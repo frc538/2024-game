@@ -29,4 +29,10 @@ public final class Constants {
     public static final int RearRightriveMotor = 4;
     
   }
+
+  public static class misc {
+    public static final double intakeSpeed = 0.5;
+    public static final double speekerLaunchSpeed = 1;
+    public static final double ampLaunchSpeed = 0.5;
+  }
 }

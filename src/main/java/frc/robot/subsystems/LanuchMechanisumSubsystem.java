@@ -18,7 +18,18 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
   topLaunch = new PWMSparkMax(Constants.PWM.topLaunch);
   bottomLaunch = new PWMSparkMax(Constants.PWM.bottomLaunch);
 
+    topLaunch.addFollower(bottomLaunch);
+
   }
+public void launchSpeaker(){
+  topLaunch.set(Constants.misc.speekerLaunchSpeed);
+}
+
+public void launchAmp(){
+  //launch into the amp
+  topLaunch.set(Constants.misc.ampLaunchSpeed);
+}
+
 
   @Override
   public void periodic() {
