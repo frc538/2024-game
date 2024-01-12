@@ -178,3 +178,6 @@ logs/
 ctre_sim/
 .vscode/launch.json
 .vscode/settings.json
+networktables.json
+simgui-ds.json
+simgui.json
