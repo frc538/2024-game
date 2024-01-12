@@ -16,6 +16,7 @@ public final class Constants {
   public static class PWM {
     public static final int topLaunch = 0;
     public static final int bottomLaunch = 1;
+    public static final int intake = 2;
   }
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
