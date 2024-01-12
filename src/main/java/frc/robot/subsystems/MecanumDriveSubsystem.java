@@ -4,30 +4,43 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class MecanumDriveSubsystem extends SubsystemBase {
-  PWMSparkMax frontLeft;
-  PWMSparkMax frontRight;
-  PWMSparkMax rearLeft;
-  PWMSparkMax rearRight;
+  CANSparkMax frontLeft;
+  CANSparkMax frontRight;
+  CANSparkMax rearLeft;
+  CANSparkMax rearRight;
 
   MecanumDrive driveBase;
 
   /** Creates a new MechaniumDrive. */
   public MecanumDriveSubsystem() {
-    frontLeft = new PWMSparkMax(Constants.PWM.FrontLeftDriveMotor);
-    frontRight = new PWMSparkMax(Constants.PWM.FrontRightDriveMotor);
-    rearLeft = new PWMSparkMax(Constants.PWM.RearLeftDriveMotor);
-    rearRight = new PWMSparkMax(Constants.PWM.RearRightriveMotor);
+    frontLeft = new CANSparkMax(Constants.CANSparkMaxID.FrontLeftDriveMotor, MotorType.kBrushless);
+    frontRight = new CANSparkMax(Constants.CANSparkMaxID.FrontRightDriveMotor, MotorType.kBrushless);
+    rearLeft = new CANSparkMax(Constants.CANSparkMaxID.RearLeftDriveMotor, MotorType.kBrushless);
+    rearRight = new CANSparkMax(Constants.CANSparkMaxID.RearRightriveMotor, MotorType.kBrushless);
 
+    frontLeft.restoreFactoryDefaults();
     frontLeft.setInverted(false);
+    frontLeft.burnFlash();
+
+    rearLeft.restoreFactoryDefaults();
     rearLeft.setInverted(false);
+    rearLeft.burnFlash();
+
+    frontRight.restoreFactoryDefaults();
     frontRight.setInverted(true);
+    frontRight.burnFlash();
+
+    rearRight.restoreFactoryDefaults();
     rearRight.setInverted(true);
+    rearRight.burnFlash();
 
     driveBase = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
   }

@@ -14,12 +14,19 @@ package frc.robot;
  */
 public final class Constants {
   public static class PWM {
-    public static final int FrontLeftDriveMotor = 0;
-    public static final int FrontRightDriveMotor = 1;
-    public static final int RearLeftDriveMotor = 2;
-    public static final int RearRightriveMotor = 3;
+    public static final int topLaunch = 0;
+    public static final int bottomLaunch = 1;
   }
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
+  }
+
+  public static class CANSparkMaxID {
+
+    public static final int FrontLeftDriveMotor = 1;
+    public static final int FrontRightDriveMotor = 2;
+    public static final int RearLeftDriveMotor = 3;
+    public static final int RearRightriveMotor = 4;
+    
   }
 }
