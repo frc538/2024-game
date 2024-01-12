@@ -9,19 +9,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class IntakeMechanisum extends SubsystemBase {
-  PWMSparkMax topIntake;
-  PWMSparkMax bottomIntake;
+  PWMSparkMax intake;
+  
   /** Creates a new IntakeMechanisum. */
   public IntakeMechanisum() {
 
-    topIntake = new PWMSparkMax(Constants.PWM.topLaunch);
-    bottomIntake = new PWMSparkMax(Constants.PWM.bottomLaunch);
-
-    topIntake.addFollower(bottomIntake);
+    intake = new PWMSparkMax(Constants.PWM.intake);
   }
 
   public void intake(){
-    topIntake.set(Constants.misc.intakeSpeed);
+    intake.set(Constants.misc.intakeSpeed);
   }
 
   @Override
