@@ -29,4 +29,17 @@ public final class Constants {
     public static final int RearRightriveMotor = 4;
     
   }
+
+  public static class Misc {
+    // Positions of the Drive Wheels relative to the center of the Robot.
+    public static final double FrontLeftDriveWheel_Position_X = -0.3;
+    public static final double FrontLeftDriveWheel_Position_Y = 0.3;
+    
+    public static final double FrontRightDriveWheel_Position_X = 0.3;
+    public static final double FrontRightDriveWheel_Position_Y = 0.3;
+    public static final double RearLeftDriveWheel_Position_X = -0.3;
+    public static final double RearLeftDriveWheel_Position_Y = -0.3;
+    public static final double RearRightDriveWheel_Position_X = 0.3;
+    public static final double RearRightDriveWheel_Position_Y = -0.3;
+  }
 }

@@ -4,9 +4,16 @@
 
 package frc.robot.subsystems;
 
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -43,6 +50,17 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     rearRight.burnFlash();
 
     driveBase = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
+  }
+
+  public Map<String,RelativeEncoder> GetEncoders()
+  {
+    Map<String, RelativeEncoder> Encoders = new HashMap<String,RelativeEncoder>();
+    Encoders.put("Front Left", frontLeft.getEncoder());
+    Encoders.put("Front Right", frontRight.getEncoder());
+    Encoders.put("Rear Left", rearLeft.getEncoder());
+    Encoders.put("Rear Right", rearRight.getEncoder());
+
+    return Encoders;
   }
 
   public void drive(double forwardSpeed, double rightSpeed, double rotatinalSpeed) {
