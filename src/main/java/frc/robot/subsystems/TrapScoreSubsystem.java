@@ -4,11 +4,23 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
-public class PWMLauncher extends SubsystemBase {
-  /** Creates a new PWMLauncher. */
-  public PWMLauncher() {}
+public class TrapScoreSubsystem extends SubsystemBase {
+
+   PWMSparkMax trapScoreTurner;
+
+  /** Creates a new TrapScoreSubsystem. */
+  public TrapScoreSubsystem() {
+
+   trapScoreTurner = new PWMSparkMax(Constants.PWM.trapScoreTurner);
+
+
+
+
+  }
 
   @Override
   public void periodic() {
