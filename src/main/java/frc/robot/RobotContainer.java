@@ -11,6 +11,7 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeMechanisum;
 import frc.robot.subsystems.LanuchMechanisumSubsystem;
 import frc.robot.subsystems.MecanumDriveSubsystem;
+import frc.robot.subsystems.TrapScoreSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
@@ -29,6 +30,7 @@ public class RobotContainer {
   private final MecanumDriveSubsystem m_Drive = new MecanumDriveSubsystem();
   private final LanuchMechanisumSubsystem m_LaunchMech = new LanuchMechanisumSubsystem();
   private final IntakeMechanisum m_Intakemech = new IntakeMechanisum();
+  private final TrapScoreSubsystem m_TrapScoreSubsystem = new TrapScoreSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   //private final CommandXboxController m_driverController =  new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -75,6 +77,17 @@ public class RobotContainer {
       m_Intakemech.intake();
     },m_Intakemech));
 
+    contrJoystick.button(3).onFalse(Commands.run(() -> {
+      m_TrapScoreSubsystem.startAngle();
+    },m_TrapScoreSubsystem));
+
+    contrJoystick.button(4).onFalse(Commands.run(() -> {
+      m_TrapScoreSubsystem.loadAngle();
+    },m_TrapScoreSubsystem));
+
+    contrJoystick.button(5).onFalse(Commands.run(() -> {
+      m_TrapScoreSubsystem.dropAngle();
+    },m_TrapScoreSubsystem));
    
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,

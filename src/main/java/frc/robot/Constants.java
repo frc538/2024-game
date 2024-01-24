@@ -36,5 +36,8 @@ public final class Constants {
     public static final double intakeSpeed = 0.5;
     public static final double speekerLaunchSpeed = 1;
     public static final double ampLaunchSpeed = 0.5;
+    public static final int startAngle = 0;
+    public static final int loadAngle = 90;
+    public static final int dropAngle = 180;
   }
 }
