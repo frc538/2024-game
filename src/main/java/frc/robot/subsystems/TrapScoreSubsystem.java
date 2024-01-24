@@ -4,22 +4,33 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class TrapScoreSubsystem extends SubsystemBase {
 
-   PWMSparkMax trapScoreTurner;
+   Servo trapScoreTurner;
 
   /** Creates a new TrapScoreSubsystem. */
   public TrapScoreSubsystem() {
 
-   trapScoreTurner = new PWMSparkMax(Constants.PWM.trapScoreTurner);
+    trapScoreTurner = new Servo(Constants.PWM.trapScoreTurner);
+  }
 
+  public void startAngle()
+  {
+    trapScoreTurner.setAngle(Constants.misc.startAngle);
+  }
 
+  public void loadAngle()
+  {
+    trapScoreTurner.setAngle(Constants.misc.loadAngle);
+  }
 
-
+  public void dropAngle()
+  {
+    trapScoreTurner.setAngle(Constants.misc.dropAngle);
   }
 
   @Override
