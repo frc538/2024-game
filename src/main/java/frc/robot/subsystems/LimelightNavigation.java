@@ -51,7 +51,6 @@ public class LimelightNavigation extends SubsystemBase {
     	m_FrontLeftWheel_Endocer.getPosition(), m_FrontRightWheel_Encoder.getPosition(), m_RearLeftWheel_Encoder.getPosition(), m_RearRightWheel_Encoder.getPosition()
     ));
 
-    // TODO: Create odemorty object. Needs encoders.
   }
 
   @Override
