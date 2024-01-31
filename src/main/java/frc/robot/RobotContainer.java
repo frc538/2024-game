@@ -13,7 +13,6 @@ import frc.robot.subsystems.TrapScoreSubsystem;
 
 import com.revrobotics.REVPhysicsSim;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
