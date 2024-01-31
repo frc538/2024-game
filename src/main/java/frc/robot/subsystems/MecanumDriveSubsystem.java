@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
@@ -43,6 +44,15 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     rearRight.burnFlash();
 
     driveBase = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
+
+    float stallTorque = Constants.misc.stallTorque;
+    float freeSpeed = Constants.misc.freeSpeed;
+
+    REVPhysicsSim.getInstance().addSparkMax(frontLeft, stallTorque, freeSpeed);
+    REVPhysicsSim.getInstance().addSparkMax(frontRight, stallTorque, freeSpeed);
+    REVPhysicsSim.getInstance().addSparkMax(rearLeft, stallTorque, freeSpeed);
+    REVPhysicsSim.getInstance().addSparkMax(rearRight, stallTorque, freeSpeed);
+
   }
 
   public void drive(double forwardSpeed, double rightSpeed, double rotatinalSpeed) {
