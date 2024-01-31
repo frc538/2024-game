@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.REVPhysicsSim;
+
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -15,7 +18,16 @@ public class IntakeMechanisum extends SubsystemBase {
   public IntakeMechanisum() {
 
     intake = new PWMSparkMax(Constants.PWM.intake);
+    REVPhysicsSim.getInstance();
+    
+    
   }
+
+  float stallTorque = Constants.misc.stallTorque;
+  float freeSpeed = Constants.misc.freeSpeed;
+
+
+  public void addSparkMax​(CANSparkMax intake, double stallTorque, float freeSpeed){}
 
   public void intake(){
     intake.set(Constants.misc.intakeSpeed);

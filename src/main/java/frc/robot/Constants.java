@@ -34,6 +34,8 @@ public final class Constants {
     public static final int FrontRightDriveMotor = 2;
     public static final int RearLeftDriveMotor = 3;
     public static final int RearRightriveMotor = 4;
+    public static final int topLaunch = 5;
+    public static final int bottomLaunch = 6;
     
   }
 
@@ -44,5 +46,7 @@ public final class Constants {
     public static final int startAngle = 0;
     public static final int loadAngle = 90;
     public static final int dropAngle = 180;
+    public static final float stallTorque = 2.6f;
+    public static final float freeSpeed = 5676;
   }
 }

@@ -10,7 +10,9 @@ import frc.robot.subsystems.IntakeMechanisum;
 import frc.robot.subsystems.LanuchMechanisumSubsystem;
 import frc.robot.subsystems.MecanumDriveSubsystem;
 import frc.robot.subsystems.TrapScoreSubsystem;
-//import edu.wpi.first.wpilibj2.command.Command;
+
+import com.revrobotics.REVPhysicsSim;
+
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -82,6 +84,8 @@ public class RobotContainer {
     contrJoystick.button(5).onFalse(Commands.run(() -> {
       m_TrapScoreSubsystem.dropAngle();
     },m_TrapScoreSubsystem));
+
+    contrJoystick.button(12).onTrue(Commands.run(() -> {REVPhysicsSim.getInstance().run();}));
    
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
