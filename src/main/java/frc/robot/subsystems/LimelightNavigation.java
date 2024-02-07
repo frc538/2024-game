@@ -4,18 +4,18 @@
 
 package frc.robot.subsystems;
 
-import java.util.Dictionary;
-import java.util.List;
 import java.util.Map;
 
+import com.revrobotics.RelativeEncoder;
+
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.MecanumDriveKinematics;
 import edu.wpi.first.math.kinematics.MecanumDriveOdometry;
 import edu.wpi.first.math.kinematics.MecanumDriveWheelPositions;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import com.revrobotics.RelativeEncoder;
-
 import frc.robot.Constants;
 
 public class LimelightNavigation extends SubsystemBase {
@@ -56,6 +56,25 @@ public class LimelightNavigation extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+	if ( NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0) != 0 )
+	{
+		double[] robotPose = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_wpired").getDoubleArray(new double[0]);
+
+		Map<String, RelativeEncoder> Encoders = new MecanumDriveSubsystem().GetEncoders(); //BUGBUG: Get this in RobotContainer, pass to this subsystem.
+		m_FrontLeftWheel_Endocer	= Encoders.get("Front Left");
+   		m_FrontRightWheel_Encoder	= Encoders.get("Front Right");
+    	m_RearLeftWheel_Encoder		= Encoders.get("Rear Left");
+    	m_RearRightWheel_Encoder	= Encoders.get("Rear Right");
+
+		var MecanumDriveWheelPositions = new MecanumDriveWheelPositions(
+			m_FrontLeftWheel_Endocer.getPosition(), m_FrontRightWheel_Encoder.getPosition(), m_RearLeftWheel_Encoder.getPosition(), m_RearRightWheel_Encoder.getPosition()
+		);
+
+		m_DriveOdometry.resetPosition(null, MecanumDriveWheelPositions, new Pose2d(robotPose[0], robotPose[1], null));
+	}
+
+	SmartDashboard.putNumber("Robot X", m_DriveOdometry.getPoseMeters().getX());
+	SmartDashboard.putNumber("Robot Y", m_DriveOdometry.getPoseMeters().getY());
   }
 }
 
