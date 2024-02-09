@@ -30,9 +30,6 @@ public class RobotContainer {
   private final LanuchMechanisumSubsystem m_LaunchMech = new LanuchMechanisumSubsystem();
   private final IntakeMechanisum m_Intakemech = new IntakeMechanisum();
   private final TrapScoreSubsystem m_TrapScoreSubsystem = new TrapScoreSubsystem();
-
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  //private final CommandXboxController m_driverController =  new CommandXboxController(OperatorConstants.kDriverControllerPort);
       
 
   private final CommandJoystick contrJoystick = new CommandJoystick(0);
@@ -88,10 +85,6 @@ public class RobotContainer {
 
     if (RobotBase.isSimulation()) REVPhysicsSim.getInstance().run();
    
-
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
   /**

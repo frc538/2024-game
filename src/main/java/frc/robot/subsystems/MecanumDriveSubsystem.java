@@ -8,7 +8,9 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -47,12 +49,14 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
     float stallTorque = Constants.misc.stallTorque;
     float freeSpeed = Constants.misc.freeSpeed;
-
-    REVPhysicsSim.getInstance().addSparkMax(frontLeft, stallTorque, freeSpeed);
+    if (RobotBase.isSimulation()) {
+      REVPhysicsSim.getInstance().addSparkMax(frontLeft, stallTorque, freeSpeed);
     REVPhysicsSim.getInstance().addSparkMax(frontRight, stallTorque, freeSpeed);
     REVPhysicsSim.getInstance().addSparkMax(rearLeft, stallTorque, freeSpeed);
     REVPhysicsSim.getInstance().addSparkMax(rearRight, stallTorque, freeSpeed);
 
+    }
+    
   }
 
   public void drive(double forwardSpeed, double rightSpeed, double rotatinalSpeed) {
@@ -62,5 +66,14 @@ public class MecanumDriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    double frontLeftSpeed = frontLeft.getEncoder().getVelocity();
+    double frontRightSpeed = frontRight.getEncoder().getVelocity();
+    double rearLeftSpeed = rearLeft.getEncoder().getVelocity();
+    double rearRightSpeed = rearRight.getEncoder().getVelocity();
+
+    SmartDashboard.putNumber("frontLeftSpeed", frontLeftSpeed);
+    SmartDashboard.putNumber("frontRightSpeed", frontRightSpeed);
+    SmartDashboard.putNumber("rearLeftSpeed", rearLeftSpeed);
+    SmartDashboard.putNumber("rearRightSpeed", rearRightSpeed);
   }
 }
