@@ -33,8 +33,9 @@ public class LimelightNavigation extends SubsystemBase {
   MecanumDriveOdometry m_DriveOdometry;
 
   /** Creates a new LimelightNavigation. */
-  public LimelightNavigation() {
-    Map<String, RelativeEncoder> Encoders = new MecanumDriveSubsystem().GetEncoders(); //BUGBUG: Get this in RobotContainer, pass to this subsystem.
+  public LimelightNavigation(Map<String, RelativeEncoder> encoders) {
+    //BUGBUG: Get this in RobotContainer, pass to this subsystem.
+	Map<String, RelativeEncoder> Encoders = encoders;
     m_FrontLeftWheel_Endocer	= Encoders.get("Front Left");
     m_FrontRightWheel_Encoder	= Encoders.get("Front Right");
     m_RearLeftWheel_Encoder		= Encoders.get("Rear Left");
@@ -59,13 +60,6 @@ public class LimelightNavigation extends SubsystemBase {
 	if ( NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0) != 0 )
 	{
 		double[] robotPose = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_wpired").getDoubleArray(new double[0]);
-
-		Map<String, RelativeEncoder> Encoders = new MecanumDriveSubsystem().GetEncoders(); //BUGBUG: Get this in RobotContainer, pass to this subsystem.
-		m_FrontLeftWheel_Endocer	= Encoders.get("Front Left");
-   		m_FrontRightWheel_Encoder	= Encoders.get("Front Right");
-    	m_RearLeftWheel_Encoder		= Encoders.get("Rear Left");
-    	m_RearRightWheel_Encoder	= Encoders.get("Rear Right");
-
 		var MecanumDriveWheelPositions = new MecanumDriveWheelPositions(
 			m_FrontLeftWheel_Endocer.getPosition(), m_FrontRightWheel_Encoder.getPosition(), m_RearLeftWheel_Encoder.getPosition(), m_RearRightWheel_Encoder.getPosition()
 		);
