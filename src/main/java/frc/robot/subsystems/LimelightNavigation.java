@@ -9,6 +9,7 @@ import java.util.Map;
 import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.MecanumDriveKinematics;
 import edu.wpi.first.math.kinematics.MecanumDriveOdometry;
@@ -32,6 +33,8 @@ public class LimelightNavigation extends SubsystemBase {
   MecanumDriveKinematics m_Kinematics;
   MecanumDriveOdometry m_DriveOdometry;
 
+  int x;
+
   /** Creates a new LimelightNavigation. */
   public LimelightNavigation(Map<String, RelativeEncoder> encoders) {
     //BUGBUG: Get this in RobotContainer, pass to this subsystem.
@@ -48,10 +51,11 @@ public class LimelightNavigation extends SubsystemBase {
     m_RearRightWheel_Position	= new Translation2d(Constants.Misc.RearRightDriveWheel_Position_X, Constants.Misc.RearRightDriveWheel_Position_Y);
 
     m_Kinematics	= new MecanumDriveKinematics(m_FrontLeftWheel_Position, m_FrontRightWheel_Position, m_RearLeftWheel_Position, m_RearRightWheel_Position);
-    m_DriveOdometry	= new MecanumDriveOdometry(m_Kinematics, null, new MecanumDriveWheelPositions(
+    m_DriveOdometry	= new MecanumDriveOdometry(m_Kinematics, new Rotation2d(0), new MecanumDriveWheelPositions(
     	m_FrontLeftWheel_Endocer.getPosition(), m_FrontRightWheel_Encoder.getPosition(), m_RearLeftWheel_Encoder.getPosition(), m_RearRightWheel_Encoder.getPosition()
     ));
 
+    x=0;
   }
 
   @Override
@@ -69,6 +73,8 @@ public class LimelightNavigation extends SubsystemBase {
 
 	SmartDashboard.putNumber("Robot X", m_DriveOdometry.getPoseMeters().getX());
 	SmartDashboard.putNumber("Robot Y", m_DriveOdometry.getPoseMeters().getY());
+  SmartDashboard.putNumber("X", x);
+  x++;
   }
 }
 
