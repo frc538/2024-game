@@ -66,14 +66,20 @@ public class MecanumDriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
   // This method will be called once per scheduler run
-    double frontLeftSpeed = frontLeft.getEncoder().getVelocity();
-    double frontRightSpeed = frontRight.getEncoder().getVelocity();
-    double rearLeftSpeed = rearLeft.getEncoder().getVelocity();
-    double rearRightSpeed = rearRight.getEncoder().getVelocity();
+    // double frontLeftSpeed = frontLeft.getEncoder().getVelocity();
+    // double frontRightSpeed = frontRight.getEncoder().getVelocity();
+    // double rearLeftSpeed = rearLeft.getEncoder().getVelocity();
+    // double rearRightSpeed = rearRight.getEncoder().getVelocity();
 
-    SmartDashboard.putNumber("frontLeftSpeed", frontLeftSpeed);
-    SmartDashboard.putNumber("frontRightSpeed", frontRightSpeed);
-    SmartDashboard.putNumber("rearLeftSpeed", rearLeftSpeed);
-    SmartDashboard.putNumber("rearRightSpeed", rearRightSpeed);
+    // SmartDashboard.putNumber("frontLeftSpeed", frontLeftSpeed);
+    // SmartDashboard.putNumber("frontRightSpeed", frontRightSpeed);
+    // SmartDashboard.putNumber("rearLeftSpeed", rearLeftSpeed);
+    // SmartDashboard.putNumber("rearRightSpeed", rearRightSpeed);
+
+    int x;
+    x=0;
+
+    SmartDashboard.putNumber("X", x);
+    x++;
   }
 }
