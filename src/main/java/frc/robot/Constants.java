@@ -32,6 +32,10 @@ public final class Constants {
     
   }
 
+  public static class CanID {
+    public static final int Pigeon2 = 10;
+  }
+
   public static class Misc {
     // Positions of the Drive Wheels relative to the center of the Robot.
     public static final double FrontLeftDriveWheel_Position_X = -0.3;
