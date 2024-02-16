@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import java.util.Map;
 
+import com.ctre.phoenix6.configs.Pigeon2Configuration;
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -18,6 +20,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.CanID;
 
 public class LimelightNavigation extends SubsystemBase {
   Translation2d m_FrontLeftWheel_Position;
@@ -32,6 +35,9 @@ public class LimelightNavigation extends SubsystemBase {
 
   MecanumDriveKinematics m_Kinematics;
   MecanumDriveOdometry m_DriveOdometry;
+
+  private Pigeon2 pigeon2;
+  private Pigeon2Configuration pigeon2Config;
 
   int x;
 
@@ -55,6 +61,10 @@ public class LimelightNavigation extends SubsystemBase {
     	m_FrontLeftWheel_Endocer.getPosition(), m_FrontRightWheel_Encoder.getPosition(), m_RearLeftWheel_Encoder.getPosition(), m_RearRightWheel_Encoder.getPosition()
     ));
 
+    pigeon2 = new Pigeon2(CanID.Pigeon2);
+    pigeon2Config = new Pigeon2Configuration();
+
+
     x=0;
   }
 
@@ -68,7 +78,7 @@ public class LimelightNavigation extends SubsystemBase {
 			m_FrontLeftWheel_Endocer.getPosition(), m_FrontRightWheel_Encoder.getPosition(), m_RearLeftWheel_Encoder.getPosition(), m_RearRightWheel_Encoder.getPosition()
 		);
 
-		m_DriveOdometry.resetPosition(new Rotation2d(), MecanumDriveWheelPositions, new Pose2d(robotPose[0], robotPose[1], new Rotation2d()));
+		m_DriveOdometry.resetPosition(pigeon2.getRotation2d(), MecanumDriveWheelPositions, new Pose2d(robotPose[0], robotPose[1], pigeon2.getRotation2d()));
 	}
 
 	SmartDashboard.putNumber("Robot X", m_DriveOdometry.getPoseMeters().getX());
