@@ -68,7 +68,7 @@ public class LimelightNavigation extends SubsystemBase {
 			m_FrontLeftWheel_Endocer.getPosition(), m_FrontRightWheel_Encoder.getPosition(), m_RearLeftWheel_Encoder.getPosition(), m_RearRightWheel_Encoder.getPosition()
 		);
 
-		m_DriveOdometry.resetPosition(null, MecanumDriveWheelPositions, new Pose2d(robotPose[0], robotPose[1], null));
+		m_DriveOdometry.resetPosition(new Rotation2d(), MecanumDriveWheelPositions, new Pose2d(robotPose[0], robotPose[1], new Rotation2d()));
 	}
 
 	SmartDashboard.putNumber("Robot X", m_DriveOdometry.getPoseMeters().getX());
@@ -78,4 +78,4 @@ public class LimelightNavigation extends SubsystemBase {
   }
 }
 
-// https://docs.wpilib.org/en/stable/docs/software/kinematics-and-odometry/mecanum-drive-kinematics.html
+// https://docs.wpilib.org/en/stable/docs/software/kinematics-and-odometry/mecanum-drive-kinematics.html.
