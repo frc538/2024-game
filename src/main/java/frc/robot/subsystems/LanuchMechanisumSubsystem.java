@@ -12,41 +12,43 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class LanuchMechanisumSubsystem extends SubsystemBase {
-    CANSparkMax topRight;
-    CANSparkMax topLeft;
+    CANSparkMax top;
+    CANSparkMax bottom;
     CANSparkMax staging;
-    CANSparkMax launcherLoad;
+    CANSparkMax pickup;
 
   /** Creates a new LanuchMechanisumSubsystem. */
   public LanuchMechanisumSubsystem() {
 
-    topRight = new CANSparkMax(Constants.CANSparkMaxID.topRight, MotorType.kBrushless);
-    topLeft = new CANSparkMax(Constants.CANSparkMaxID.topLeft, MotorType.kBrushless);
+    top = new CANSparkMax(Constants.CANSparkMaxID.topRight, MotorType.kBrushless);
+    bottom = new CANSparkMax(Constants.CANSparkMaxID.topLeft, MotorType.kBrushless);
     staging = new CANSparkMax(Constants.CANSparkMaxID.staging, MotorType.kBrushless);
-    launcherLoad = new CANSparkMax(Constants.CANSparkMaxID.launcherLoad, MotorType.kBrushless);
+    pickup = new CANSparkMax(Constants.CANSparkMaxID.launcherLoad, MotorType.kBrushless);
   
 
-    topLeft.follow(topRight);
+    bottom.follow(top);
+    staging.follow(pickup);
 
       float stallTorque = Constants.misc.stallTorque;
       float freeSpeed = Constants.misc.freeSpeed;
 
-      REVPhysicsSim.getInstance().addSparkMax(topRight, stallTorque, freeSpeed);
-      REVPhysicsSim.getInstance().addSparkMax(topLeft, stallTorque, freeSpeed);
+      REVPhysicsSim.getInstance().addSparkMax(top, stallTorque, freeSpeed);
+      REVPhysicsSim.getInstance().addSparkMax(bottom, stallTorque, freeSpeed);
       REVPhysicsSim.getInstance().addSparkMax(staging, stallTorque, freeSpeed);
-      REVPhysicsSim.getInstance().addSparkMax(launcherLoad, stallTorque, freeSpeed);
+      REVPhysicsSim.getInstance().addSparkMax(pickup, stallTorque, freeSpeed);
   }
 public void launchSpeaker(){
-  topRight.set(Constants.misc.speekerLaunchSpeed);
+  top.set(Constants.misc.speekerLaunchSpeed);
+  pickup.set(Constants.misc.speekerLaunchSpeed);
 }
 
 public void launchAmp(){
   //launch into the amp
-  topRight.set(Constants.misc.ampLaunchSpeed);
+  top.set(Constants.misc.ampLaunchSpeed);
 }
 
 public void initaliseLauncher(){
-  staging.set(Constants.misc.intSpeed);
+  pickup.set(Constants.misc.intSpeed);
 
 }
 

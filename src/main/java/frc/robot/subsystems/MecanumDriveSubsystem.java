@@ -21,6 +21,8 @@ public class MecanumDriveSubsystem extends SubsystemBase {
   CANSparkMax rearRight;
 
   MecanumDrive driveBase;
+  int x;
+  int y;
 
   /** Creates a new MechaniumDrive. */
   public MecanumDriveSubsystem() {
@@ -56,11 +58,16 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     REVPhysicsSim.getInstance().addSparkMax(rearRight, stallTorque, freeSpeed);
 
     }
+
+     x=0;
     
   }
 
   public void drive(double forwardSpeed, double rightSpeed, double rotatinalSpeed) {
     driveBase.driveCartesian(forwardSpeed, rightSpeed, rotatinalSpeed);
+
+    SmartDashboard.putNumber("y", y);
+    y++;
   }
 
   @Override
@@ -76,10 +83,11 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     // SmartDashboard.putNumber("rearLeftSpeed", rearLeftSpeed);
     // SmartDashboard.putNumber("rearRightSpeed", rearRightSpeed);
 
-    int x;
-    x=0;
+    
+   
 
     SmartDashboard.putNumber("X", x);
     x++;
+    System.out.println("periodic");
   }
 }
