@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean
@@ -33,7 +35,7 @@ public final class Constants {
     public static final int FrontLeftDriveMotor = 1;
     public static final int FrontRightDriveMotor = 2;
     public static final int RearLeftDriveMotor = 3;
-    public static final int RearRightriveMotor = 4;
+    public static final int RearRighDriveMotor = 4;
     public static final int topRight = 5;
     public static final int topLeft = 6;
     public static final int intake = 7;
@@ -42,7 +44,7 @@ public final class Constants {
     
   }
 
-  public static class misc {
+  public static class Misc {
     public static final double intakeSpeed = 0.5;
     public static final double speekerLaunchSpeed = 1;
     public static final double ampLaunchSpeed = 0.5;
@@ -52,5 +54,18 @@ public final class Constants {
     public static final float stallTorque = 2.6f;
     public static final float freeSpeed = 5676;
     public static final double intSpeed = .25;
+    
+    // Positions of the Drive Wheels relative to the center of the Robot.
+    public static final double FrontLeftDriveWheel_Position_X = -0.3;
+    public static final double FrontLeftDriveWheel_Position_Y = 0.3;
+    public static final double FrontRightDriveWheel_Position_X = 0.3;
+    public static final double FrontRightDriveWheel_Position_Y = 0.3;
+    public static final double RearLeftDriveWheel_Position_X = -0.3;
+    public static final double RearLeftDriveWheel_Position_Y = -0.3;
+    public static final double RearRightDriveWheel_Position_X = 0.3;
+    public static final double RearRightDriveWheel_Position_Y = -0.3;
+
+  public static class CanID {
+    public static final int Pigeon2 = 10;
   }
 }
