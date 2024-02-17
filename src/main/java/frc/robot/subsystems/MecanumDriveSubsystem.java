@@ -10,11 +10,15 @@ import java.util.List;
 import java.util.Map;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 
+
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -25,6 +29,8 @@ public class MecanumDriveSubsystem extends SubsystemBase {
   CANSparkMax rearRight;
 
   MecanumDrive driveBase;
+  int x;
+  int y;
 
   /** Creates a new MechaniumDrive. */
   public MecanumDriveSubsystem() {
@@ -50,6 +56,19 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     rearRight.burnFlash();
 
     driveBase = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
+
+    float stallTorque = Constants.misc.stallTorque;
+    float freeSpeed = Constants.misc.freeSpeed;
+    if (RobotBase.isSimulation()) {
+      REVPhysicsSim.getInstance().addSparkMax(frontLeft, stallTorque, freeSpeed);
+    REVPhysicsSim.getInstance().addSparkMax(frontRight, stallTorque, freeSpeed);
+    REVPhysicsSim.getInstance().addSparkMax(rearLeft, stallTorque, freeSpeed);
+    REVPhysicsSim.getInstance().addSparkMax(rearRight, stallTorque, freeSpeed);
+
+    }
+
+     x=0;
+    
   }
 
   public Map<String,RelativeEncoder> GetEncoders()
@@ -65,10 +84,29 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
   public void drive(double forwardSpeed, double rightSpeed, double rotatinalSpeed) {
     driveBase.driveCartesian(forwardSpeed, rightSpeed, rotatinalSpeed);
+
+    SmartDashboard.putNumber("y", y);
+    y++;
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+  // This method will be called once per scheduler run
+    // double frontLeftSpeed = frontLeft.getEncoder().getVelocity();
+    // double frontRightSpeed = frontRight.getEncoder().getVelocity();
+    // double rearLeftSpeed = rearLeft.getEncoder().getVelocity();
+    // double rearRightSpeed = rearRight.getEncoder().getVelocity();
+
+    // SmartDashboard.putNumber("frontLeftSpeed", frontLeftSpeed);
+    // SmartDashboard.putNumber("frontRightSpeed", frontRightSpeed);
+    // SmartDashboard.putNumber("rearLeftSpeed", rearLeftSpeed);
+    // SmartDashboard.putNumber("rearRightSpeed", rearRightSpeed);
+
+    
+   
+
+    SmartDashboard.putNumber("X", x);
+    x++;
+    System.out.println("periodic");
   }
 }
