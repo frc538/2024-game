@@ -29,8 +29,8 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
     bottom.follow(top);
     staging.follow(pickup);
 
-      float stallTorque = Constants.misc.stallTorque;
-      float freeSpeed = Constants.misc.freeSpeed;
+      float stallTorque = Constants.Misc.stallTorque;
+      float freeSpeed = Constants.Misc.freeSpeed;
 
       REVPhysicsSim.getInstance().addSparkMax(top, stallTorque, freeSpeed);
       REVPhysicsSim.getInstance().addSparkMax(bottom, stallTorque, freeSpeed);
@@ -38,17 +38,17 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
       REVPhysicsSim.getInstance().addSparkMax(pickup, stallTorque, freeSpeed);
   }
 public void launchSpeaker(){
-  top.set(Constants.misc.speekerLaunchSpeed);
-  pickup.set(Constants.misc.speekerLaunchSpeed);
+  top.set(Constants.Misc.speekerLaunchSpeed);
+  pickup.set(Constants.Misc.speekerLaunchSpeed);
 }
 
 public void launchAmp(){
   //launch into the amp
-  top.set(Constants.misc.ampLaunchSpeed);
+  top.set(Constants.Misc.ampLaunchSpeed);
 }
 
 public void initaliseLauncher(){
-  pickup.set(Constants.misc.intSpeed);
+  pickup.set(Constants.Misc.intSpeed);
 
 }
 

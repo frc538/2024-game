@@ -57,8 +57,8 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
     driveBase = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
-    float stallTorque = Constants.misc.stallTorque;
-    float freeSpeed = Constants.misc.freeSpeed;
+    float stallTorque = Constants.Misc.stallTorque;
+    float freeSpeed = Constants.Misc.freeSpeed;
     if (RobotBase.isSimulation()) {
       REVPhysicsSim.getInstance().addSparkMax(frontLeft, stallTorque, freeSpeed);
     REVPhysicsSim.getInstance().addSparkMax(frontRight, stallTorque, freeSpeed);
