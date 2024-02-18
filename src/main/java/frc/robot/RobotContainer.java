@@ -16,8 +16,6 @@ import com.revrobotics.REVPhysicsSim;
 import edu.wpi.first.wpilibj.RobotBase;
 
 import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.LimelightNavigation;
 import frc.robot.subsystems.MecanumDriveSubsystem;
 
