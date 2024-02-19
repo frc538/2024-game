@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.geometry.Rotation2d;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean
@@ -48,9 +46,9 @@ public final class Constants {
     public static final double intakeSpeed = 0.5;
     public static final double speekerLaunchSpeed = 1;
     public static final double ampLaunchSpeed = 0.5;
-    public static final int startAngle = 0;
-    public static final int loadAngle = 90;
-    public static final int dropAngle = 180;
+    public static final int startAngleDegrees = 0;
+    public static final int loadAngleDegrees = 90;
+    public static final int dropAngleDegrees = 180;
     public static final float stallTorque = 2.6f;
     public static final float freeSpeed = 5676;
     public static final double intSpeed = .25;

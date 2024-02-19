@@ -20,17 +20,17 @@ public class TrapScoreSubsystem extends SubsystemBase {
 
   public void startAngle()
   {
-    trapScoreTurner.setAngle(Constants.Misc.startAngle);
+    trapScoreTurner.setAngle(Constants.Misc.startAngleDegrees);
   }
 
   public void loadAngle()
   {
-    trapScoreTurner.setAngle(Constants.Misc.loadAngle);
+    trapScoreTurner.setAngle(Constants.Misc.loadAngleDegrees);
   }
 
   public void dropAngle()
   {
-    trapScoreTurner.setAngle(Constants.Misc.dropAngle);
+    trapScoreTurner.setAngle(Constants.Misc.dropAngleDegrees);
   }
 
   @Override

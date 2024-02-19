@@ -4,9 +4,7 @@
 
 package frc.robot.subsystems;
 
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.revrobotics.CANSparkMax;
@@ -16,7 +14,6 @@ import com.revrobotics.RelativeEncoder;
 
 
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
