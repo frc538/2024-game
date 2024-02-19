@@ -35,7 +35,7 @@ public final class Constants {
     public static final int FrontLeftDriveMotor = 1;
     public static final int FrontRightDriveMotor = 2;
     public static final int RearLeftDriveMotor = 3;
-    public static final int RearRighDriveMotor = 4;
+    public static final int RearRightDriveMotor = 4;
     public static final int topRight = 5;
     public static final int topLeft = 6;
     public static final int intake = 7;
@@ -64,6 +64,7 @@ public final class Constants {
     public static final double RearLeftDriveWheel_Position_Y = -0.3;
     public static final double RearRightDriveWheel_Position_X = 0.3;
     public static final double RearRightDriveWheel_Position_Y = -0.3;
+  }
 
   public static class CanID {
     public static final int Pigeon2 = 10;

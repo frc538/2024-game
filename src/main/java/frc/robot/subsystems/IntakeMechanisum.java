@@ -19,8 +19,8 @@ public class IntakeMechanisum extends SubsystemBase {
 
     intake = new CANSparkMax(Constants.CANSparkMaxID.intake, MotorType.kBrushless);
 
-    float stallTorque = Constants.misc.stallTorque;
-    float freeSpeed = Constants.misc.freeSpeed;
+    float stallTorque = Constants.Misc.stallTorque;
+    float freeSpeed = Constants.Misc.freeSpeed;
 
     REVPhysicsSim.getInstance().addSparkMax(intake, stallTorque, freeSpeed);
     
@@ -29,7 +29,7 @@ public class IntakeMechanisum extends SubsystemBase {
 
 
   public void intake(){
-    intake.set(Constants.misc.intakeSpeed);
+    intake.set(Constants.Misc.intakeSpeed);
   }
 
   @Override

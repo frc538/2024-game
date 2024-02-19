@@ -37,7 +37,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     frontLeft = new CANSparkMax(Constants.CANSparkMaxID.FrontLeftDriveMotor, MotorType.kBrushless);
     frontRight = new CANSparkMax(Constants.CANSparkMaxID.FrontRightDriveMotor, MotorType.kBrushless);
     rearLeft = new CANSparkMax(Constants.CANSparkMaxID.RearLeftDriveMotor, MotorType.kBrushless);
-    rearRight = new CANSparkMax(Constants.CANSparkMaxID.RearRightriveMotor, MotorType.kBrushless);
+    rearRight = new CANSparkMax(Constants.CANSparkMaxID.RearRightDriveMotor, MotorType.kBrushless);
 
     frontLeft.restoreFactoryDefaults();
     frontLeft.setInverted(false);
@@ -57,8 +57,8 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
     driveBase = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
-    float stallTorque = Constants.misc.stallTorque;
-    float freeSpeed = Constants.misc.freeSpeed;
+    float stallTorque = Constants.Misc.stallTorque;
+    float freeSpeed = Constants.Misc.freeSpeed;
     if (RobotBase.isSimulation()) {
       REVPhysicsSim.getInstance().addSparkMax(frontLeft, stallTorque, freeSpeed);
     REVPhysicsSim.getInstance().addSparkMax(frontRight, stallTorque, freeSpeed);
