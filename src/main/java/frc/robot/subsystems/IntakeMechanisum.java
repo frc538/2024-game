@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -19,10 +20,7 @@ public class IntakeMechanisum extends SubsystemBase {
 
     intake = new CANSparkMax(Constants.CANSparkMaxID.intake, MotorType.kBrushless);
 
-    float stallTorque = Constants.Misc.stallTorque;
-    float freeSpeed = Constants.Misc.freeSpeed;
-
-    REVPhysicsSim.getInstance().addSparkMax(intake, stallTorque, freeSpeed);
+    REVPhysicsSim.getInstance().addSparkMax(intake, DCMotor.getNEO(1));
     
     
   }

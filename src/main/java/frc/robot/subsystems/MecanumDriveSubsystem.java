@@ -12,7 +12,7 @@ import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 
-
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -54,13 +54,11 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
     driveBase = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
-    float stallTorque = Constants.Misc.stallTorque;
-    float freeSpeed = Constants.Misc.freeSpeed;
     if (RobotBase.isSimulation()) {
-      REVPhysicsSim.getInstance().addSparkMax(frontLeft, stallTorque, freeSpeed);
-    REVPhysicsSim.getInstance().addSparkMax(frontRight, stallTorque, freeSpeed);
-    REVPhysicsSim.getInstance().addSparkMax(rearLeft, stallTorque, freeSpeed);
-    REVPhysicsSim.getInstance().addSparkMax(rearRight, stallTorque, freeSpeed);
+      REVPhysicsSim.getInstance().addSparkMax(frontLeft, DCMotor.getNEO(1));
+    REVPhysicsSim.getInstance().addSparkMax(frontRight, DCMotor.getNEO(1));
+    REVPhysicsSim.getInstance().addSparkMax(rearLeft, DCMotor.getNEO(1));
+    REVPhysicsSim.getInstance().addSparkMax(rearRight, DCMotor.getNEO(1));
 
     }
 

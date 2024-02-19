@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.REVPhysicsSim;
 
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -29,13 +30,10 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
     bottom.follow(top);
     staging.follow(pickup);
 
-      float stallTorque = Constants.Misc.stallTorque;
-      float freeSpeed = Constants.Misc.freeSpeed;
-
-      REVPhysicsSim.getInstance().addSparkMax(top, stallTorque, freeSpeed);
-      REVPhysicsSim.getInstance().addSparkMax(bottom, stallTorque, freeSpeed);
-      REVPhysicsSim.getInstance().addSparkMax(staging, stallTorque, freeSpeed);
-      REVPhysicsSim.getInstance().addSparkMax(pickup, stallTorque, freeSpeed);
+      REVPhysicsSim.getInstance().addSparkMax(top, DCMotor.getNEO(1));
+      REVPhysicsSim.getInstance().addSparkMax(bottom, DCMotor.getNEO(1));
+      REVPhysicsSim.getInstance().addSparkMax(staging, DCMotor.getNEO(1));
+      REVPhysicsSim.getInstance().addSparkMax(pickup, DCMotor.getNEO(1));
   }
 public void launchSpeaker(){
   top.set(Constants.Misc.speekerLaunchSpeed);
