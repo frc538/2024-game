@@ -31,7 +31,7 @@ public final class Constants {
     public static final int FrontLeftDriveMotor = 1;
     public static final int FrontRightDriveMotor = 2;
     public static final int RearLeftDriveMotor = 3;
-    public static final int RearRightriveMotor = 4;
+    public static final int RearRightDriveMotor = 4;
 
   }
 }
