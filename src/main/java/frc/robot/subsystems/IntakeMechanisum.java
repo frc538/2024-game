@@ -22,7 +22,6 @@ public class IntakeMechanisum extends SubsystemBase {
 
     REVPhysicsSim.getInstance().addSparkMax(intake, DCMotor.getNEO(1));
     
-    
   }
 
 
