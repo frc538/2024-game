@@ -4,9 +4,7 @@
 
 package frc.robot.subsystems;
 
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.revrobotics.CANSparkMax;
@@ -14,9 +12,8 @@ import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 
-
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -37,7 +34,8 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     frontLeft = new CANSparkMax(Constants.CANSparkMaxID.FrontLeftDriveMotor, MotorType.kBrushless);
     frontRight = new CANSparkMax(Constants.CANSparkMaxID.FrontRightDriveMotor, MotorType.kBrushless);
     rearLeft = new CANSparkMax(Constants.CANSparkMaxID.RearLeftDriveMotor, MotorType.kBrushless);
-    rearRight = new CANSparkMax(Constants.CANSparkMaxID.RearRighDriveMotor, MotorType.kBrushless);
+    rearRight = new CANSparkMax(Constants.CANSparkMaxID.RearRightDriveMotor, MotorType.kBrushless);
+
 
     frontLeft.restoreFactoryDefaults();
     frontLeft.setInverted(false);
@@ -57,13 +55,11 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
     driveBase = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
-    float stallTorque = Constants.Misc.stallTorque;
-    float freeSpeed = Constants.Misc.freeSpeed;
     if (RobotBase.isSimulation()) {
-      REVPhysicsSim.getInstance().addSparkMax(frontLeft, stallTorque, freeSpeed);
-    REVPhysicsSim.getInstance().addSparkMax(frontRight, stallTorque, freeSpeed);
-    REVPhysicsSim.getInstance().addSparkMax(rearLeft, stallTorque, freeSpeed);
-    REVPhysicsSim.getInstance().addSparkMax(rearRight, stallTorque, freeSpeed);
+      REVPhysicsSim.getInstance().addSparkMax(frontLeft, DCMotor.getNEO(1));
+    REVPhysicsSim.getInstance().addSparkMax(frontRight, DCMotor.getNEO(1));
+    REVPhysicsSim.getInstance().addSparkMax(rearLeft, DCMotor.getNEO(1));
+    REVPhysicsSim.getInstance().addSparkMax(rearRight, DCMotor.getNEO(1));
 
     }
 
