@@ -34,7 +34,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     frontLeft = new CANSparkMax(Constants.CANSparkMaxID.FrontLeftDriveMotor, MotorType.kBrushless);
     frontRight = new CANSparkMax(Constants.CANSparkMaxID.FrontRightDriveMotor, MotorType.kBrushless);
     rearLeft = new CANSparkMax(Constants.CANSparkMaxID.RearLeftDriveMotor, MotorType.kBrushless);
-    rearRight = new CANSparkMax(Constants.CANSparkMaxID.RearRightDriveMotor, MotorType.kBrushless);
+    rearRight = new CANSparkMax(Constants.CANSparkMaxID.RearRighDriveMotor, MotorType.kBrushless);
 
 
     frontLeft.restoreFactoryDefaults();
