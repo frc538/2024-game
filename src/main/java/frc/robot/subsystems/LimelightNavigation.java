@@ -6,7 +6,7 @@ package frc.robot.subsystems;
 
 import java.util.Map;
 
-import com.ctre.phoenix6.configs.Pigeon2Configuration;
+//import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.revrobotics.RelativeEncoder;
 
@@ -37,7 +37,7 @@ public class LimelightNavigation extends SubsystemBase {
   MecanumDriveOdometry m_DriveOdometry;
 
   private Pigeon2 pigeon2;
-  private Pigeon2Configuration pigeon2Config;
+  //private Pigeon2Configuration pigeon2Config;
 
   int x;
 
@@ -62,7 +62,7 @@ public class LimelightNavigation extends SubsystemBase {
     ));
 
     pigeon2 = new Pigeon2(CanID.Pigeon2);
-    pigeon2Config = new Pigeon2Configuration();
+    //pigeon2Config = new Pigeon2Configuration();
 
 
     x=0;
