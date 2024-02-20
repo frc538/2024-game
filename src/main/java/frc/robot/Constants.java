@@ -49,8 +49,6 @@ public final class Constants {
     public static final int startAngleDegrees = 0;
     public static final int loadAngleDegrees = 90;
     public static final int dropAngleDegrees = 180;
-    public static final float stallTorque = 2.6f;
-    public static final float freeSpeed = 5676;
     public static final double intSpeed = .25;
     
     // Positions of the Drive Wheels relative to the center of the Robot.
