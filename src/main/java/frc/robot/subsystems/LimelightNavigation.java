@@ -67,7 +67,6 @@ public class LimelightNavigation extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-	Lime
 	if ( NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0) != 0 )
 	{
 		double[] robotPose = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_wpired").getDoubleArray(new double[0]);
