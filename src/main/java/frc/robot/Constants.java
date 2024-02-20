@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Translation2d;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean
@@ -52,14 +54,10 @@ public final class Constants {
     	public static final double intSpeed = .25;
 		
     	// Positions of the Drive Wheels relative to the center of the Robot.
-    	public static final double FrontLeftDriveWheel_Position_X = -0.3;
-    	public static final double FrontLeftDriveWheel_Position_Y = 0.3;
-    	public static final double FrontRightDriveWheel_Position_X = 0.3;
-    	public static final double FrontRightDriveWheel_Position_Y = 0.3;
-    	public static final double RearLeftDriveWheel_Position_X = -0.3;
-    	public static final double RearLeftDriveWheel_Position_Y = -0.3;
-    	public static final double RearRightDriveWheel_Position_X = 0.3;
-    	public static final double RearRightDriveWheel_Position_Y = -0.3;
+		public static final Translation2d FrontLeftDriveWheel_Position_Meters	= new Translation2d(-0.3, 0.3);
+		public static final Translation2d FrontRightDriveWheel_Position_Meters	= new Translation2d(0.3, 0.3);
+		public static final Translation2d RearLeftDriveWheel_Position_Meters	= new Translation2d(-0.3, -0.3);
+		public static final Translation2d RearRightDriveWheel_Position_Meters	= new Translation2d(0.3, -0.3);
   	}
 
 	public static class CanID {
