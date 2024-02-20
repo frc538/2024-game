@@ -11,6 +11,7 @@ import com.revrobotics.REVPhysicsSim;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
 
 public class LanuchMechanisumSubsystem extends SubsystemBase {
     CANSparkMax top;
@@ -30,11 +31,13 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
     bottom.follow(top);
     staging.follow(pickup);
 
-
-      REVPhysicsSim.getInstance().addSparkMax(top, DCMotor.getNEO(1));
-      REVPhysicsSim.getInstance().addSparkMax(bottom, DCMotor.getNEO(1));
-      REVPhysicsSim.getInstance().addSparkMax(staging, DCMotor.getNEO(1));
-      REVPhysicsSim.getInstance().addSparkMax(pickup, DCMotor.getNEO(1));
+	if (Robot.isSimulation())
+	{
+		REVPhysicsSim.getInstance().addSparkMax(top, DCMotor.getNEO(1));
+		REVPhysicsSim.getInstance().addSparkMax(bottom, DCMotor.getNEO(1));
+		REVPhysicsSim.getInstance().addSparkMax(staging, DCMotor.getNEO(1));
+		REVPhysicsSim.getInstance().addSparkMax(pickup, DCMotor.getNEO(1));
+	}
   }
 public void launchSpeaker(){
   top.set(Constants.Misc.speekerLaunchSpeed);
