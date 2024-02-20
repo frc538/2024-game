@@ -31,10 +31,10 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
   /** Creates a new MechaniumDrive. */
   public MecanumDriveSubsystem() {
-    frontLeft = new CANSparkMax(Constants.CANSparkMaxID.FrontLeftDriveMotor, MotorType.kBrushless);
-    frontRight = new CANSparkMax(Constants.CANSparkMaxID.FrontRightDriveMotor, MotorType.kBrushless);
-    rearLeft = new CANSparkMax(Constants.CANSparkMaxID.RearLeftDriveMotor, MotorType.kBrushless);
-    rearRight = new CANSparkMax(Constants.CANSparkMaxID.RearRighDriveMotor, MotorType.kBrushless);
+    frontLeft = new CANSparkMax(Constants.CANIDs.FrontLeftDriveMotor, MotorType.kBrushless);
+    frontRight = new CANSparkMax(Constants.CANIDs.FrontRightDriveMotor, MotorType.kBrushless);
+    rearLeft = new CANSparkMax(Constants.CANIDs.RearLeftDriveMotor, MotorType.kBrushless);
+    rearRight = new CANSparkMax(Constants.CANIDs.RearRighDriveMotor, MotorType.kBrushless);
 
 
     frontLeft.restoreFactoryDefaults();
@@ -56,7 +56,8 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     driveBase = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
     if (RobotBase.isSimulation()) {
-      REVPhysicsSim.getInstance().addSparkMax(frontLeft, DCMotor.getNEO(1));
+
+    REVPhysicsSim.getInstance().addSparkMax(frontLeft, DCMotor.getNEO(1));
     REVPhysicsSim.getInstance().addSparkMax(frontRight, DCMotor.getNEO(1));
     REVPhysicsSim.getInstance().addSparkMax(rearLeft, DCMotor.getNEO(1));
     REVPhysicsSim.getInstance().addSparkMax(rearRight, DCMotor.getNEO(1));
@@ -88,21 +89,18 @@ public class MecanumDriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
   // This method will be called once per scheduler run
-    // double frontLeftSpeed = frontLeft.getEncoder().getVelocity();
-    // double frontRightSpeed = frontRight.getEncoder().getVelocity();
-    // double rearLeftSpeed = rearLeft.getEncoder().getVelocity();
-    // double rearRightSpeed = rearRight.getEncoder().getVelocity();
+    double frontLeftSpeed = frontLeft.getEncoder().getVelocity();
+    double frontRightSpeed = frontRight.getEncoder().getVelocity();
+    double rearLeftSpeed = rearLeft.getEncoder().getVelocity();
+    double rearRightSpeed = rearRight.getEncoder().getVelocity();
 
-    // SmartDashboard.putNumber("frontLeftSpeed", frontLeftSpeed);
-    // SmartDashboard.putNumber("frontRightSpeed", frontRightSpeed);
-    // SmartDashboard.putNumber("rearLeftSpeed", rearLeftSpeed);
-    // SmartDashboard.putNumber("rearRightSpeed", rearRightSpeed);
 
-    
-   
+    SmartDashboard.putNumber("frontLeftSpeed", frontLeftSpeed);
+    SmartDashboard.putNumber("frontRightSpeed", frontRightSpeed);
+    SmartDashboard.putNumber("rearLeftSpeed", rearLeftSpeed);
+    SmartDashboard.putNumber("rearRightSpeed", rearRightSpeed);
 
     SmartDashboard.putNumber("X", x);
     x++;
-    System.out.println("periodic");
   }
 }

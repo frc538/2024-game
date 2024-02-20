@@ -30,7 +30,7 @@ public final class Constants {
 		public static final int kDriverControllerPort = 0;
 	}
 
-	public static class CANSparkMaxID {
+	public static class CANIDs {
 		public static final int FrontLeftDriveMotor = 1;
 		public static final int FrontRightDriveMotor = 2;
 		public static final int RearLeftDriveMotor = 3;
