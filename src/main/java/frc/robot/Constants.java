@@ -17,18 +17,29 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static class PWM {
-    public static final int topLaunch = 0;
-    public static final int bottomLaunch = 1;
-    public static final int intake = 2;
-    public static final int trapScoreTurner = 3;
-  }
+	public static class PWM {
+		public static final int topLaunch = 0;
+		public static final int bottomLaunch = 1;
+		public static final int intake = 2;
+		public static final int trapScoreTurner = 3;
+	}
 
-  public static class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
-  }
+	public static class OperatorConstants {
+		public static final int kDriverControllerPort = 0;
+	}
 
-  public static class CANSparkMaxID {
+	public static class CANSparkMaxID {
+		public static final int FrontLeftDriveMotor = 1;
+		public static final int FrontRightDriveMotor = 2;
+		public static final int RearLeftDriveMotor = 3;
+		public static final int RearRighDriveMotor = 4;
+		public static final int topRight = 5;
+		public static final int topLeft = 6;
+		public static final int intake = 7;
+		public static final int staging = 8;
+		public static final int launcherLoad = 9;
+	}
+
 
     public static final int FrontLeftDriveMotor = 1;
     public static final int FrontRightDriveMotor = 2;
@@ -62,7 +73,7 @@ public final class Constants {
     public static final double RearRightDriveWheel_Position_Y = -0.3;
   }
 
-  public static class CanID {
-    public static final int Pigeon2 = 10;
-  }
+	public static class CanID {
+		public static final int Pigeon2 = 10;
+	}
 }

@@ -30,6 +30,7 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
     bottom.follow(top);
     staging.follow(pickup);
 
+
       REVPhysicsSim.getInstance().addSparkMax(top, DCMotor.getNEO(1));
       REVPhysicsSim.getInstance().addSparkMax(bottom, DCMotor.getNEO(1));
       REVPhysicsSim.getInstance().addSparkMax(staging, DCMotor.getNEO(1));
