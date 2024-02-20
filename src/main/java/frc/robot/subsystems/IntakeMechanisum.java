@@ -9,6 +9,7 @@ import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -18,9 +19,11 @@ public class IntakeMechanisum extends SubsystemBase {
   /** Creates a new IntakeMechanisum. */
   public IntakeMechanisum() {
 
-    intake = new CANSparkMax(Constants.CANSparkMaxID.intake, MotorType.kBrushless);
+    intake = new CANSparkMax(Constants.CANIDs.intake, MotorType.kBrushless);
+    if (RobotBase.isSimulation()) {
 
     REVPhysicsSim.getInstance().addSparkMax(intake, DCMotor.getNEO(1));
+    }
     
   }
 

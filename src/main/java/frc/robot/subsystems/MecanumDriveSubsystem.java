@@ -15,6 +15,7 @@ import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -31,10 +32,10 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
   /** Creates a new MechaniumDrive. */
   public MecanumDriveSubsystem() {
-    frontLeft = new CANSparkMax(Constants.CANSparkMaxID.FrontLeftDriveMotor, MotorType.kBrushless);
-    frontRight = new CANSparkMax(Constants.CANSparkMaxID.FrontRightDriveMotor, MotorType.kBrushless);
-    rearLeft = new CANSparkMax(Constants.CANSparkMaxID.RearLeftDriveMotor, MotorType.kBrushless);
-    rearRight = new CANSparkMax(Constants.CANSparkMaxID.RearRightDriveMotor, MotorType.kBrushless);
+    frontLeft = new CANSparkMax(Constants.CANIDs.FrontLeftDriveMotor, MotorType.kBrushless);
+    frontRight = new CANSparkMax(Constants.CANIDs.FrontRightDriveMotor, MotorType.kBrushless);
+    rearLeft = new CANSparkMax(Constants.CANIDs.RearLeftDriveMotor, MotorType.kBrushless);
+    rearRight = new CANSparkMax(Constants.CANIDs.RearRighDriveMotor, MotorType.kBrushless);
 
 
     frontLeft.restoreFactoryDefaults();
@@ -93,6 +94,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     double frontRightSpeed = frontRight.getEncoder().getVelocity();
     double rearLeftSpeed = rearLeft.getEncoder().getVelocity();
     double rearRightSpeed = rearRight.getEncoder().getVelocity();
+
 
     SmartDashboard.putNumber("frontLeftSpeed", frontLeftSpeed);
     SmartDashboard.putNumber("frontRightSpeed", frontRightSpeed);
