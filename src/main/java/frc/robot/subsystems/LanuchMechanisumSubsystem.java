@@ -52,7 +52,11 @@ public void launchAmp(){
 public void initaliseLauncher(){
   pickup.set(Constants.Misc.intSpeed);
   top.set(0);
+}
 
+public void eject(){
+  top.set(Constants.Misc.eject);
+  pickup.set(Constants.Misc.eject);
 }
 
 

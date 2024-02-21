@@ -48,6 +48,7 @@ public final class Constants {
     public static final int loadAngleDegrees = 90;
     public static final int dropAngleDegrees = 180;
     public static final double intSpeed = .25;
+    public static final double eject = -.25;
     
     // Positions of the Drive Wheels relative to the center of the Robot.
     public static final double FrontLeftDriveWheel_Position_X = -0.3;

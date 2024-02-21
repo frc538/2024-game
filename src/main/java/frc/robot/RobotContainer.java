@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-//import frc.robot.Constants.OperatorConstants;
-
 import frc.robot.subsystems.IntakeMechanisum;
 import frc.robot.subsystems.LanuchMechanisumSubsystem;
 import frc.robot.subsystems.MecanumDriveSubsystem;
@@ -13,12 +11,7 @@ import frc.robot.subsystems.TrapScoreSubsystem;
 
 import com.revrobotics.REVPhysicsSim;
 import edu.wpi.first.wpilibj.RobotBase;
-
-//import frc.robot.subsystems.LimelightNavigation;
-
-//import java.util.Map;
-
-//import com.revrobotics.RelativeEncoder;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -38,9 +31,6 @@ public class RobotContainer {
   private final IntakeMechanisum m_Intakemech = new IntakeMechanisum();
   private final TrapScoreSubsystem m_TrapScoreSubsystem = new TrapScoreSubsystem();
 
- // private Map<String, RelativeEncoder> Encoders = m_Drive.GetEncoders();
-
- // private final LimelightNavigation m_Navigation = new LimelightNavigation(Encoders);
       
 
   private final CommandJoystick contrJoystick = new CommandJoystick(0);
@@ -92,6 +82,10 @@ public class RobotContainer {
     contrJoystick.button(5).onFalse(Commands.run(() -> {
       m_TrapScoreSubsystem.dropAngle();
     },m_TrapScoreSubsystem));
+
+    contrJoystick.button(12).whileTrue(Commands.run(() -> {
+     m_LaunchMech.eject(); 
+    },m_LaunchMech));
 
 
     if (RobotBase.isSimulation()) REVPhysicsSim.getInstance().run();
