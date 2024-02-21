@@ -66,7 +66,6 @@ public void eject(){
 
 public void stop(){
   top.set(0);
-  
   pickup.set(0);
 }
 
@@ -75,7 +74,10 @@ public void stop(){
   public void periodic(){
 
     double topspeed = top.get();
-    SmartDashboard.putNumber("laucherSpeed", topspeed);
+    SmartDashboard.putNumber("laucher Speed", topspeed);
+
+    double pickupSpeed = pickup.get();
+    SmartDashboard.putNumber("Pickup Speed", pickupSpeed);
 
     SmartDashboard.putNumber("v", v);
 

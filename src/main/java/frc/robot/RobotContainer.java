@@ -12,6 +12,7 @@ import frc.robot.subsystems.climber;
 
 import com.revrobotics.REVPhysicsSim;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -65,13 +66,12 @@ public class RobotContainer {
   contrJoystick.button(1).onFalse(Commands.startEnd(() -> m_LaunchMech.launchSpeaker(),
   () -> m_LaunchMech.stop(), m_LaunchMech).withTimeout(5));
 
-    contrJoystick.button(2).onFalse(Commands.run(() -> {
-      m_LaunchMech.launchAmp();
-    },m_LaunchMech));
+   
+    contrJoystick.button(2).onFalse(Commands.startEnd(() -> m_LaunchMech.launchAmp(), () ->
+     m_LaunchMech.stop(), m_LaunchMech).withTimeout(5));
 
-    contrJoystick.button(3).whileTrue(Commands.run(() -> {
-      m_Intakemech.intake();
-    },m_Intakemech));
+    contrJoystick.button(3).onTrue(Commands.startEnd(() -> m_LaunchMech.initaliseLauncher(), () ->
+     m_LaunchMech.stop(), m_LaunchMech).withTimeout(5));
 
     contrJoystick.button(3).onFalse(Commands.run(() -> {
       m_TrapScoreSubsystem.startAngle();
@@ -85,9 +85,8 @@ public class RobotContainer {
       m_TrapScoreSubsystem.dropAngle();
     },m_TrapScoreSubsystem));
 
-    contrJoystick.button(12).whileTrue(Commands.run(() -> {
-     m_LaunchMech.eject(); 
-    },m_LaunchMech));
+    contrJoystick.button(12).onTrue(Commands.startEnd(() -> m_LaunchMech.eject(), () ->
+     m_LaunchMech.stop(), m_LaunchMech).withTimeout(5));
 
     contrJoystick.button(6).onTrue(Commands.startEnd(() -> m_Climber.climbUp(),
   () -> m_Climber.stop(), m_Climber).withTimeout(5));
