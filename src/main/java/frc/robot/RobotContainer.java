@@ -8,6 +8,7 @@ import frc.robot.subsystems.IntakeMechanisum;
 import frc.robot.subsystems.LanuchMechanisumSubsystem;
 import frc.robot.subsystems.MecanumDriveSubsystem;
 import frc.robot.subsystems.TrapScoreSubsystem;
+import frc.robot.subsystems.climber;
 
 import com.revrobotics.REVPhysicsSim;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -29,6 +30,7 @@ public class RobotContainer {
   private final LanuchMechanisumSubsystem m_LaunchMech = new LanuchMechanisumSubsystem();
   private final IntakeMechanisum m_Intakemech = new IntakeMechanisum();
   private final TrapScoreSubsystem m_TrapScoreSubsystem = new TrapScoreSubsystem();
+  private final climber m_Climber = new climber();
 
       
 
@@ -86,6 +88,9 @@ public class RobotContainer {
     contrJoystick.button(12).whileTrue(Commands.run(() -> {
      m_LaunchMech.eject(); 
     },m_LaunchMech));
+
+    contrJoystick.button(6).onTrue(Commands.startEnd(() -> m_Climber.climbUp(),
+  () -> m_Climber.stop(), m_Climber).withTimeout(5));
 
 
     if (RobotBase.isSimulation()) REVPhysicsSim.getInstance().run();
