@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.CanID;
+import frc.robot.LimelightHelpers;
 
 public class LimelightNavigation extends SubsystemBase {
   Translation2d m_FrontLeftWheel_Position;
@@ -50,12 +51,8 @@ public class LimelightNavigation extends SubsystemBase {
     m_RearRightWheel_Encoder	= Encoders.get("Rear Right");
 
 
-    m_FrontLeftWheel_Position	= new Translation2d(Constants.Misc.FrontLeftDriveWheel_Position_X, Constants.Misc.FrontLeftDriveWheel_Position_Y);
-    m_FrontRightWheel_Position	= new Translation2d(Constants.Misc.FrontRightDriveWheel_Position_X, Constants.Misc.FrontRightDriveWheel_Position_Y);
-    m_RearLeftWheel_Position	= new Translation2d(Constants.Misc.RearLeftDriveWheel_Position_X, Constants.Misc.RearRightDriveWheel_Position_Y);
-    m_RearRightWheel_Position	= new Translation2d(Constants.Misc.RearRightDriveWheel_Position_X, Constants.Misc.RearRightDriveWheel_Position_Y);
-
-    m_Kinematics	= new MecanumDriveKinematics(m_FrontLeftWheel_Position, m_FrontRightWheel_Position, m_RearLeftWheel_Position, m_RearRightWheel_Position);
+    m_Kinematics	= new MecanumDriveKinematics(Constants.Misc.FrontLeftDriveWheel_Position_Meters, Constants.Misc.FrontRightDriveWheel_Position_Meters,
+		Constants.Misc.RearLeftDriveWheel_Position_Meters, Constants.Misc.RearRightDriveWheel_Position_Meters);
     m_DriveOdometry	= new MecanumDriveOdometry(m_Kinematics, new Rotation2d(0), new MecanumDriveWheelPositions(
     	m_FrontLeftWheel_Endocer.getPosition(), m_FrontRightWheel_Encoder.getPosition(), m_RearLeftWheel_Encoder.getPosition(), m_RearRightWheel_Encoder.getPosition()
     ));
@@ -70,14 +67,14 @@ public class LimelightNavigation extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-	if ( NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0) != 0 )
+	if ( LimelightHelpers.getTV(Constants.Misc.LimelightName) == true )
 	{
-		double[] robotPose = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_wpired").getDoubleArray(new double[0]);
+		Pose2d robotPose2d = LimelightHelpers.getBotPose2d_wpiRed(Constants.Misc.LimelightName);
 		var MecanumDriveWheelPositions = new MecanumDriveWheelPositions(
 			m_FrontLeftWheel_Endocer.getPosition(), m_FrontRightWheel_Encoder.getPosition(), m_RearLeftWheel_Encoder.getPosition(), m_RearRightWheel_Encoder.getPosition()
 		);
 
-		m_DriveOdometry.resetPosition(pigeon2.getRotation2d(), MecanumDriveWheelPositions, new Pose2d(robotPose[0], robotPose[1], pigeon2.getRotation2d()));
+		m_DriveOdometry.resetPosition(pigeon2.getRotation2d(), MecanumDriveWheelPositions, robotPose2d);
 	}
 
 	SmartDashboard.putNumber("Robot X", m_DriveOdometry.getPoseMeters().getX());
