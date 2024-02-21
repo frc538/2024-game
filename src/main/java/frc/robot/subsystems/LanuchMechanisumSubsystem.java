@@ -10,6 +10,7 @@ import com.revrobotics.REVPhysicsSim;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -18,6 +19,8 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
     CANSparkMax bottom;
     CANSparkMax staging;
     CANSparkMax pickup;
+
+    int v;
 
   /** Creates a new LanuchMechanisumSubsystem. */
   public LanuchMechanisumSubsystem() {
@@ -37,6 +40,8 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
       REVPhysicsSim.getInstance().addSparkMax(staging, DCMotor.getNEO(1));
       REVPhysicsSim.getInstance().addSparkMax(pickup, DCMotor.getNEO(1));
     }
+
+    v = 0;
   }
 public void launchSpeaker(){
   top.set(Constants.Misc.speekerLaunchSpeed);
@@ -59,7 +64,20 @@ public void eject(){
   pickup.set(Constants.Misc.eject);
 }
 
+public void stop(){
+  top.set(0);
+  pickup.set(0);
+}
+
 
   @Override
-  public void periodic(){}
+  public void periodic(){
+
+    double topspeed = top.get();
+    SmartDashboard.putNumber("laucherSpeed", topspeed);
+
+    SmartDashboard.putNumber("v", v)
+
+    v++;
+  }
 }

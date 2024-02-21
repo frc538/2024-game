@@ -61,7 +61,6 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     REVPhysicsSim.getInstance().addSparkMax(frontRight, DCMotor.getNEO(1));
     REVPhysicsSim.getInstance().addSparkMax(rearLeft, DCMotor.getNEO(1));
     REVPhysicsSim.getInstance().addSparkMax(rearRight, DCMotor.getNEO(1));
-
     }
 
      x=0;
