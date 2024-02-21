@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -38,18 +39,22 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
 
     frontLeft.restoreFactoryDefaults();
+    frontLeft.setIdleMode(IdleMode.kBrake);
     frontLeft.setInverted(false);
     frontLeft.burnFlash();
 
     rearLeft.restoreFactoryDefaults();
+    rearLeft.setIdleMode(IdleMode.kBrake);
     rearLeft.setInverted(false);
     rearLeft.burnFlash();
 
     frontRight.restoreFactoryDefaults();
+    frontRight.setIdleMode(IdleMode.kBrake);
     frontRight.setInverted(true);
     frontRight.burnFlash();
 
     rearRight.restoreFactoryDefaults();
+    rearRight.setIdleMode(IdleMode.kBrake);
     rearRight.setInverted(true);
     rearRight.burnFlash();
 
@@ -61,7 +66,6 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     REVPhysicsSim.getInstance().addSparkMax(frontRight, DCMotor.getNEO(1));
     REVPhysicsSim.getInstance().addSparkMax(rearLeft, DCMotor.getNEO(1));
     REVPhysicsSim.getInstance().addSparkMax(rearRight, DCMotor.getNEO(1));
-
     }
 
      x=0;
@@ -89,10 +93,10 @@ public class MecanumDriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
   // This method will be called once per scheduler run
-    double frontLeftSpeed = frontLeft.getEncoder().getVelocity();
-    double frontRightSpeed = frontRight.getEncoder().getVelocity();
-    double rearLeftSpeed = rearLeft.getEncoder().getVelocity();
-    double rearRightSpeed = rearRight.getEncoder().getVelocity();
+    double frontLeftSpeed = frontLeft.get();
+    double frontRightSpeed = frontRight.get();
+    double rearLeftSpeed = rearLeft.get();
+    double rearRightSpeed = rearRight.get();
 
 
     SmartDashboard.putNumber("frontLeftSpeed", frontLeftSpeed);

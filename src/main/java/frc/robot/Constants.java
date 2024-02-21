@@ -31,14 +31,14 @@ public final class Constants {
 	}
 
 	public static class CANIDs {
-		public static final int FrontLeftDriveMotor = 1;
-		public static final int FrontRightDriveMotor = 2;
-		public static final int RearLeftDriveMotor = 3;
-		public static final int RearRighDriveMotor = 4;
-		public static final int topRight = 5;
-		public static final int topLeft = 6;
-		public static final int intake = 7;
-		public static final int staging = 8;
+		public static final int FrontLeftDriveMotor = 8;
+		public static final int FrontRightDriveMotor = 1;
+		public static final int RearLeftDriveMotor = 5;
+		public static final int RearRighDriveMotor = 2;
+		public static final int topRight = 3;
+		public static final int topLeft = 4;
+		public static final int intake = 6;
+		public static final int staging = 10;
 		public static final int launcherLoad = 9;
 	}
 
@@ -58,9 +58,11 @@ public final class Constants {
 		public static final Translation2d FrontRightDriveWheel_Position_Meters	= new Translation2d(0.3, 0.3);
 		public static final Translation2d RearLeftDriveWheel_Position_Meters	= new Translation2d(-0.3, -0.3);
 		public static final Translation2d RearRightDriveWheel_Position_Meters	= new Translation2d(0.3, -0.3);
-
-		public static final String LimelightName	= "limelight";
+	
+    	public static final double eject = -.25;
+		public static final String LimelightName = "limelight";
   	}
+
 
 	public static class CanID {
 		public static final int Pigeon2 = 10;
