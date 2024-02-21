@@ -59,10 +59,13 @@ public class RobotContainer {
       m_Drive.drive(forwardSpeed, rightSpeed, rotatinalSpeed);
     }, m_Drive));
 
-    contrJoystick.button(1).onFalse(Commands.run(() -> {
-      m_LaunchMech.launchSpeaker();
-    }, m_LaunchMech));
-
+   /*contrJoystick.button(1).onFalse(Commands.run(() -> {
+   *   m_LaunchMech.launchSpeaker();
+   * }, m_LaunchMech));
+   */
+  contrJoystick.button(1).onFalse(Commands.startEnd(() -> m_LaunchMech.launchSpeaker(),
+  () -> m_LaunchMech.stop(), m_LaunchMech).withTimeout(5));
+  
     contrJoystick.button(2).onFalse(Commands.run(() -> {
       m_LaunchMech.launchAmp();
     },m_LaunchMech));

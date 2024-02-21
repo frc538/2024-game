@@ -77,7 +77,7 @@ public void stop(){
     double topspeed = top.get();
     SmartDashboard.putNumber("laucherSpeed", topspeed);
 
-    SmartDashboard.putNumber("v", v)
+    SmartDashboard.putNumber("v", v);
 
     v++;
   }

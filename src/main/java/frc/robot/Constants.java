@@ -58,29 +58,9 @@ public final class Constants {
 		public static final Translation2d FrontRightDriveWheel_Position_Meters	= new Translation2d(0.3, 0.3);
 		public static final Translation2d RearLeftDriveWheel_Position_Meters	= new Translation2d(-0.3, -0.3);
 		public static final Translation2d RearRightDriveWheel_Position_Meters	= new Translation2d(0.3, -0.3);
-
-
-  public static class Misc {
-    public static final double intakeSpeed = 0.5;
-    public static final double speekerLaunchSpeed = 1;
-    public static final double ampLaunchSpeed = 0.5;
-    public static final int startAngleDegrees = 0;
-    public static final int loadAngleDegrees = 90;
-    public static final int dropAngleDegrees = 180;
-    public static final double intSpeed = .25;
-    public static final double eject = -.25;
-    
-    // Positions of the Drive Wheels relative to the center of the Robot.
-    public static final double FrontLeftDriveWheel_Position_X = -0.3;
-    public static final double FrontLeftDriveWheel_Position_Y = 0.3;
-    public static final double FrontRightDriveWheel_Position_X = 0.3;
-    public static final double FrontRightDriveWheel_Position_Y = 0.3;
-    public static final double RearLeftDriveWheel_Position_X = -0.3;
-    public static final double RearLeftDriveWheel_Position_Y = -0.3;
-    public static final double RearRightDriveWheel_Position_X = 0.3;
-    public static final double RearRightDriveWheel_Position_Y = -0.3;
-
-		public static final String LimelightName	= "limelight";
+	
+    	public static final double eject = -.25;
+		public static final String LimelightName = "limelight";
   	}
 
 
