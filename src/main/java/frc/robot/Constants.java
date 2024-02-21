@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Translation2d;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean
@@ -37,8 +39,26 @@ public final class Constants {
 		public static final int topLeft = 6;
 		public static final int intake = 7;
 		public static final int staging = 8;
-		public static final int launcherLoad = 9;    
-  }
+		public static final int launcherLoad = 9;
+	}
+
+  	public static class Misc {
+    	public static final double intakeSpeed = 0.5;
+    	public static final double speekerLaunchSpeed = 1;
+    	public static final double ampLaunchSpeed = 0.5;
+    	public static final int startAngleDegrees = 0;
+    	public static final int loadAngleDegrees = 90;
+    	public static final int dropAngleDegrees = 180;
+    	public static final float stallTorque = 2.6f;
+    	public static final float freeSpeed = 5676;
+    	public static final double intSpeed = .25;
+		
+    	// Positions of the Drive Wheels relative to the center of the Robot.
+		public static final Translation2d FrontLeftDriveWheel_Position_Meters	= new Translation2d(-0.3, 0.3);
+		public static final Translation2d FrontRightDriveWheel_Position_Meters	= new Translation2d(0.3, 0.3);
+		public static final Translation2d RearLeftDriveWheel_Position_Meters	= new Translation2d(-0.3, -0.3);
+		public static final Translation2d RearRightDriveWheel_Position_Meters	= new Translation2d(0.3, -0.3);
+
 
   public static class Misc {
     public static final double intakeSpeed = 0.5;
@@ -59,7 +79,10 @@ public final class Constants {
     public static final double RearLeftDriveWheel_Position_Y = -0.3;
     public static final double RearRightDriveWheel_Position_X = 0.3;
     public static final double RearRightDriveWheel_Position_Y = -0.3;
-  }
+
+		public static final String LimelightName	= "limelight";
+  	}
+
 
 	public static class CanID {
 		public static final int Pigeon2 = 10;
