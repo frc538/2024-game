@@ -67,6 +67,7 @@ public void eject(){
 
 public void stop(){
   top.set(0);
+  
   pickup.set(0);
 }
 
