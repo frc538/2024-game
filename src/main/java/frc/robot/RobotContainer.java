@@ -35,8 +35,8 @@ public class RobotContainer {
   private final MecanumDriveSubsystem m_Drive = new MecanumDriveSubsystem();
 
   private final LanuchMechanisumSubsystem m_LaunchMech = new LanuchMechanisumSubsystem();
-  private final IntakeMechanisum m_Intakemech = new IntakeMechanisum();
-  private final TrapScoreSubsystem m_TrapScoreSubsystem = new TrapScoreSubsystem();
+  // private final IntakeMechanisum m_Intakemech = new IntakeMechanisum();
+  // private final TrapScoreSubsystem m_TrapScoreSubsystem = new TrapScoreSubsystem();
 
  // private Map<String, RelativeEncoder> Encoders = m_Drive.GetEncoders();
 
@@ -77,21 +77,21 @@ public class RobotContainer {
       m_LaunchMech.launchAmp();
     },m_LaunchMech));
 
-    contrJoystick.button(3).whileTrue(Commands.run(() -> {
-      m_Intakemech.intake();
-    },m_Intakemech));
+    //  contrJoystick.button(3).whileTrue(Commands.run(() -> {
+    //    m_Intakemech.intake();
+    //  },m_Intakemech));
 
-    contrJoystick.button(3).onFalse(Commands.run(() -> {
-      m_TrapScoreSubsystem.startAngle();
-    },m_TrapScoreSubsystem));
+    //  contrJoystick.button(3).onFalse(Commands.run(() -> {
+    //    m_TrapScoreSubsystem.startAngle();
+    //  },m_TrapScoreSubsystem));
 
-    contrJoystick.button(4).onFalse(Commands.run(() -> {
-      m_TrapScoreSubsystem.loadAngle();
-    },m_TrapScoreSubsystem));
+    //  contrJoystick.button(4).onFalse(Commands.run(() -> {
+    //    m_TrapScoreSubsystem.loadAngle();
+    //  },m_TrapScoreSubsystem));
 
-    contrJoystick.button(5).onFalse(Commands.run(() -> {
-      m_TrapScoreSubsystem.dropAngle();
-    },m_TrapScoreSubsystem));
+    //  contrJoystick.button(5).onFalse(Commands.run(() -> {
+    //    m_TrapScoreSubsystem.dropAngle();
+    //  },m_TrapScoreSubsystem));
 
 
     if (RobotBase.isSimulation()) REVPhysicsSim.getInstance().run();
