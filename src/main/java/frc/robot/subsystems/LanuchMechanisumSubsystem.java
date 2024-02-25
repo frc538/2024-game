@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Robot;
 
 public class LanuchMechanisumSubsystem extends SubsystemBase {
     CANSparkMax top;
@@ -67,7 +66,6 @@ public void eject(){
 
 public void stop(){
   top.set(0);
-  
   pickup.set(0);
 }
 
@@ -76,7 +74,10 @@ public void stop(){
   public void periodic(){
 
     double topspeed = top.get();
-    SmartDashboard.putNumber("laucherSpeed", topspeed);
+    SmartDashboard.putNumber("laucher Speed", topspeed);
+
+    double pickupSpeed = pickup.get();
+    SmartDashboard.putNumber("Pickup Speed", pickupSpeed);
 
     SmartDashboard.putNumber("v", v);
 
