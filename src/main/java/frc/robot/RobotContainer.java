@@ -34,7 +34,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final MecanumDriveSubsystem m_Drive = new MecanumDriveSubsystem();
 
-  private final LanuchMechanisumSubsystem m_LaunchMech = new LanuchMechanisumSubsystem();
+ // private final LanuchMechanisumSubsystem m_LaunchMech = new LanuchMechanisumSubsystem();
   // private final IntakeMechanisum m_Intakemech = new IntakeMechanisum();
   // private final TrapScoreSubsystem m_TrapScoreSubsystem = new TrapScoreSubsystem();
 
@@ -64,18 +64,19 @@ public class RobotContainer {
     
     m_Drive.setDefaultCommand(Commands.run(() -> {
       double forwardSpeed = -contrJoystick.getY();
-      double rightSpeed = -contrJoystick.getX();
-      double rotatinalSpeed = -contrJoystick.getZ();
-      m_Drive.drive(forwardSpeed, rightSpeed, rotatinalSpeed);
+      double rightSpeed = contrJoystick.getX();
+      double rotatinalSpeed = contrJoystick.getZ();
+      double slider = contrJoystick.getRawAxis(3);
+      m_Drive.drive(forwardSpeed, rightSpeed, rotatinalSpeed, slider);
     }, m_Drive));
 
-    contrJoystick.button(1).onFalse(Commands.run(() -> {
-      m_LaunchMech.launchSpeaker();
-    }, m_LaunchMech));
+    //contrJoystick.button(1).onFalse(Commands.run(() -> {
+    //  m_LaunchMech.launchSpeaker();
+    //}, m_LaunchMech));
 
-    contrJoystick.button(2).onFalse(Commands.run(() -> {
-      m_LaunchMech.launchAmp();
-    },m_LaunchMech));
+    //contrJoystick.button(2).onFalse(Commands.run(() -> {
+    //  m_LaunchMech.launchAmp();
+    //},m_LaunchMech));
 
     //  contrJoystick.button(3).whileTrue(Commands.run(() -> {
     //    m_Intakemech.intake();

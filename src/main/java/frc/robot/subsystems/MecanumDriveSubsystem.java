@@ -24,6 +24,8 @@ public class MecanumDriveSubsystem extends SubsystemBase {
   CANSparkMax frontRight;
   CANSparkMax rearLeft;
   CANSparkMax rearRight;
+  private double driveGain = 0.1;
+  
 
   MecanumDrive driveBase;
   int x;
@@ -79,12 +81,12 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     return Encoders;
   }
 
-  public void drive(double forwardSpeed, double rightSpeed, double rotatinalSpeed) {
-    driveBase.driveCartesian(forwardSpeed, rightSpeed, rotatinalSpeed);
+  public void drive(double forwardSpeed, double rightSpeed, double rotatinalSpeed, double sliderValue) {
+    double driveGain = 0.45*sliderValue+.55;
+    driveBase.driveCartesian(forwardSpeed*driveGain, rightSpeed*driveGain, rotatinalSpeed*driveGain);
 
-    SmartDashboard.putNumber("y", y);
-    y++;
   }
+
 
   @Override
   public void periodic() {

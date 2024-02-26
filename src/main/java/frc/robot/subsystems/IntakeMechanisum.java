@@ -22,7 +22,7 @@ public class IntakeMechanisum extends SubsystemBase {
     intake = new CANSparkMax(Constants.CANIDs.intake, MotorType.kBrushless);
     if (RobotBase.isSimulation()) {
 
-    REVPhysicsSim.getInstance().addSparkMax(intake, DCMotor.getNEO(1));
+  //  REVPhysicsSim.getInstance().addSparkMax(intake, DCMotor.getNEO(1));
     }
     
   }

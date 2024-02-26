@@ -33,10 +33,10 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
     staging.follow(pickup);
 
     if (RobotBase.isSimulation()) {
-      REVPhysicsSim.getInstance().addSparkMax(top, DCMotor.getNEO(1));
-      REVPhysicsSim.getInstance().addSparkMax(bottom, DCMotor.getNEO(1));
-      REVPhysicsSim.getInstance().addSparkMax(staging, DCMotor.getNEO(1));
-      REVPhysicsSim.getInstance().addSparkMax(pickup, DCMotor.getNEO(1));
+  //    REVPhysicsSim.getInstance().addSparkMax(top, DCMotor.getNEO(1));
+  //    REVPhysicsSim.getInstance().addSparkMax(bottom, DCMotor.getNEO(1));
+  //    REVPhysicsSim.getInstance().addSparkMax(staging, DCMotor.getNEO(1));
+  //    REVPhysicsSim.getInstance().addSparkMax(pickup, DCMotor.getNEO(1));
     }
   }
 public void launchSpeaker(){
