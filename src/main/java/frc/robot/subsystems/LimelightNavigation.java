@@ -20,6 +20,7 @@ import edu.wpi.first.math.kinematics.MecanumDriveOdometry;
 import edu.wpi.first.math.kinematics.MecanumDriveWheelPositions;
 import edu.wpi.first.math.kinematics.WheelPositions;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -96,7 +97,8 @@ public class LimelightNavigation extends SubsystemBase {
 
       if (LimelightHelpers.getTV(Constants.Misc.LimelightName) == true) {
         Pose2d robotPose2d = LimelightHelpers.getBotPose2d_wpiRed(Constants.Misc.LimelightName);
-        m_DrivePoseEstimator.addVisionMeasurement(robotPose2d, LimelightHelpers.);
+        m_DrivePoseEstimator.addVisionMeasurement(robotPose2d, Timer.getFPGATimestamp());
+      }
     }
     SmartDashboard.putNumber("Robot X", m_DrivePoseEstimator.getEstimatedPosition().getX());
     SmartDashboard.putNumber("Robot Y", m_DrivePoseEstimator.getEstimatedPosition().getY());

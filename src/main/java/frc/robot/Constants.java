@@ -63,6 +63,6 @@ public final class Constants {
   	}
 
 	public static class CanID {
-		public static final int Pigeon2 = 10;
+		public static final int Pigeon2 = 1;
 	}
 }
