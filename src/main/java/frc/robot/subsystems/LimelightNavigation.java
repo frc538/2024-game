@@ -93,6 +93,10 @@ public class LimelightNavigation extends SubsystemBase {
           m_FrontRightWheel_Encoder.getPosition(), m_RearLeftWheel_Encoder.getPosition(),
           m_RearRightWheel_Encoder.getPosition());
       m_DrivePoseEstimator.update(m_pigeon2.getRotation2d(), positions);
+
+      if (LimelightHelpers.getTV(Constants.Misc.LimelightName) == true) {
+        Pose2d robotPose2d = LimelightHelpers.getBotPose2d_wpiRed(Constants.Misc.LimelightName);
+        m_DrivePoseEstimator.addVisionMeasurement(robotPose2d, LimelightHelpers.);
     }
     SmartDashboard.putNumber("Robot X", m_DrivePoseEstimator.getEstimatedPosition().getX());
     SmartDashboard.putNumber("Robot Y", m_DrivePoseEstimator.getEstimatedPosition().getY());
