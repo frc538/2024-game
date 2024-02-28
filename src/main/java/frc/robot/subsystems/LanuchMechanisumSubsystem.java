@@ -69,6 +69,11 @@ public void stop(){
   pickup.set(0);
 }
 
+public void load(){
+  top.set(.5);
+  pickup.set(0);
+}
+
 
   @Override
   public void periodic(){

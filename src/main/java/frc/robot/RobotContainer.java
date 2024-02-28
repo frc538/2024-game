@@ -4,7 +4,7 @@
 
 package frc.robot;
 
-import frc.robot.subsystems.IntakeMechanisum;
+
 import frc.robot.subsystems.LanuchMechanisumSubsystem;
 import frc.robot.subsystems.MecanumDriveSubsystem;
 import frc.robot.subsystems.TrapScoreSubsystem;
@@ -12,7 +12,6 @@ import frc.robot.subsystems.climber;
 
 import com.revrobotics.REVPhysicsSim;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -29,7 +28,6 @@ public class RobotContainer {
   private final MecanumDriveSubsystem m_Drive = new MecanumDriveSubsystem();
 
   private final LanuchMechanisumSubsystem m_LaunchMech = new LanuchMechanisumSubsystem();
-  private final IntakeMechanisum m_Intakemech = new IntakeMechanisum();
   private final TrapScoreSubsystem m_TrapScoreSubsystem = new TrapScoreSubsystem();
   private final climber m_Climber = new climber();
 
@@ -73,23 +71,26 @@ public class RobotContainer {
     contrJoystick.button(3).onTrue(Commands.startEnd(() -> m_LaunchMech.initaliseLauncher(), () ->
      m_LaunchMech.stop(), m_LaunchMech).withTimeout(5));
 
-    contrJoystick.button(3).onFalse(Commands.run(() -> {
+    contrJoystick.button(4).onFalse(Commands.run(() -> {
       m_TrapScoreSubsystem.startAngle();
     },m_TrapScoreSubsystem));
 
-    contrJoystick.button(4).onFalse(Commands.run(() -> {
+    contrJoystick.button(5).onFalse(Commands.run(() -> {
       m_TrapScoreSubsystem.loadAngle();
     },m_TrapScoreSubsystem));
 
-    contrJoystick.button(5).onFalse(Commands.run(() -> {
+    contrJoystick.button(6).onFalse(Commands.run(() -> {
       m_TrapScoreSubsystem.dropAngle();
     },m_TrapScoreSubsystem));
 
     contrJoystick.button(12).onTrue(Commands.startEnd(() -> m_LaunchMech.eject(), () ->
      m_LaunchMech.stop(), m_LaunchMech).withTimeout(5));
 
-    contrJoystick.button(6).onTrue(Commands.startEnd(() -> m_Climber.climbUp(),
+    contrJoystick.button(7).onTrue(Commands.startEnd(() -> m_Climber.climbUp(),
   () -> m_Climber.stop(), m_Climber).withTimeout(5));
+
+    contrJoystick.button(11).onTrue(Commands.startEnd(() -> m_LaunchMech.load(), () -> 
+    m_LaunchMech.stop(), m_LaunchMech).withTimeout(2.5));
 
 
     if (RobotBase.isSimulation()) REVPhysicsSim.getInstance().run();
