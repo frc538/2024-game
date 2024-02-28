@@ -40,8 +40,12 @@ public final class Constants {
 		public static final int intake = 6;
 		public static final int staging = 10;
 		public static final int launcherLoad = 9;
+		public static final int Pigeon2 = 10;
 		public static final int sliderA = 11;
 		public static final int sliderB = 12;
+		public static final int angleA = 13;
+		public static final int angleB = 14;
+
 	}
 
   	public static class Misc {
@@ -65,10 +69,8 @@ public final class Constants {
 		public static final String LimelightName = "limelight";
 
 		public static final double climbSpeed = .25;
+
+		public static final double angleUpSpeed = .25;
+		public static final double angleDownSpeed = -.25;
   	}
-
-
-	public static class CanID {
-		public static final int Pigeon2 = 10;
-	}
 }
