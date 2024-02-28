@@ -18,7 +18,7 @@ import edu.wpi.first.math.kinematics.MecanumDriveWheelPositions;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.CanID;
+import frc.robot.Constants.CANIDs;
 import frc.robot.LimelightHelpers;
 
 public class LimelightNavigation extends SubsystemBase {
@@ -56,7 +56,7 @@ public class LimelightNavigation extends SubsystemBase {
     	m_FrontLeftWheel_Endocer.getPosition(), m_FrontRightWheel_Encoder.getPosition(), m_RearLeftWheel_Encoder.getPosition(), m_RearRightWheel_Encoder.getPosition()
     ));
 
-    pigeon2 = new Pigeon2(CanID.Pigeon2);
+    pigeon2 = new Pigeon2(CANIDs.Pigeon2);
     //pigeon2Config = new Pigeon2Configuration();
 
 
