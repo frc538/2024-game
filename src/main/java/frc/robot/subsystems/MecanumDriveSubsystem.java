@@ -87,6 +87,38 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
   }
 
+  public void alignRedAmp() {
+    double x = SmartDashboard.getNumber("Robot X", Double.NaN);
+    double y = SmartDashboard.getNumber("Robot Y", Double.NaN);
+    double left = 0;
+    double forward = 0;
+    double desiredx = 16.52;
+    double desiredy = 1.40;
+
+    double ydisplacement = y-desiredy;
+    double xdisplacement = x-desiredx;
+    if (Double.isNaN(x)) {
+      left = 0;
+    } else if(Math.abs(xdisplacement)<0.06) {
+      left = 0;
+    } else if(xdisplacement<0) {
+      left = 0.1;
+    }else {
+      left = -0.1;
+    }
+    
+    if (Double.isNaN(y)) {
+      forward = 0;
+    } else if(Math.abs(ydisplacement)<0.06) {
+      forward = 0;
+    } else if(ydisplacement<0) {
+      forward = 0.1;
+    } else {
+      forward = -0.1;
+    }
+
+    drive(forward, left, 0, 0);
+  }
 
   @Override
   public void periodic() {

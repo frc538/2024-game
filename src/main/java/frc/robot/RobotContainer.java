@@ -76,6 +76,8 @@ public class RobotContainer {
     }, m_Drive));
 
     contrJoystick.button(3).onTrue(Commands.run(()-> m_Navigation.resetPosition(), m_Navigation));
+    contrJoystick.button(5).whileTrue(Commands.run(()-> m_Drive.alignRedAmp(),m_Drive));
+
 
     //contrJoystick.button(1).onFalse(Commands.run(() -> {
     //  m_LaunchMech.launchSpeaker();
