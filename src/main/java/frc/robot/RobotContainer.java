@@ -4,7 +4,7 @@
 
 package frc.robot;
 
-import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.LeftClimberSubsystem;
 
 //import frc.robot.Constants.OperatorConstants;
 
@@ -12,6 +12,7 @@ import frc.robot.subsystems.IntakeMechanisum;
 import frc.robot.subsystems.LanuchMechanisumSubsystem;
 import frc.robot.subsystems.LimelightNavigation;
 import frc.robot.subsystems.MecanumDriveSubsystem;
+import frc.robot.subsystems.RightClimberSubsystem;
 import frc.robot.subsystems.TrapScoreSubsystem;
 
 import java.util.Map;
@@ -45,7 +46,8 @@ public class RobotContainer {
   private final MecanumDriveSubsystem m_Drive = new MecanumDriveSubsystem();
 
   private final LanuchMechanisumSubsystem m_LaunchMech = new LanuchMechanisumSubsystem();
-  private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
+  private final LeftClimberSubsystem mLeftClimber = new LeftClimberSubsystem();
+  private final RightClimberSubsystem mRightClimber = new RightClimberSubsystem();
   // private final IntakeMechanisum m_Intakemech = new IntakeMechanisum();
   // private final TrapScoreSubsystem m_TrapScoreSubsystem = new
   // TrapScoreSubsystem();
@@ -116,15 +118,15 @@ public class RobotContainer {
     // m_TrapScoreSubsystem.dropAngle();
     // },m_TrapScoreSubsystem));
 
-    mechanismJoystick.axisGreaterThan(1, 0.5).whileTrue(Commands.startEnd(() -> m_ClimberSubsystem.leftLower(),
-        () -> m_ClimberSubsystem.bothStop(), m_ClimberSubsystem));
-    mechanismJoystick.axisLessThan(1, -0.5).whileTrue(Commands.startEnd(() -> m_ClimberSubsystem.leftRaise(),
-        () -> m_ClimberSubsystem.bothStop(), m_ClimberSubsystem));
+    mechanismJoystick.axisGreaterThan(1, 0.5).whileTrue(Commands.startEnd(() -> mLeftClimber.lower(),
+        () -> mLeftClimber.stop(), mLeftClimber));
+    mechanismJoystick.axisLessThan(1, -0.5).whileTrue(Commands.startEnd(() -> mLeftClimber.raise(),
+        () -> mLeftClimber.stop(), mLeftClimber));
 
-    mechanismJoystick.axisGreaterThan(5, 0.5).whileTrue(Commands.startEnd(() -> m_ClimberSubsystem.rightLower(),
-        () -> m_ClimberSubsystem.bothStop(), m_ClimberSubsystem));
-    mechanismJoystick.axisLessThan(5, -0.5).whileTrue(Commands.startEnd(() -> m_ClimberSubsystem.rightRaise(),
-        () -> m_ClimberSubsystem.bothStop(), m_ClimberSubsystem));
+    mechanismJoystick.axisGreaterThan(5, 0.5).whileTrue(Commands.startEnd(() -> mRightClimber.lower(),
+        () -> mRightClimber.stop(), mRightClimber));
+    mechanismJoystick.axisLessThan(5, -0.5).whileTrue(Commands.startEnd(() -> mRightClimber.raise(),
+        () -> mRightClimber.stop(), mRightClimber));
 
     mechanismJoystick.axisGreaterThan(3, 0.5)
         .whileTrue(Commands.startEnd(() -> m_LaunchMech.intake(), () -> m_LaunchMech.stop(), m_LaunchMech));
