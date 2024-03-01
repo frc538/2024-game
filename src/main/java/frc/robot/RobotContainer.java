@@ -32,45 +32,55 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in
+ * the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of
+ * the robot (including
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final MecanumDriveSubsystem m_Drive = new MecanumDriveSubsystem();
 
- private final LanuchMechanisumSubsystem m_LaunchMech = new LanuchMechanisumSubsystem();
- private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
+  private final LanuchMechanisumSubsystem m_LaunchMech = new LanuchMechanisumSubsystem();
+  private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
   // private final IntakeMechanisum m_Intakemech = new IntakeMechanisum();
-  // private final TrapScoreSubsystem m_TrapScoreSubsystem = new TrapScoreSubsystem();
+  // private final TrapScoreSubsystem m_TrapScoreSubsystem = new
+  // TrapScoreSubsystem();
 
   private Map<String, RelativeEncoder> Encoders = m_Drive.GetEncoders();
 
   private final LimelightNavigation m_Navigation = new LimelightNavigation(Encoders);
-      
 
   private final CommandJoystick driveJoystick = new CommandJoystick(0);
   private final CommandJoystick mechanismJoystick = new CommandJoystick(1);
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
   }
 
   /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
+   * Use this method to define your trigger->command mappings. Triggers can be
+   * created via the
+   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
+   * an arbitrary
    * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
+   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
+   * {@link
+   * CommandXboxController
+   * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
+   * PS4} controllers or
+   * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
   private void configureBindings() {
-    
+
     m_Drive.setDefaultCommand(Commands.run(() -> {
       double forwardSpeed = -driveJoystick.getY();
       double rightSpeed = driveJoystick.getX();
@@ -79,45 +89,55 @@ public class RobotContainer {
       m_Drive.drive(forwardSpeed, rightSpeed, rotatinalSpeed, slider);
     }, m_Drive));
 
-    driveJoystick.button(3).onTrue(Commands.run(()-> m_Navigation.resetPosition(), m_Navigation));
-    driveJoystick.button(5).whileTrue(Commands.run(()-> m_Drive.alignRedAmp(),m_Drive));
+    driveJoystick.button(3).onTrue(Commands.run(() -> m_Navigation.resetPosition(), m_Navigation));
+    driveJoystick.button(5).whileTrue(Commands.run(() -> m_Drive.alignRedAmp(), m_Drive));
 
+    // contrJoystick.button(1).onFalse(Commands.run(() -> {
+    // m_LaunchMech.launchSpeaker();
+    // }, m_LaunchMech));
 
-    //contrJoystick.button(1).onFalse(Commands.run(() -> {
-    //  m_LaunchMech.launchSpeaker();
-    //}, m_LaunchMech));
+    // contrJoystick.button(2).onFalse(Commands.run(() -> {
+    // m_LaunchMech.launchAmp();
+    // },m_LaunchMech));
 
-    //contrJoystick.button(2).onFalse(Commands.run(() -> {
-    //  m_LaunchMech.launchAmp();
-    //},m_LaunchMech));
+    // contrJoystick.button(3).whileTrue(Commands.run(() -> {
+    // m_Intakemech.intake();
+    // },m_Intakemech));
 
-    //  contrJoystick.button(3).whileTrue(Commands.run(() -> {
-    //    m_Intakemech.intake();
-    //  },m_Intakemech));
+    // contrJoystick.button(3).onFalse(Commands.run(() -> {
+    // m_TrapScoreSubsystem.startAngle();
+    // },m_TrapScoreSubsystem));
 
-    //  contrJoystick.button(3).onFalse(Commands.run(() -> {
-    //    m_TrapScoreSubsystem.startAngle();
-    //  },m_TrapScoreSubsystem));
+    // contrJoystick.button(4).onFalse(Commands.run(() -> {
+    // m_TrapScoreSubsystem.loadAngle();
+    // },m_TrapScoreSubsystem));
 
-    //  contrJoystick.button(4).onFalse(Commands.run(() -> {
-    //    m_TrapScoreSubsystem.loadAngle();
-    //  },m_TrapScoreSubsystem));
+    // contrJoystick.button(5).onFalse(Commands.run(() -> {
+    // m_TrapScoreSubsystem.dropAngle();
+    // },m_TrapScoreSubsystem));
 
-    //  contrJoystick.button(5).onFalse(Commands.run(() -> {
-    //    m_TrapScoreSubsystem.dropAngle();
-    //  },m_TrapScoreSubsystem));
+    mechanismJoystick.axisGreaterThan(1, 0.5).whileTrue(Commands.startEnd(() -> m_ClimberSubsystem.leftLower(),
+        () -> m_ClimberSubsystem.bothStop(), m_ClimberSubsystem));
+    mechanismJoystick.axisLessThan(1, -0.5).whileTrue(Commands.startEnd(() -> m_ClimberSubsystem.leftRaise(),
+        () -> m_ClimberSubsystem.bothStop(), m_ClimberSubsystem));
 
+    mechanismJoystick.axisGreaterThan(5, 0.5).whileTrue(Commands.startEnd(() -> m_ClimberSubsystem.rightLower(),
+        () -> m_ClimberSubsystem.bothStop(), m_ClimberSubsystem));
+    mechanismJoystick.axisLessThan(5, -0.5).whileTrue(Commands.startEnd(() -> m_ClimberSubsystem.rightRaise(),
+        () -> m_ClimberSubsystem.bothStop(), m_ClimberSubsystem));
+
+    mechanismJoystick.axisGreaterThan(3, 0.5)
+        .whileTrue(Commands.startEnd(() -> m_LaunchMech.intake(), () -> m_LaunchMech.stop(), m_LaunchMech));
+    // mechanismJoystick.axisGreaterThan(2, 0.5).whileTrue(Commands.run(() ->
+    // m_LaunchMech.spinUp(), m_LaunchMech));
     mechanismJoystick.button(5).onTrue(
-      Commands.startEnd(() -> m_ClimberSubsystem.leftRaise(), () -> m_ClimberSubsystem.bothStop(), m_ClimberSubsystem)
-    );
+        Commands.run(() -> m_LaunchMech.spinUp(), m_LaunchMech).withTimeout(2)
+            .andThen(Commands.run(() -> m_LaunchMech.shoot(), m_LaunchMech).withTimeout(0.5))
+            .andThen(Commands.run(() -> m_LaunchMech.stop(), m_LaunchMech)));
 
-    mechanismJoystick.button(6).onTrue(
-      Commands.startEnd(() -> m_ClimberSubsystem.leftLower(), () -> m_ClimberSubsystem.bothStop(), m_ClimberSubsystem)
-    );
+    if (RobotBase.isSimulation())
+      REVPhysicsSim.getInstance().run();
 
-
-    if (RobotBase.isSimulation()) REVPhysicsSim.getInstance().run();
-   
   }
 
 }

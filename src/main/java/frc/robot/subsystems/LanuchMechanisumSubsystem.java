@@ -52,8 +52,8 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
   }
 
   public void intake() {
-    top.set(-1);
-    bottom.set(-1);
+    top.set(-0.2);
+    bottom.set(-0.2);
   }
 
   public void stop() {
