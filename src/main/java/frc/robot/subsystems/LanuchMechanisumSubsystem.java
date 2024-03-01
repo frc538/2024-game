@@ -15,48 +15,58 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class LanuchMechanisumSubsystem extends SubsystemBase {
-    CANSparkMax top;
-    CANSparkMax bottom;
-    CANSparkMax staging;
-    CANSparkMax pickup;
+  CANSparkMax top;
+  CANSparkMax bottom;
 
   /** Creates a new LanuchMechanisumSubsystem. */
   public LanuchMechanisumSubsystem() {
 
-    top = new CANSparkMax(Constants.CANIDs.topRight, MotorType.kBrushless);
-    bottom = new CANSparkMax(Constants.CANIDs.topLeft, MotorType.kBrushless);
-    staging = new CANSparkMax(Constants.CANIDs.staging, MotorType.kBrushless);
-    pickup = new CANSparkMax(Constants.CANIDs.launcherLoad, MotorType.kBrushless);
-  
-
-    bottom.follow(top);
-    staging.follow(pickup);
+    top = new CANSparkMax(Constants.CANIDs.topShoot, MotorType.kBrushless);
+    bottom = new CANSparkMax(Constants.CANIDs.bottomShoot, MotorType.kBrushless);
 
     if (RobotBase.isSimulation()) {
-  //    REVPhysicsSim.getInstance().addSparkMax(top, DCMotor.getNEO(1));
-  //    REVPhysicsSim.getInstance().addSparkMax(bottom, DCMotor.getNEO(1));
-  //    REVPhysicsSim.getInstance().addSparkMax(staging, DCMotor.getNEO(1));
-  //    REVPhysicsSim.getInstance().addSparkMax(pickup, DCMotor.getNEO(1));
+      // REVPhysicsSim.getInstance().addSparkMax(top, DCMotor.getNEO(1));
+      // REVPhysicsSim.getInstance().addSparkMax(bottom, DCMotor.getNEO(1));
+      // REVPhysicsSim.getInstance().addSparkMax(staging, DCMotor.getNEO(1));
+      // REVPhysicsSim.getInstance().addSparkMax(pickup, DCMotor.getNEO(1));
     }
   }
-public void launchSpeaker(){
-  top.set(Constants.Misc.speekerLaunchSpeed);
-  pickup.set(Constants.Misc.speekerLaunchSpeed);
-}
 
-public void launchAmp(){
-  //launch into the amp
-  top.set(Constants.Misc.ampLaunchSpeed);
-  pickup.set(0);
-}
+  private void launchSpeaker() {
+    top.set(Constants.Misc.speekerLaunchSpeed);
+  }
 
-public void initaliseLauncher(){
-  pickup.set(Constants.Misc.intSpeed);
-  top.set(0);
+  private void launchAmp() {
+    // launch into the amp
+    top.set(Constants.Misc.ampLaunchSpeed);
+  }
 
-}
+  private void initaliseLauncher() {
+    top.set(0);
 
+  }
+
+  public void shoot() {
+    top.set(1);
+    bottom.set(1);
+  }
+
+  public void intake() {
+    top.set(-1);
+    bottom.set(-1);
+  }
+
+  public void stop() {
+    top.set(0);
+    bottom.set(0);
+  }
+
+  public void spinUp() {
+    top.set(1);
+    bottom.set(0);
+  }
 
   @Override
-  public void periodic(){}
+  public void periodic() {
+  }
 }

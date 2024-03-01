@@ -35,8 +35,13 @@ public final class Constants {
 		public static final int FrontRightDriveMotor = 1;
 		public static final int RearLeftDriveMotor = 5;
 		public static final int RearRighDriveMotor = 2;
-		public static final int topRight = 5;
-		public static final int topLeft = 6;
+
+		public static final int topShoot = 4;
+		public static final int bottomShoot = 6;
+
+		public static final int leftClimber = 3;
+		public static final int rightClimber = 7;
+
 		public static final int intake = 7;
 		public static final int staging = 8;
 		public static final int launcherLoad = 9;

@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import frc.robot.subsystems.ClimberSubsystem;
+
 //import frc.robot.Constants.OperatorConstants;
 
 import frc.robot.subsystems.IntakeMechanisum;
@@ -39,7 +41,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final MecanumDriveSubsystem m_Drive = new MecanumDriveSubsystem();
 
- // private final LanuchMechanisumSubsystem m_LaunchMech = new LanuchMechanisumSubsystem();
+ private final LanuchMechanisumSubsystem m_LaunchMech = new LanuchMechanisumSubsystem();
+ private final ClimberSubsystem m_ClimberSubsystem = new ClimberSubsystem();
   // private final IntakeMechanisum m_Intakemech = new IntakeMechanisum();
   // private final TrapScoreSubsystem m_TrapScoreSubsystem = new TrapScoreSubsystem();
 
@@ -48,7 +51,8 @@ public class RobotContainer {
   private final LimelightNavigation m_Navigation = new LimelightNavigation(Encoders);
       
 
-  private final CommandJoystick contrJoystick = new CommandJoystick(0);
+  private final CommandJoystick driveJoystick = new CommandJoystick(0);
+  private final CommandJoystick mechanismJoystick = new CommandJoystick(1);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -68,15 +72,15 @@ public class RobotContainer {
   private void configureBindings() {
     
     m_Drive.setDefaultCommand(Commands.run(() -> {
-      double forwardSpeed = -contrJoystick.getY();
-      double rightSpeed = contrJoystick.getX();
-      double rotatinalSpeed = contrJoystick.getZ();
-      double slider = contrJoystick.getRawAxis(3);
+      double forwardSpeed = -driveJoystick.getY();
+      double rightSpeed = driveJoystick.getX();
+      double rotatinalSpeed = driveJoystick.getZ();
+      double slider = driveJoystick.getRawAxis(3);
       m_Drive.drive(forwardSpeed, rightSpeed, rotatinalSpeed, slider);
     }, m_Drive));
 
-    contrJoystick.button(3).onTrue(Commands.run(()-> m_Navigation.resetPosition(), m_Navigation));
-    contrJoystick.button(5).whileTrue(Commands.run(()-> m_Drive.alignRedAmp(),m_Drive));
+    driveJoystick.button(3).onTrue(Commands.run(()-> m_Navigation.resetPosition(), m_Navigation));
+    driveJoystick.button(5).whileTrue(Commands.run(()-> m_Drive.alignRedAmp(),m_Drive));
 
 
     //contrJoystick.button(1).onFalse(Commands.run(() -> {
@@ -102,6 +106,14 @@ public class RobotContainer {
     //  contrJoystick.button(5).onFalse(Commands.run(() -> {
     //    m_TrapScoreSubsystem.dropAngle();
     //  },m_TrapScoreSubsystem));
+
+    mechanismJoystick.button(5).onTrue(
+      Commands.startEnd(() -> m_ClimberSubsystem.leftRaise(), () -> m_ClimberSubsystem.bothStop(), m_ClimberSubsystem)
+    );
+
+    mechanismJoystick.button(6).onTrue(
+      Commands.startEnd(() -> m_ClimberSubsystem.leftLower(), () -> m_ClimberSubsystem.bothStop(), m_ClimberSubsystem)
+    );
 
 
     if (RobotBase.isSimulation()) REVPhysicsSim.getInstance().run();
