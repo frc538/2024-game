@@ -81,9 +81,24 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     return Encoders;
   }
 
+  public double deadzone(double value, double dz) {
+    if (value > dz) {
+      return value - dz;
+    }
+    if (value < -dz) {
+      return value + dz;
+    }
+    else {
+      return 0;
+    }
+  }
+
   public void drive(double forwardSpeed, double rightSpeed, double rotatinalSpeed, double sliderValue) {
     double driveGain = 0.45*sliderValue+.55;
-    driveBase.driveCartesian(forwardSpeed*driveGain, rightSpeed*driveGain, rotatinalSpeed*driveGain);
+    driveBase.driveCartesian(
+      deadzone(forwardSpeed,Constants.Misc.driveDeadzone)*driveGain, 
+      deadzone(rightSpeed,Constants.Misc.driveDeadzone)*driveGain,
+      deadzone(rotatinalSpeed,Constants.Misc.driveDeadzone)*driveGain);
 
   }
 
