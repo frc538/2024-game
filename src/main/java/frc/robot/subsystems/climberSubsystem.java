@@ -52,6 +52,6 @@ public class climberSubsystem extends SubsystemBase {
     double angle = m_pigeon2.getAngle();
     SmartDashboard.putNumber("angle", angle);
     StatusSignal<Double> pitch = m_pigeon2.getPitch();
- //   SmartDashboard.putData("pitch", pitch);
+   // SmartDashboard.putData("pitch", pitch);
   }
 }
