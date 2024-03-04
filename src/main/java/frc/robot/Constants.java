@@ -64,10 +64,17 @@ public final class Constants {
 		public static final Translation2d RearLeftDriveWheel_Position_Meters	= new Translation2d(-0.3, -0.3);
 		public static final Translation2d RearRightDriveWheel_Position_Meters	= new Translation2d(0.3, -0.3);
 
+		public static final double driveDeadzone = 0.1;
+
 		public static final String LimelightName = "limelight";
   	}
 
 	public static class CanID {
 		public static final int Pigeon2 = 1;
+	}
+
+	public static class Autos {
+	public static final double maxSpeed = 1;
+	public static final double distance = 3;
 	}
 }

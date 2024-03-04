@@ -12,6 +12,7 @@ import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
@@ -26,10 +27,9 @@ public class MecanumDriveSubsystem extends SubsystemBase {
   CANSparkMax rearRight;
   private double driveGain = 0.1;
   
-
+  LimelightNavigation m_LimelightNavigation;
   MecanumDrive driveBase;
-  int x;
-  int y;
+
 
   /** Creates a new MechaniumDrive. */
   public MecanumDriveSubsystem() {
@@ -65,11 +65,11 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     REVPhysicsSim.getInstance().addSparkMax(rearRight, DCMotor.getNEO(1));
 
     }
-
-     x=0;
     
   }
-
+  public void setLimeLightNavigation (LimelightNavigation lNavigation) {
+    m_LimelightNavigation = lNavigation;
+  }
   public Map<String,RelativeEncoder> GetEncoders()
   {
     Map<String, RelativeEncoder> Encoders = new HashMap<String,RelativeEncoder>();
@@ -81,23 +81,91 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     return Encoders;
   }
 
+  public double deadzone(double value, double dz) {
+    if (value > dz) {
+      return value - dz;
+    }
+    if (value < -dz) {
+      return value + dz;
+    }
+    else {
+      return 0;
+    }
+  }
+
   public void drive(double forwardSpeed, double rightSpeed, double rotatinalSpeed, double sliderValue) {
     double driveGain = 0.45*sliderValue+.55;
-    driveBase.driveCartesian(forwardSpeed*driveGain, rightSpeed*driveGain, rotatinalSpeed*driveGain);
+    driveBase.driveCartesian(
+      deadzone(forwardSpeed,Constants.Misc.driveDeadzone)*driveGain, 
+      deadzone(rightSpeed,Constants.Misc.driveDeadzone)*driveGain,
+      deadzone(rotatinalSpeed,Constants.Misc.driveDeadzone)*driveGain);
 
   }
 
   public void alignRedAmp() {
-    double x = SmartDashboard.getNumber("Robot X", Double.NaN);
-    double y = SmartDashboard.getNumber("Robot Y", Double.NaN);
-    double left = 0;
-    double forward = 0;
+
     double desiredx = 16.52;
     double desiredy = 1.40;
+    double desiredHeading = 1;
 
-    double ydisplacement = y-desiredy;
-    double xdisplacement = x-desiredx;
-    if (Double.isNaN(x)) {
+    alignTarget(desiredx, desiredy, desiredHeading);
+  }
+
+  public void alignBlueAmp() {
+
+    double desiredx = 16.52;
+    double desiredy = 1.40;
+    double desiredHeading = 1;
+
+    alignTarget(desiredx, desiredy, desiredHeading);
+  }
+
+  public void alignBlueSpeaker() {
+
+    double desiredx = 16.52;
+    double desiredy = 1.40;
+    double desiredHeading = 1;
+
+    alignTarget(desiredx, desiredy, desiredHeading);
+  }
+
+   public void alignRedSpeaker() {
+
+    double desiredx = 16.52;
+    double desiredy = 1.40;
+    double desiredHeading = 1;
+
+    alignTarget(desiredx, desiredy, desiredHeading);
+  }
+
+   public void alignRedSource() {
+
+    double desiredx = 16.52;
+    double desiredy = 1.40;
+    double desiredHeading = 1;
+
+    alignTarget(desiredx, desiredy, desiredHeading);
+  }
+
+   public void alignBlueSource() {
+
+    double desiredx = 16.52;
+    double desiredy = 1.40;
+    double desiredHeading = 1;
+
+    alignTarget(desiredx, desiredy, desiredHeading);
+  }
+
+  public void alignTarget(double desiredx, double desiredy, double desiredHeading) {
+    double left = 0;
+    double forward = 0;
+    double rotationSpeed = 0;
+    Pose2d pose = m_LimelightNavigation.getPose2d();
+    double ydisplacement = pose.getY()-desiredy;
+    double xdisplacement = pose.getX()-desiredx;
+    double headingdisplacement = pose.getRotation().getDegrees()-desiredHeading;
+    double kpHeading = 0.05;
+    if (Double.isNaN(xdisplacement)) {
       left = 0;
     } else if(Math.abs(xdisplacement)<0.06) {
       left = 0;
@@ -106,8 +174,8 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     }else {
       left = -0.1;
     }
-    
-    if (Double.isNaN(y)) {
+
+    if (Double.isNaN(ydisplacement)) {
       forward = 0;
     } else if(Math.abs(ydisplacement)<0.06) {
       forward = 0;
@@ -117,7 +185,17 @@ public class MecanumDriveSubsystem extends SubsystemBase {
       forward = -0.1;
     }
 
-    drive(forward, left, 0, 0);
+    if (Double.isNaN(headingdisplacement)) {
+      rotationSpeed = 0;
+    } else {
+      double error = headingdisplacement;
+      if (error > 180.0) {
+        error = -(360-error);
+      }
+      rotationSpeed = kpHeading*error;
+    }
+
+    drive(forward, left, rotationSpeed, 0);
   }
 
   @Override
@@ -134,7 +212,5 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("rearLeftSpeed", rearLeftSpeed);
     SmartDashboard.putNumber("rearRightSpeed", rearRightSpeed);
 
-    SmartDashboard.putNumber("X", x);
-    x++;
   }
 }
