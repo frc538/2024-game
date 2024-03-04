@@ -153,7 +153,11 @@ public class RobotContainer {
 
   public Command getAuto()
   {
-    return new Autos(m_Drive);
+    return Commands.run(() -> m_Drive.drive(Constants.Autos.maxSpeed,0,0,0),m_Drive).withTimeout(Constants.Autos.driveTimeout)
+    .andThen(Commands.run(() -> m_Drive.alignRedSpeaker(), m_Drive)).withTimeout(Constants.Autos.alignTimeout)
+    .andThen(Commands.run(() -> m_LaunchMech.spinUp(), m_LaunchMech)).withTimeout(0.5)
+    .andThen(Commands.run(() -> m_LaunchMech.shoot(), m_LaunchMech)).withTimeout(0.7)
+    .andThen(Commands.runOnce(() -> m_LaunchMech.stop(), m_LaunchMech));
   }
 
 }
