@@ -42,7 +42,7 @@ public class LimelightNavigation extends SubsystemBase {
   // MecanumDriveOdometry m_DriveOdometry;
   MecanumDrivePoseEstimator m_DrivePoseEstimator;
 
-  private Pigeon2 m_pigeon2;
+  public static Pigeon2 m_pigeon2;
   boolean m_InitializeDFromTag = false;
   // private Pigeon2Configuration pigeon2Config;
 
@@ -69,9 +69,14 @@ public class LimelightNavigation extends SubsystemBase {
 
     m_pigeon2 = new Pigeon2(CanID.Pigeon2);
     // pigeon2Config = new Pigeon2Configuration();
-
   }
 
+  public void ledsOff(){
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+  }
+  public void ledsOn(){
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(2);
+  }
   public void resetPosition() {
     // This method will be called once per scheduler run
     if (LimelightHelpers.getTV(Constants.Misc.LimelightName) == true) {

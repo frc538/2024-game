@@ -4,52 +4,58 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.CanID;
 
 public class climberSubsystem extends SubsystemBase {
-  CANSparkMax climberA;
-  CANSparkMax climberB;
+  CANSparkMax climberLeft;
+  CANSparkMax climberRight;
+  Pigeon2 m_pigeon2;
+
   /** Creates a new climberSubsystem. */
   public climberSubsystem() {
-    climberA = new CANSparkMax(Constants.CANIDs.leftClimber, MotorType.kBrushless);
-    climberB = new CANSparkMax(Constants.CANIDs.rightClimber, MotorType.kBrushless);
+    climberLeft = new CANSparkMax(Constants.CANIDs.leftClimber, MotorType.kBrushless);
+    climberRight = new CANSparkMax(Constants.CANIDs.rightClimber, MotorType.kBrushless);
     
-    m_pigeon2 = new Pigeon2(CanID.Pigeon2);
+    m_pigeon2 = LimelightNavigation.m_pigeon2;
 
-    climberA.restoreFactoryDefaults();
-    climberA.setInverted(false);
-    climberA.burnFlash();
+    climberLeft.restoreFactoryDefaults();
+    climberLeft.setInverted(false);
+    climberLeft.burnFlash();
 
-    climberB.restoreFactoryDefaults();
-    climberB.setInverted(true);
-    climberB.burnFlash();
+    climberRight.restoreFactoryDefaults();
+    climberRight.setInverted(true);
+    climberRight.burnFlash();
   }
 
-  private Pigeon2 m_pigeon2;
-  boolean m_InitializeDFromTag = false;
-  // private Pigeon2Configuration pigeon2Config;
+  public void raise() {
+    double raiseCommand = .8;
+    raiseLower(raiseCommand);
+  }
 
-  public void raise() {}
+  public void lower() {
+    double lowerCommand = -.8;
+    raiseLower(lowerCommand);
+  }
 
-  public void lower() {}
+  private void raiseLower(double cmd){
+    double error = m_pigeon2.getRoll().getValueAsDouble();
+    double levelCommand = MecanumDriveSubsystem.deadzone(error, Constants.Misc.climberDeadZone)*Constants.Misc.climberP;
+    climberLeft.set(cmd-levelCommand);
+    climberRight.set(cmd+levelCommand);
+  }
 
   public void stop() {
-    climberA.set(0);
-    climberB.set(-0);
+    climberLeft.set(0);
+    climberRight.set(-0);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    double roll = m_pigeon2.getRoll().getValueAsDouble();
-    SmartDashboard.putNumber("roll", roll);
   }
 }
