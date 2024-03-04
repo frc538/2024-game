@@ -163,7 +163,7 @@ public class RobotContainer {
       REVPhysicsSim.getInstance().run();
 
   }
-
+  
   public Command getAuto()
   {
     return Commands.run(() -> m_Drive.drive(Constants.Autos.maxSpeed,0,0,0),m_Drive).withTimeout(Constants.Autos.driveTimeout)
