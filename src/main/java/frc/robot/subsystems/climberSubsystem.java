@@ -49,9 +49,7 @@ public class climberSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    double angle = m_pigeon2.getAngle();
-    SmartDashboard.putNumber("angle", angle);
-    StatusSignal<Double> pitch = m_pigeon2.getPitch();
-    SmartDashboard.putData("pitch", pitch);
+    double roll = m_pigeon2.getRoll().getValueAsDouble();
+    SmartDashboard.putNumber("roll", roll);
   }
 }
