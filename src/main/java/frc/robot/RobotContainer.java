@@ -126,8 +126,6 @@ public class RobotContainer {
     // m_TrapScoreSubsystem.dropAngle();
     // },m_TrapScoreSubsystem));
 
-    /*
-    TODO: Uncomment this code when the climber is working
 
     mechanismJoystick.axisGreaterThan(1, 0.5).whileTrue(Commands.startEnd(() -> mLeftClimber.lower(),
         () -> mLeftClimber.stop(), mLeftClimber));
@@ -138,7 +136,7 @@ public class RobotContainer {
         () -> mRightClimber.stop(), mRightClimber));
     mechanismJoystick.axisLessThan(5, -0.5).whileTrue(Commands.startEnd(() -> mRightClimber.raise(),
         () -> mRightClimber.stop(), mRightClimber));
-*/
+
     mechanismJoystick.axisGreaterThan(3, 0.5)
         .whileTrue(Commands.startEnd(() -> m_LaunchMech.intake(), () -> m_LaunchMech.stop(), m_LaunchMech));
     // mechanismJoystick.axisGreaterThan(2, 0.5).whileTrue(Commands.run(() ->
