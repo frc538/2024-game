@@ -100,8 +100,17 @@ public class LimelightNavigation extends SubsystemBase {
         m_DrivePoseEstimator.addVisionMeasurement(robotPose2d, Timer.getFPGATimestamp());
       }
     }
-    SmartDashboard.putNumber("Robot X", m_DrivePoseEstimator.getEstimatedPosition().getX());
-    SmartDashboard.putNumber("Robot Y", m_DrivePoseEstimator.getEstimatedPosition().getY());
+    Pose2d pose = m_DrivePoseEstimator.getEstimatedPosition();
+    SmartDashboard.putNumber("Robot X", pose.getX());
+    SmartDashboard.putNumber("Robot Y", pose.getY());
+    SmartDashboard.putNumber("Robot Heading", pose.getRotation().getDegrees());
+    
+    SmartDashboard.putNumber("Robot Pitch", m_pigeon2.getPitch().getValueAsDouble());
+    SmartDashboard.putNumber("Robot Yaw", m_pigeon2.getYaw().getValueAsDouble());
+    SmartDashboard.putNumber("Robot Roll", m_pigeon2.getRoll().getValueAsDouble());
+  }
+  public Pose2d getPose2d() {
+    return m_DrivePoseEstimator.getEstimatedPosition();
   }
 }
 
