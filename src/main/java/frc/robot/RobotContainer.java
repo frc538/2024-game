@@ -60,7 +60,8 @@ public class RobotContainer {
 
   private final LimelightNavigation m_Navigation = new LimelightNavigation(Encoders);
 
-  private final climberSubsystem m_climber = new climberSubsystem(mLeftClimber, mRightClimber);//has to be after limelight subsystem
+  private final climberSubsystem m_climber = new climberSubsystem(mLeftClimber, mRightClimber);// has to be after
+                                                                                               // limelight subsystem
 
   private final CommandJoystick driveJoystick = new CommandJoystick(0);
   private final CommandJoystick mechanismJoystick = new CommandJoystick(1);
@@ -98,7 +99,7 @@ public class RobotContainer {
       m_Drive.drive(forwardSpeed, rightSpeed, rotatinalSpeed, slider);
     }, m_Drive));
 
-    m_Navigation.setDefaultCommand(Commands.run(()-> { 
+    m_Navigation.setDefaultCommand(Commands.run(() -> {
       m_Navigation.ledsOff();
     }, m_Navigation));
 
@@ -109,7 +110,8 @@ public class RobotContainer {
     driveJoystick.button(4).whileTrue(Commands.run(() -> m_Drive.alignBlueSpeaker(), m_Drive));
     driveJoystick.button(7).whileTrue(Commands.run(() -> m_Drive.alignRedSource(), m_Drive));
     driveJoystick.button(8).whileTrue(Commands.run(() -> m_Drive.alignBlueSource(), m_Drive));
-    driveJoystick.button(10).onTrue(Commands.run(()-> m_Navigation.ledsOn(), m_Navigation));
+    driveJoystick.button(10).onTrue(Commands.run(() -> m_Navigation.ledsOn(), m_Navigation));
+    driveJoystick.button(1).whileTrue(Commands.run(() -> m_Drive.sportMode(), m_Drive));
 
     // contrJoystick.button(1).onFalse(Commands.run(() -> {
     // m_LaunchMech.launchSpeaker();
@@ -145,15 +147,14 @@ public class RobotContainer {
     mechanismJoystick.axisLessThan(5, -0.5).whileTrue(Commands.startEnd(() -> mRightClimber.raise(),
         () -> mRightClimber.stop(), mRightClimber));
 
-    mechanismJoystick.button(0).whileTrue(Commands.startEnd(() -> m_climber.lower(), () -> m_climber.stop(), m_climber));
-    mechanismJoystick.button(3).whileTrue(Commands.startEnd(() -> m_climber.raise(), () -> m_climber.stop(), m_climber));
-
-    
+    mechanismJoystick.button(1)
+        .whileTrue(Commands.startEnd(() -> m_climber.lower(), () -> m_climber.stop(), m_climber));
+    mechanismJoystick.button(4)
+        .whileTrue(Commands.startEnd(() -> m_climber.raise(), () -> m_climber.stop(), m_climber));
 
     mechanismJoystick.axisGreaterThan(3, 0.5)
         .whileTrue(Commands.startEnd(() -> m_LaunchMech.intake(), () -> m_LaunchMech.stop(), m_LaunchMech));
-    mechanismJoystick.axisGreaterThan(2, 0.5).whileTrue(Commands.run(() ->
-    m_LaunchMech.spinUp(), m_LaunchMech));
+    mechanismJoystick.axisGreaterThan(2, 0.5).whileTrue(Commands.run(() -> m_LaunchMech.spinUp(), m_LaunchMech));
     mechanismJoystick.button(5).onTrue(
         Commands.run(() -> m_LaunchMech.spinUp(), m_LaunchMech).withTimeout(2)
             .andThen(Commands.run(() -> m_LaunchMech.shoot(), m_LaunchMech).withTimeout(0.5))
@@ -164,13 +165,16 @@ public class RobotContainer {
 
   }
 
-  public Command getAuto()
-  {
-    return Commands.run(() -> m_Drive.drive(Constants.Autos.maxSpeed,0,0,0),m_Drive).withTimeout(Constants.Autos.driveTimeout)
-    //.andThen(Commands.run(() -> m_Drive.alignRedSpeaker(), m_Drive)).withTimeout(Constants.Autos.alignTimeout)
-    //.andThen(Commands.run(() -> m_LaunchMech.spinUp(), m_LaunchMech)).withTimeout(0.5)
-    //.andThen(Commands.run(() -> m_LaunchMech.shoot(), m_LaunchMech)).withTimeout(0.7)
-    .andThen(Commands.runOnce(() -> m_LaunchMech.stop(), m_LaunchMech));
+  public Command getAuto() {
+    return Commands.run(() -> m_Drive.drive(Constants.Autos.maxSpeed, 0, 0, 0), m_Drive)
+        .withTimeout(Constants.Autos.driveTimeout)
+        // .andThen(Commands.run(() -> m_Drive.alignRedSpeaker(),
+        // m_Drive)).withTimeout(Constants.Autos.alignTimeout)
+        // .andThen(Commands.run(() -> m_LaunchMech.spinUp(),
+        // m_LaunchMech)).withTimeout(0.5)
+        // .andThen(Commands.run(() -> m_LaunchMech.shoot(),
+        // m_LaunchMech)).withTimeout(0.7)
+        .andThen(Commands.runOnce(() -> m_LaunchMech.stop(), m_LaunchMech));
   }
 
 }

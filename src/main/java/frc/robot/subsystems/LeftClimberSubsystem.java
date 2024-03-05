@@ -19,15 +19,14 @@ public class LeftClimberSubsystem extends SubsystemBase {
     }
     if (value < -dz) {
       return value + dz;
-    }
-    else {
+    } else {
       return 0;
     }
   }
 
   /** Creates a new ClimberSubsystem. */
-  public LeftClimberSubsystem() { 
-    
+  public LeftClimberSubsystem() {
+
     climber = new CANSparkMax(Constants.CANIDs.leftClimber, MotorType.kBrushless);
 
     climber.restoreFactoryDefaults();
@@ -41,7 +40,7 @@ public class LeftClimberSubsystem extends SubsystemBase {
 
   public void raise() {
     climber.set(1);
-    }
+  }
 
   public void lower() {
     climber.set(-1);

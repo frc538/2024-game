@@ -47,53 +47,53 @@ public final class Constants {
 		public static final int launcherLoad = 9;
 	}
 
-  	public static class Misc {
-    	public static final double intakeSpeed = 0.5;
-    	public static final double speekerLaunchSpeed = 1;
-    	public static final double ampLaunchSpeed = 0.5;
-    	public static final int startAngleDegrees = 0;
-    	public static final int loadAngleDegrees = 90;
-    	public static final int dropAngleDegrees = 180;
-    	public static final float stallTorque = 2.6f;
-    	public static final float freeSpeed = 5676;
-    	public static final double intSpeed = .25;
-		
-    	// Positions of the Drive Wheels relative to the center of the Robot.
-		public static final Translation2d FrontLeftDriveWheel_Position_Meters	= new Translation2d(-0.3, 0.3);
-		public static final Translation2d FrontRightDriveWheel_Position_Meters	= new Translation2d(0.3, 0.3);
-		public static final Translation2d RearLeftDriveWheel_Position_Meters	= new Translation2d(-0.3, -0.3);
-		public static final Translation2d RearRightDriveWheel_Position_Meters	= new Translation2d(0.3, -0.3);
+	public static class Misc {
+		public static final double intakeSpeed = 0.5;
+		public static final double speekerLaunchSpeed = 1;
+		public static final double ampLaunchSpeed = 0.5;
+		public static final int startAngleDegrees = 0;
+		public static final int loadAngleDegrees = 90;
+		public static final int dropAngleDegrees = 180;
+		public static final float stallTorque = 2.6f;
+		public static final float freeSpeed = 5676;
+		public static final double intSpeed = .25;
 
-		public static final double driveDeadzone = 0.1;
+		// Positions of the Drive Wheels relative to the center of the Robot.
+		public static final Translation2d FrontLeftDriveWheel_Position_Meters = new Translation2d(-0.3, 0.3);
+		public static final Translation2d FrontRightDriveWheel_Position_Meters = new Translation2d(0.3, 0.3);
+		public static final Translation2d RearLeftDriveWheel_Position_Meters = new Translation2d(-0.3, -0.3);
+		public static final Translation2d RearRightDriveWheel_Position_Meters = new Translation2d(0.3, -0.3);
+
+		public static final double driveDeadzone = 0.15;
 
 		public static final double rotationGain = 0.25;
 
 		public static final String LimelightName = "limelight";
 
-		//climbers
+		// climbers
 		public static final double climberP = 0.1;
 		public static final double climberDeadZone = 5;
 		public static final double climberJoystickDeadzone = 0.1;
-  	}
+	}
 
 	public static class CanID {
 		public static final int Pigeon2 = 1;
 	}
 
 	public static class Autos {
-	public static final double maxSpeed = 1;
-	public static final double distance = 3;
-	public static final double alignTimeout = 5;
-	public static final double driveTimeout = 3;
+		public static final double maxSpeed = 1;
+		public static final double distance = 3;
+		public static final double alignTimeout = 5;
+		public static final double driveTimeout = 3;
 	}
 
 	public static class Alignment {
 		public static final double speakerDistanceFeet = 5; // feet
-		public static final double speakerAngleOffsetDegrees = 0; 
+		public static final double speakerAngleOffsetDegrees = 0;
 		public static final double ampDistanceFeet = 5; // feet
-		public static final double ampAngleOffsetDegrees = 0; 
+		public static final double ampAngleOffsetDegrees = 0;
 		public static final double sourceDistanceFeet = 5; // feet
-		public static final double sourceAngleOffsetDegrees = 0; 
+		public static final double sourceAngleOffsetDegrees = 0;
 
 	}
 }

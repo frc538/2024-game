@@ -26,10 +26,9 @@ public class MecanumDriveSubsystem extends SubsystemBase {
   CANSparkMax rearLeft;
   CANSparkMax rearRight;
   private double driveGain = 0.1;
-  
+
   LimelightNavigation m_LimelightNavigation;
   MecanumDrive driveBase;
-
 
   /** Creates a new MechaniumDrive. */
   public MecanumDriveSubsystem() {
@@ -37,7 +36,6 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     frontRight = new CANSparkMax(Constants.CANIDs.FrontRightDriveMotor, MotorType.kBrushless);
     rearLeft = new CANSparkMax(Constants.CANIDs.RearLeftDriveMotor, MotorType.kBrushless);
     rearRight = new CANSparkMax(Constants.CANIDs.RearRighDriveMotor, MotorType.kBrushless);
-
 
     frontLeft.restoreFactoryDefaults();
     frontLeft.setInverted(false);
@@ -59,20 +57,21 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
     if (RobotBase.isSimulation()) {
 
-    REVPhysicsSim.getInstance().addSparkMax(frontLeft, DCMotor.getNEO(1));
-    REVPhysicsSim.getInstance().addSparkMax(frontRight, DCMotor.getNEO(1));
-    REVPhysicsSim.getInstance().addSparkMax(rearLeft, DCMotor.getNEO(1));
-    REVPhysicsSim.getInstance().addSparkMax(rearRight, DCMotor.getNEO(1));
+      REVPhysicsSim.getInstance().addSparkMax(frontLeft, DCMotor.getNEO(1));
+      REVPhysicsSim.getInstance().addSparkMax(frontRight, DCMotor.getNEO(1));
+      REVPhysicsSim.getInstance().addSparkMax(rearLeft, DCMotor.getNEO(1));
+      REVPhysicsSim.getInstance().addSparkMax(rearRight, DCMotor.getNEO(1));
 
     }
-    
+
   }
-  public void setLimeLightNavigation (LimelightNavigation lNavigation) {
+
+  public void setLimeLightNavigation(LimelightNavigation lNavigation) {
     m_LimelightNavigation = lNavigation;
   }
-  public Map<String,RelativeEncoder> GetEncoders()
-  {
-    Map<String, RelativeEncoder> Encoders = new HashMap<String,RelativeEncoder>();
+
+  public Map<String, RelativeEncoder> GetEncoders() {
+    Map<String, RelativeEncoder> Encoders = new HashMap<String, RelativeEncoder>();
     Encoders.put("Front Left", frontLeft.getEncoder());
     Encoders.put("Front Right", frontRight.getEncoder());
     Encoders.put("Rear Left", rearLeft.getEncoder());
@@ -87,27 +86,30 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     }
     if (value < -dz) {
       return value + dz;
-    }
-    else {
+    } else {
       return 0;
     }
   }
 
   public void drive(double forwardSpeed, double rightSpeed, double rotatinalSpeed, double sliderValue) {
-    double driveGain = 0.45*sliderValue+.55;
+    double driveGain = 0.45 * sliderValue + .55;
     double rotationGain = Constants.Misc.rotationGain;
     driveBase.driveCartesian(
-      deadzone(forwardSpeed,Constants.Misc.driveDeadzone)*driveGain, 
-      deadzone(rightSpeed,Constants.Misc.driveDeadzone)*driveGain,
-      deadzone(rotatinalSpeed,Constants.Misc.driveDeadzone)*rotationGain);
+        deadzone(forwardSpeed, Constants.Misc.driveDeadzone) * driveGain,
+        deadzone(rightSpeed, Constants.Misc.driveDeadzone) * driveGain,
+        deadzone(rotatinalSpeed, Constants.Misc.driveDeadzone) * rotationGain);
 
+  }
+
+  public void sportMode() {
+    driveGain = 1;
   }
 
   public void alignRedAmp() {
 
     double desiredx = 578.77;
     double desiredy = 323;
-    double desiredHeading = 270+180+Constants.Alignment.ampAngleOffsetDegrees;
+    double desiredHeading = 270 + 180 + Constants.Alignment.ampAngleOffsetDegrees;
 
     alignTarget(desiredx, desiredy, desiredHeading);
   }
@@ -116,7 +118,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
     double desiredx = 72.5;
     double desiredy = 323;
-    double desiredHeading = 270+180+Constants.Alignment.ampAngleOffsetDegrees;
+    double desiredHeading = 270 + 180 + Constants.Alignment.ampAngleOffsetDegrees;
 
     alignTarget(desiredx, desiredy, desiredHeading);
   }
@@ -125,34 +127,34 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
     double desiredx = -1.5;
     double desiredy = 218.42;
-    double desiredHeading = 0+180+Constants.Alignment.speakerAngleOffsetDegrees;
+    double desiredHeading = 0 + 180 + Constants.Alignment.speakerAngleOffsetDegrees;
 
     alignTarget(desiredx, desiredy, desiredHeading);
   }
 
-   public void alignRedSpeaker() {
+  public void alignRedSpeaker() {
 
     double desiredx = 652.73;
     double desiredy = 218.42;
-    double desiredHeading = 180+180+Constants.Alignment.speakerAngleOffsetDegrees;
+    double desiredHeading = 180 + 180 + Constants.Alignment.speakerAngleOffsetDegrees;
 
     alignTarget(desiredx, desiredy, desiredHeading);
   }
 
-   public void alignRedSource() {
+  public void alignRedSource() {
 
     double desiredx = 593.68;
     double desiredy = 9.68;
-    double desiredHeading = 120+180+Constants.Alignment.sourceAngleOffsetDegrees;
+    double desiredHeading = 120 + 180 + Constants.Alignment.sourceAngleOffsetDegrees;
 
     alignTarget(desiredx, desiredy, desiredHeading);
   }
 
-   public void alignBlueSource() {
+  public void alignBlueSource() {
 
     double desiredx = 57.54;
     double desiredy = 9.68;
-    double desiredHeading = 60+180+Constants.Alignment.sourceAngleOffsetDegrees;
+    double desiredHeading = 60 + 180 + Constants.Alignment.sourceAngleOffsetDegrees;
 
     alignTarget(desiredx, desiredy, desiredHeading);
   }
@@ -162,25 +164,25 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     double forward = 0;
     double rotationSpeed = 0;
     Pose2d pose = m_LimelightNavigation.getPose2d();
-    double ydisplacement = pose.getY()-desiredy;
-    double xdisplacement = pose.getX()-desiredx;
-    double headingdisplacement = pose.getRotation().getDegrees()-desiredHeading;
+    double ydisplacement = pose.getY() - desiredy;
+    double xdisplacement = pose.getX() - desiredx;
+    double headingdisplacement = pose.getRotation().getDegrees() - desiredHeading;
     double kpHeading = 0.05;
     if (Double.isNaN(xdisplacement)) {
       left = 0;
-    } else if(Math.abs(xdisplacement)<0.06) {
+    } else if (Math.abs(xdisplacement) < 0.06) {
       left = 0;
-    } else if(xdisplacement<0) {
+    } else if (xdisplacement < 0) {
       left = 0.1;
-    }else {
+    } else {
       left = -0.1;
     }
 
     if (Double.isNaN(ydisplacement)) {
       forward = 0;
-    } else if(Math.abs(ydisplacement)<0.06) {
+    } else if (Math.abs(ydisplacement) < 0.06) {
       forward = 0;
-    } else if(ydisplacement<0) {
+    } else if (ydisplacement < 0) {
       forward = 0.1;
     } else {
       forward = -0.1;
@@ -191,9 +193,9 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     } else {
       double error = headingdisplacement;
       if (error > 180.0) {
-        error = -(360-error);
+        error = -(360 - error);
       }
-      rotationSpeed = kpHeading*error;
+      rotationSpeed = kpHeading * error;
     }
 
     drive(forward, left, rotationSpeed, 0);
@@ -201,12 +203,11 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-  // This method will be called once per scheduler run
+    // This method will be called once per scheduler run
     double frontLeftSpeed = frontLeft.getEncoder().getVelocity();
     double frontRightSpeed = frontRight.getEncoder().getVelocity();
     double rearLeftSpeed = rearLeft.getEncoder().getVelocity();
     double rearRightSpeed = rearRight.getEncoder().getVelocity();
-
 
     SmartDashboard.putNumber("frontLeftSpeed", frontLeftSpeed);
     SmartDashboard.putNumber("frontRightSpeed", frontRightSpeed);

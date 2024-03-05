@@ -13,6 +13,7 @@ import frc.robot.subsystems.MecanumDriveSubsystem;
 
 public final class Autos extends Command {
   private final MecanumDriveSubsystem mecanumDrive;
+
   public Autos(MecanumDriveSubsystem MDS) {
     this.mecanumDrive = MDS;
 
@@ -27,7 +28,7 @@ public final class Autos extends Command {
   @Override
   public boolean isFinished() {
     double distance = Math.abs(mecanumDrive.GetEncoders().get("Front Left").getPosition());
-    
+
     return distance > Constants.Autos.distance;
   }
 

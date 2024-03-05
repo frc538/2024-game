@@ -71,12 +71,14 @@ public class LimelightNavigation extends SubsystemBase {
     // pigeon2Config = new Pigeon2Configuration();
   }
 
-  public void ledsOff(){
+  public void ledsOff() {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
   }
-  public void ledsOn(){
+
+  public void ledsOn() {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(2);
   }
+
   public void resetPosition() {
     // This method will be called once per scheduler run
     if (LimelightHelpers.getTV(Constants.Misc.LimelightName) == true) {
@@ -109,11 +111,12 @@ public class LimelightNavigation extends SubsystemBase {
     SmartDashboard.putNumber("Robot X", pose.getX());
     SmartDashboard.putNumber("Robot Y", pose.getY());
     SmartDashboard.putNumber("Robot Heading", pose.getRotation().getDegrees());
-    
+
     SmartDashboard.putNumber("Robot Pitch", m_pigeon2.getPitch().getValueAsDouble());
     SmartDashboard.putNumber("Robot Yaw", m_pigeon2.getYaw().getValueAsDouble());
     SmartDashboard.putNumber("Robot Roll", m_pigeon2.getRoll().getValueAsDouble());
   }
+
   public Pose2d getPose2d() {
     return m_DrivePoseEstimator.getEstimatedPosition();
   }
