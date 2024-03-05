@@ -25,10 +25,10 @@ public class MecanumDriveSubsystem extends SubsystemBase {
   CANSparkMax frontRight;
   CANSparkMax rearLeft;
   CANSparkMax rearRight;
-  private double driveGain = 0.1;
 
   LimelightNavigation m_LimelightNavigation;
   MecanumDrive driveBase;
+  boolean sportMode = false;
 
   /** Creates a new MechaniumDrive. */
   public MecanumDriveSubsystem() {
@@ -92,7 +92,12 @@ public class MecanumDriveSubsystem extends SubsystemBase {
   }
 
   public void drive(double forwardSpeed, double rightSpeed, double rotatinalSpeed, double sliderValue) {
-    double driveGain = 0.45 * sliderValue + .55;
+    double driveGain;
+    if (sportMode == true) {
+      driveGain = 1;
+    } else {
+      driveGain = 0.45 * sliderValue + .55;
+    }
     double rotationGain = Constants.Misc.rotationGain;
     driveBase.driveCartesian(
         deadzone(forwardSpeed, Constants.Misc.driveDeadzone) * driveGain,
@@ -101,8 +106,8 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
   }
 
-  public void sportMode() {
-    driveGain = 1;
+  public void sportMode(boolean setting) {
+    sportMode = setting;
   }
 
   public void alignRedAmp() {
