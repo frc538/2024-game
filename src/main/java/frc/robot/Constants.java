@@ -69,6 +69,10 @@ public final class Constants {
 		public static final double rotationGain = 0.25;
 
 		public static final String LimelightName = "limelight";
+
+		//climbers
+		public static final double climberP = 0.1;
+		public static final double climberDeadZone = 5;
   	}
 
 	public static class CanID {

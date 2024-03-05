@@ -81,7 +81,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     return Encoders;
   }
 
-  public double deadzone(double value, double dz) {
+  public static double deadzone(double value, double dz) {
     if (value > dz) {
       return value - dz;
     }
