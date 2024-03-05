@@ -37,8 +37,8 @@ public class climberSubsystem extends SubsystemBase {
     double error = m_pigeon2.getRoll().getValueAsDouble();
     double levelCommand = MecanumDriveSubsystem.deadzone(error, Constants.Misc.climberDeadZone)
         * Constants.Misc.climberP;
-    m_lcs.setSpeed(cmd - levelCommand);
-    m_rcs.setSpeed(cmd + levelCommand);
+    m_lcs.setSpeed(cmd + levelCommand);
+    m_rcs.setSpeed(cmd - levelCommand);
   }
 
   public void stop() {
