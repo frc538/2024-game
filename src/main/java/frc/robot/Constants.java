@@ -66,6 +66,8 @@ public final class Constants {
 
 		public static final double driveDeadzone = 0.1;
 
+		public static final double rotationGain = 0.25;
+
 		public static final String LimelightName = "limelight";
   	}
 
@@ -78,5 +80,15 @@ public final class Constants {
 	public static final double distance = 3;
 	public static final double alignTimeout = 5;
 	public static final double driveTimeout = 3;
+	}
+
+	public static class Alignment {
+		public static final double speakerDistanceFeet = 5; // feet
+		public static final double speakerAngleOffsetDegrees = 0; 
+		public static final double ampDistanceFeet = 5; // feet
+		public static final double ampAngleOffsetDegrees = 0; 
+		public static final double sourceDistanceFeet = 5; // feet
+		public static final double sourceAngleOffsetDegrees = 0; 
+
 	}
 }

@@ -95,63 +95,64 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
   public void drive(double forwardSpeed, double rightSpeed, double rotatinalSpeed, double sliderValue) {
     double driveGain = 0.45*sliderValue+.55;
+    double rotationGain = Constants.Misc.rotationGain;
     driveBase.driveCartesian(
       deadzone(forwardSpeed,Constants.Misc.driveDeadzone)*driveGain, 
       deadzone(rightSpeed,Constants.Misc.driveDeadzone)*driveGain,
-      deadzone(rotatinalSpeed,Constants.Misc.driveDeadzone)*driveGain);
+      deadzone(rotatinalSpeed,Constants.Misc.driveDeadzone)*rotationGain);
 
   }
 
   public void alignRedAmp() {
 
-    double desiredx = 16.52;
-    double desiredy = 1.40;
-    double desiredHeading = 1;
+    double desiredx = 578.77;
+    double desiredy = 323;
+    double desiredHeading = 270+180+Constants.Alignment.ampAngleOffsetDegrees;
 
     alignTarget(desiredx, desiredy, desiredHeading);
   }
 
   public void alignBlueAmp() {
 
-    double desiredx = 16.52;
-    double desiredy = 1.40;
-    double desiredHeading = 1;
+    double desiredx = 72.5;
+    double desiredy = 323;
+    double desiredHeading = 270+180+Constants.Alignment.ampAngleOffsetDegrees;
 
     alignTarget(desiredx, desiredy, desiredHeading);
   }
 
   public void alignBlueSpeaker() {
 
-    double desiredx = 16.52;
-    double desiredy = 1.40;
-    double desiredHeading = 1;
+    double desiredx = -1.5;
+    double desiredy = 218.42;
+    double desiredHeading = 0+180+Constants.Alignment.speakerAngleOffsetDegrees;
 
     alignTarget(desiredx, desiredy, desiredHeading);
   }
 
    public void alignRedSpeaker() {
 
-    double desiredx = 16.52;
-    double desiredy = 1.40;
-    double desiredHeading = 1;
+    double desiredx = 652.73;
+    double desiredy = 218.42;
+    double desiredHeading = 180+180+Constants.Alignment.speakerAngleOffsetDegrees;
 
     alignTarget(desiredx, desiredy, desiredHeading);
   }
 
    public void alignRedSource() {
 
-    double desiredx = 16.52;
-    double desiredy = 1.40;
-    double desiredHeading = 1;
+    double desiredx = 593.68;
+    double desiredy = 9.68;
+    double desiredHeading = 120+180+Constants.Alignment.sourceAngleOffsetDegrees;
 
     alignTarget(desiredx, desiredy, desiredHeading);
   }
 
    public void alignBlueSource() {
 
-    double desiredx = 16.52;
-    double desiredy = 1.40;
-    double desiredHeading = 1;
+    double desiredx = 57.54;
+    double desiredy = 9.68;
+    double desiredHeading = 60+180+Constants.Alignment.sourceAngleOffsetDegrees;
 
     alignTarget(desiredx, desiredy, desiredHeading);
   }
