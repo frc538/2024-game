@@ -60,7 +60,7 @@ public class RobotContainer {
 
   private final LimelightNavigation m_Navigation = new LimelightNavigation(Encoders);
 
- // private final climberSubsystem m_climber = new climberSubsystem();//has to be after limelight subsystem
+  private final climberSubsystem m_climber = new climberSubsystem(mLeftClimber, mRightClimber);//has to be after limelight subsystem
 
   private final CommandJoystick driveJoystick = new CommandJoystick(0);
   private final CommandJoystick mechanismJoystick = new CommandJoystick(1);
@@ -145,8 +145,8 @@ public class RobotContainer {
     mechanismJoystick.axisLessThan(5, -0.5).whileTrue(Commands.startEnd(() -> mRightClimber.raise(),
         () -> mRightClimber.stop(), mRightClimber));
 
-   // mechanismJoystick.button(0).whileTrue(Commands.startEnd(() -> m_climber.lower(), () -> m_climber.stop(), m_climber));
-   // mechanismJoystick.button(3).whileTrue(Commands.startEnd(() -> m_climber.raise(), () -> m_climber.stop(), m_climber));
+    mechanismJoystick.button(0).whileTrue(Commands.startEnd(() -> m_climber.lower(), () -> m_climber.stop(), m_climber));
+    mechanismJoystick.button(3).whileTrue(Commands.startEnd(() -> m_climber.raise(), () -> m_climber.stop(), m_climber));
 
     
 

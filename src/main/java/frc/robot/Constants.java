@@ -73,6 +73,7 @@ public final class Constants {
 		//climbers
 		public static final double climberP = 0.1;
 		public static final double climberDeadZone = 5;
+		public static final double climberJoystickDeadzone = 0.1;
   	}
 
 	public static class CanID {

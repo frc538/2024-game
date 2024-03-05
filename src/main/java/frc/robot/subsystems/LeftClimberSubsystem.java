@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -14,8 +13,21 @@ import frc.robot.Constants;
 public class LeftClimberSubsystem extends SubsystemBase {
   CANSparkMax climber;
 
+  public static double climberDeadzone(double value, double dz) {
+    if (value > dz) {
+      return value - dz;
+    }
+    if (value < -dz) {
+      return value + dz;
+    }
+    else {
+      return 0;
+    }
+  }
+
   /** Creates a new ClimberSubsystem. */
-  public LeftClimberSubsystem() {
+  public LeftClimberSubsystem() { 
+    
     climber = new CANSparkMax(Constants.CANIDs.leftClimber, MotorType.kBrushless);
 
     climber.restoreFactoryDefaults();
@@ -23,9 +35,13 @@ public class LeftClimberSubsystem extends SubsystemBase {
     climber.burnFlash();
   }
 
+  public void setSpeed(double speed) {
+    climber.set(speed);
+  }
+
   public void raise() {
     climber.set(1);
-  }
+    }
 
   public void lower() {
     climber.set(-1);

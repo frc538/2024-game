@@ -23,6 +23,10 @@ public class RightClimberSubsystem extends SubsystemBase {
     climber.burnFlash();
   }
 
+  public void setSpeed(double speed) {
+    climber.set(speed);
+  }
+
   public void raise() {
     climber.set(1);
   }
