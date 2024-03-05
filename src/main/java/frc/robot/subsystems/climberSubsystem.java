@@ -18,8 +18,7 @@ public class climberSubsystem extends SubsystemBase {
   private final RightClimberSubsystem m_rightClimber = new RightClimberSubsystem();
 
   /** Creates a new climberSubsystem. */
-  public climberSubsystem() 
-    
+  public climberSubsystem(){
     m_pigeon2 = LimelightNavigation.m_pigeon2;
   }
 
@@ -43,8 +42,10 @@ public class climberSubsystem extends SubsystemBase {
   }
 
   public void stop() {
-    climberLeft.set(0);
-    climberRight.set(-0);
+   double leftSpeed = 0;
+   double rightSpeed = 0;
+   m_leftClimber.motor(leftSpeed);
+   m_rightClimber.motor(rightSpeed);
   }
 
   @Override
