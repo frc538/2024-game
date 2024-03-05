@@ -5,10 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -16,6 +13,7 @@ public class climberSubsystem extends SubsystemBase {
   LeftClimberSubsystem m_lcs;
   RightClimberSubsystem m_rcs;
   Pigeon2 m_pigeon2;
+
 
   /** Creates a new climberSubsystem. */
   public climberSubsystem(LeftClimberSubsystem lcs, RightClimberSubsystem rcs) {
