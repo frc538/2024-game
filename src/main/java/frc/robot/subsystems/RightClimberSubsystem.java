@@ -35,6 +35,10 @@ public class RightClimberSubsystem extends SubsystemBase {
     climber.set(0);
   }
 
+  public void motor(double rightSpeed){
+    climber.set(rightSpeed);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
