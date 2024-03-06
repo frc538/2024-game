@@ -94,6 +94,8 @@ public class LimelightNavigation extends SubsystemBase {
       m_DrivePoseEstimator.resetPosition(m_pigeon2.getRotation2d(), MecanumDriveWheelPositions, robotPose2d);
       m_InitializeDFromTag = true;
     }
+
+    m_pigeon2.reset();
   }
 
   @Override
@@ -123,6 +125,10 @@ public class LimelightNavigation extends SubsystemBase {
 
   public Pose2d getPose2d() {
     return m_DrivePoseEstimator.getEstimatedPosition();
+  }
+
+  public static void resetgyro () {
+    m_pigeon2.reset();
   }
 }
 

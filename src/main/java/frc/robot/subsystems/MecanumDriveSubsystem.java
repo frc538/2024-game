@@ -239,6 +239,6 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("frontRightSpeed", frontRightSpeed);
     SmartDashboard.putNumber("rearLeftSpeed", rearLeftSpeed);
     SmartDashboard.putNumber("rearRightSpeed", rearRightSpeed);
-
+    SmartDashboard.putBoolean("FieldOriented", m_fieldOriented);
   }
 }

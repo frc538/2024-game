@@ -167,7 +167,8 @@ public class RobotContainer {
 
   }
 
-  public Command getAuto() {
+  public Command autoinit() {
+    LimelightNavigation.resetgyro();
     return Commands.run(() -> m_Drive.drive(Constants.Autos.maxSpeed, 0, 0, 0), m_Drive)
         .withTimeout(Constants.Autos.driveTimeout)
         // .andThen(Commands.run(() -> m_Drive.alignRedSpeaker(),
