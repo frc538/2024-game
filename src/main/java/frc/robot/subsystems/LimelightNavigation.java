@@ -71,6 +71,10 @@ public class LimelightNavigation extends SubsystemBase {
     // pigeon2Config = new Pigeon2Configuration();
   }
 
+  public static Rotation2d getHeading() {
+    return m_pigeon2.getRotation2d();
+  }
+
   public void ledsOff() {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
   }

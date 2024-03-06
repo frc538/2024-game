@@ -7,16 +7,19 @@ package frc.robot.subsystems;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -29,6 +32,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
   LimelightNavigation m_LimelightNavigation;
   MecanumDrive driveBase;
   boolean sportMode = false;
+  boolean m_fieldOriented = false;
 
   /** Creates a new MechaniumDrive. */
   public MecanumDriveSubsystem() {
@@ -99,11 +103,28 @@ public class MecanumDriveSubsystem extends SubsystemBase {
       driveGain = 0.45 * sliderValue + .55;
     }
     double rotationGain = Constants.Misc.rotationGain;
-    driveBase.driveCartesian(
-        deadzone(forwardSpeed, Constants.Misc.driveDeadzone) * driveGain,
-        deadzone(rightSpeed, Constants.Misc.driveDeadzone) * driveGain,
-        deadzone(rotatinalSpeed, Constants.Misc.driveDeadzone) * rotationGain);
 
+    if (m_fieldOriented == true) {
+
+      var fieldOrientedSpeeds = new ChassisSpeeds(deadzone(forwardSpeed, Constants.Misc.driveDeadzone) * driveGain,
+          deadzone(rightSpeed, Constants.Misc.driveDeadzone) * driveGain,
+          deadzone(rotatinalSpeed, Constants.Misc.driveDeadzone) * rotationGain);
+
+      var chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(fieldOrientedSpeeds, LimelightNavigation.getHeading());
+
+      driveBase.driveCartesian(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond,
+          chassisSpeeds.omegaRadiansPerSecond);
+
+    } else {
+      driveBase.driveCartesian(
+          deadzone(forwardSpeed, Constants.Misc.driveDeadzone) * driveGain,
+          deadzone(rightSpeed, Constants.Misc.driveDeadzone) * driveGain,
+          deadzone(rotatinalSpeed, Constants.Misc.driveDeadzone) * rotationGain);
+    }
+  }
+
+  public void toggleFieldOrient() {
+    m_fieldOriented = !m_fieldOriented;
   }
 
   public void sportMode(boolean setting) {

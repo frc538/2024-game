@@ -48,8 +48,8 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
   }
 
   public void shoot() {
-    top.set(1);
-    bottom.set(1);
+    top.setVoltage(13);
+    bottom.setVoltage(13);
   }
 
   public void intake() {
@@ -63,7 +63,7 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
   }
 
   public void spinUp() {
-    top.set(1);
+    top.setVoltage(13);
     bottom.set(0);
   }
 
