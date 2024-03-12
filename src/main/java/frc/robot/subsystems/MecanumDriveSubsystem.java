@@ -125,6 +125,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
   public void toggleFieldOrient() {
     m_fieldOriented = !m_fieldOriented;
+    System.out.printf("field orient: %b%n", m_fieldOriented);
   }
 
   public void sportMode(boolean setting) {

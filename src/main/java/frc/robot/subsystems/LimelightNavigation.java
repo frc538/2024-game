@@ -6,6 +6,9 @@ package frc.robot.subsystems;
 
 import java.util.Map;
 
+import com.ctre.phoenix6.configs.MountPoseConfigs;
+import com.ctre.phoenix6.configs.Pigeon2Configuration;
+import com.ctre.phoenix6.configs.Pigeon2Configurator;
 //import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.revrobotics.RelativeEncoder;
@@ -44,7 +47,9 @@ public class LimelightNavigation extends SubsystemBase {
 
   public static Pigeon2 m_pigeon2;
   boolean m_InitializeDFromTag = false;
-  // private Pigeon2Configuration pigeon2Config;
+
+
+  //private Pigeon2Configuration pigeon2Config;
 
   int x;
 
@@ -68,7 +73,7 @@ public class LimelightNavigation extends SubsystemBase {
         initialPoseMeters);
 
     m_pigeon2 = new Pigeon2(CanID.Pigeon2);
-    // pigeon2Config = new Pigeon2Configuration();
+    var pigeon2Config = new Pigeon2Configuration();
   }
 
   public static Rotation2d getHeading() {
@@ -83,7 +88,13 @@ public class LimelightNavigation extends SubsystemBase {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(2);
   }
 
+  public void resetFieldOrient() {
+    m_pigeon2.reset();
+    System.out.println("resetfieldorient");
+  }
+
   public void resetPosition() {
+    //m_pigeon2.reset();
     // This method will be called once per scheduler run
     if (LimelightHelpers.getTV(Constants.Misc.LimelightName) == true) {
       Pose2d robotPose2d = LimelightHelpers.getBotPose2d_wpiRed(Constants.Misc.LimelightName);
@@ -94,14 +105,12 @@ public class LimelightNavigation extends SubsystemBase {
       m_DrivePoseEstimator.resetPosition(m_pigeon2.getRotation2d(), MecanumDriveWheelPositions, robotPose2d);
       m_InitializeDFromTag = true;
     }
-
-    m_pigeon2.reset();
   }
 
   @Override
   public void periodic() {
     if (m_InitializeDFromTag == false) {
-      resetPosition();
+     // resetPosition();
     } else {
       MecanumDriveWheelPositions positions = new MecanumDriveWheelPositions(m_FrontLeftWheel_Endocer.getPosition(),
           m_FrontRightWheel_Encoder.getPosition(), m_RearLeftWheel_Encoder.getPosition(),
@@ -117,10 +126,12 @@ public class LimelightNavigation extends SubsystemBase {
     SmartDashboard.putNumber("Robot X", pose.getX());
     SmartDashboard.putNumber("Robot Y", pose.getY());
     SmartDashboard.putNumber("Robot Heading", pose.getRotation().getDegrees());
+    SmartDashboard.putNumber("updated heading", m_pigeon2.getRotation2d().getDegrees());
 
     SmartDashboard.putNumber("Robot Pitch", m_pigeon2.getPitch().getValueAsDouble());
     SmartDashboard.putNumber("Robot Yaw", m_pigeon2.getYaw().getValueAsDouble());
     SmartDashboard.putNumber("Robot Roll", m_pigeon2.getRoll().getValueAsDouble());
+    double currentHeading = SmartDashboard.getNumber("updated heading", m_pigeon2.getRotation2d().getDegrees());
   }
 
   public Pose2d getPose2d() {
@@ -128,7 +139,7 @@ public class LimelightNavigation extends SubsystemBase {
   }
 
   public static void resetgyro () {
-    m_pigeon2.reset();
+  //  m_pigeon2.reset();
   }
 }
 
