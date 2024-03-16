@@ -170,6 +170,13 @@ public class RobotContainer {
 
   public Command autoinit() {
     LimelightNavigation.resetgyro();
+    m_Navigation.resetFieldOrient();
+    if (m_Drive.m_fieldOriented == true) {
+      System.out.println("Field oriented already on.");
+    } else {
+    m_Drive.toggleFieldOrient();
+    }
+
     return Commands.run(() -> m_Drive.drive(Constants.Autos.maxSpeed, 0, 0, 0), m_Drive)
         .withTimeout(Constants.Autos.driveTimeout)
         // .andThen(Commands.run(() -> m_Drive.alignRedSpeaker(),

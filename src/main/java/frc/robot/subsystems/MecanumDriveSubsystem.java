@@ -32,7 +32,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
   LimelightNavigation m_LimelightNavigation;
   MecanumDrive driveBase;
   boolean sportMode = false;
-  boolean m_fieldOriented = false;
+  public boolean m_fieldOriented = false;
 
   /** Creates a new MechaniumDrive. */
   public MecanumDriveSubsystem() {

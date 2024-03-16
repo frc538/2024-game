@@ -110,7 +110,7 @@ public class LimelightNavigation extends SubsystemBase {
   @Override
   public void periodic() {
     if (m_InitializeDFromTag == false) {
-     // resetPosition();
+     resetPosition();
     } else {
       MecanumDriveWheelPositions positions = new MecanumDriveWheelPositions(m_FrontLeftWheel_Endocer.getPosition(),
           m_FrontRightWheel_Encoder.getPosition(), m_RearLeftWheel_Encoder.getPosition(),
@@ -132,6 +132,7 @@ public class LimelightNavigation extends SubsystemBase {
     SmartDashboard.putNumber("Robot Yaw", m_pigeon2.getYaw().getValueAsDouble());
     SmartDashboard.putNumber("Robot Roll", m_pigeon2.getRoll().getValueAsDouble());
     double currentHeading = SmartDashboard.getNumber("updated heading", m_pigeon2.getRotation2d().getDegrees());
+    resetPosition();
   }
 
   public Pose2d getPose2d() {
