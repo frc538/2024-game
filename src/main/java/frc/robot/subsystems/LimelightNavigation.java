@@ -48,6 +48,7 @@ public class LimelightNavigation extends SubsystemBase {
   public static Pigeon2 m_pigeon2;
   boolean m_InitializeDFromTag = false;
 
+  double m_latency = 0.0;
 
   //private Pigeon2Configuration pigeon2Config;
 
@@ -97,7 +98,7 @@ public class LimelightNavigation extends SubsystemBase {
     //m_pigeon2.reset();
     // This method will be called once per scheduler run
     if (LimelightHelpers.getTV(Constants.Misc.LimelightName) == true) {
-      Pose2d robotPose2d = LimelightHelpers.getBotPose2d_wpiRed(Constants.Misc.LimelightName);
+      Pose2d robotPose2d = LimelightHelpers.getBotPose2d_wpiBlue(Constants.Misc.LimelightName);
       var MecanumDriveWheelPositions = new MecanumDriveWheelPositions(
           m_FrontLeftWheel_Endocer.getPosition(), m_FrontRightWheel_Encoder.getPosition(),
           m_RearLeftWheel_Encoder.getPosition(), m_RearRightWheel_Encoder.getPosition());
@@ -109,6 +110,8 @@ public class LimelightNavigation extends SubsystemBase {
 
   @Override
   public void periodic() {
+    double cl;
+    double tl;
     if (m_InitializeDFromTag == false) {
      resetPosition();
     } else {
@@ -118,11 +121,15 @@ public class LimelightNavigation extends SubsystemBase {
       m_DrivePoseEstimator.update(m_pigeon2.getRotation2d(), positions);
 
       if (LimelightHelpers.getTV(Constants.Misc.LimelightName) == true) {
-        Pose2d robotPose2d = LimelightHelpers.getBotPose2d_wpiRed(Constants.Misc.LimelightName);
-        m_DrivePoseEstimator.addVisionMeasurement(robotPose2d, Timer.getFPGATimestamp());
+        Pose2d robotPose2d = LimelightHelpers.getBotPose2d_wpiBlue(Constants.Misc.LimelightName);
+        cl = LimelightHelpers.getLatency_Capture("limelight");
+        tl = LimelightHelpers.getLatency_Pipeline("limelight");
+        m_latency = Timer.getFPGATimestamp()- tl /1000 - cl /1000;
+        m_DrivePoseEstimator.addVisionMeasurement(robotPose2d, m_latency);
       }
     }
     Pose2d pose = m_DrivePoseEstimator.getEstimatedPosition();
+    SmartDashboard.putNumber("Robot Latency (Milliseconds)", m_latency);
     SmartDashboard.putNumber("Robot X", pose.getX());
     SmartDashboard.putNumber("Robot Y", pose.getY());
     SmartDashboard.putNumber("Robot Heading", pose.getRotation().getDegrees());
@@ -132,7 +139,6 @@ public class LimelightNavigation extends SubsystemBase {
     SmartDashboard.putNumber("Robot Yaw", m_pigeon2.getYaw().getValueAsDouble());
     SmartDashboard.putNumber("Robot Roll", m_pigeon2.getRoll().getValueAsDouble());
     double currentHeading = SmartDashboard.getNumber("updated heading", m_pigeon2.getRotation2d().getDegrees());
-    resetPosition();
   }
 
   public Pose2d getPose2d() {
