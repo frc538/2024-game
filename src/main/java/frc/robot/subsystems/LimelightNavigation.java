@@ -49,6 +49,7 @@ public class LimelightNavigation extends SubsystemBase {
   boolean m_InitializeDFromTag = false;
 
   double m_latency = 0.0;
+  double m_limelightSamplesCaptured = 0;
 
   //private Pigeon2Configuration pigeon2Config;
 
@@ -124,12 +125,14 @@ public class LimelightNavigation extends SubsystemBase {
         Pose2d robotPose2d = LimelightHelpers.getBotPose2d_wpiBlue(Constants.Misc.LimelightName);
         cl = LimelightHelpers.getLatency_Capture("limelight");
         tl = LimelightHelpers.getLatency_Pipeline("limelight");
+        m_limelightSamplesCaptured = m_limelightSamplesCaptured + 1;
         m_latency = Timer.getFPGATimestamp()- tl /1000 - cl /1000;
         m_DrivePoseEstimator.addVisionMeasurement(robotPose2d, m_latency);
       }
     }
     Pose2d pose = m_DrivePoseEstimator.getEstimatedPosition();
     SmartDashboard.putNumber("Robot Latency (Milliseconds)", m_latency);
+    SmartDashboard.putNumber("Limelight Samples Captured", m_limelightSamplesCaptured);
     SmartDashboard.putNumber("Robot X", pose.getX());
     SmartDashboard.putNumber("Robot Y", pose.getY());
     SmartDashboard.putNumber("Robot Heading", pose.getRotation().getDegrees());
