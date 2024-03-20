@@ -143,11 +143,13 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
   public void alignBlueAmp() {
 
-    double desiredx = 72.5;
-    double desiredy = 323;
-    double desiredHeading = 270 + 180 + Constants.Alignment.ampAngleOffsetDegrees;
+    double desiredx = 1.8415;
+    double desiredy = 8.2042;
+    //double desiredHeading = 270 + 180 + Constants.Alignment.ampAngleOffsetDegrees;
+    double desiredRange = 1.2;
 
-    alignTarget(desiredx, desiredy, desiredHeading);
+    //alignTarget(desiredx, desiredy, desiredHeading);
+    alignrange(desiredRange, desiredHeading, desiredRange);
   }
 
   public void alignBlueSpeaker() {
@@ -186,6 +188,31 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     alignTarget(desiredx, desiredy, desiredHeading);
   }
 
+  public void alignrange(double desiredRange, double targetX, double targetY) {
+    Pose2d robotPose = m_LimelightNavigation.getPose2d();
+    double currentHeading = robotPose.getRotation().getDegrees();
+
+    double desiredHeading = Math.toDegrees(Math.atan2(targetY, targetX));
+    double headingError = desiredHeading-currentHeading;
+
+    double distanceX = targetX-robotPose.getX();
+    double distanceY = targetY-robotPose.getY();
+    double actualRange = Math.sqrt(distanceX*distanceX+distanceY*distanceY);
+    double rangeError = desiredRange-actualRange;
+    double steer = 0.0f;
+    double KPAim = -0.1f;
+    double KPDistance = -0.1f;
+    double minAim = 0.05f;
+    
+    steer = deadzone(KPAim * headingError, minAim);
+
+
+    double distanceAdjust = rangeError * KPDistance;
+
+    drive(distanceAdjust, 0, steer, 0);
+  }
+
+// go to desired pos and heading
   public void alignTarget(double desiredx, double desiredy, double desiredHeading) {
     double left = 0;
     double forward = 0;
