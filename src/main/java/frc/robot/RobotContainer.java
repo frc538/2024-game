@@ -107,7 +107,7 @@ public class RobotContainer {
     driveJoystick.button(11).onTrue(Commands.runOnce(() -> m_Navigation.resetFieldOrient(), m_Navigation));
     driveJoystick.button(5).whileTrue(Commands.runOnce(() -> m_Drive.alignRedAmp(), m_Drive));
     driveJoystick.button(3).whileTrue(Commands.runOnce(() -> m_Drive.alignRedSpeaker(), m_Drive));
-    driveJoystick.button(6).whileTrue(Commands.runOnce(() -> m_Drive.alignBlueAmp(), m_Drive));
+    driveJoystick.button(6).whileTrue(Commands.run(() -> m_Drive.alignBlueAmp(), m_Drive));
     driveJoystick.button(4).whileTrue(Commands.runOnce(() -> m_Drive.alignBlueSpeaker(), m_Drive));
     driveJoystick.button(7).whileTrue(Commands.runOnce(() -> m_Drive.alignRedSource(), m_Drive));
     driveJoystick.button(8).whileTrue(Commands.runOnce(() -> m_Drive.alignBlueSource(), m_Drive));
@@ -158,10 +158,17 @@ public class RobotContainer {
     mechanismJoystick.axisGreaterThan(3, 0.5)
         .whileTrue(Commands.startEnd(() -> m_LaunchMech.intake(), () -> m_LaunchMech.stop(), m_LaunchMech));
     mechanismJoystick.axisGreaterThan(2, 0.5).whileTrue(Commands.run(() -> m_LaunchMech.spinUp(), m_LaunchMech));
+/*
     mechanismJoystick.button(5).onTrue(
         Commands.run(() -> m_LaunchMech.spinUp(), m_LaunchMech).withTimeout(2)
             .andThen(Commands.run(() -> m_LaunchMech.shoot(), m_LaunchMech).withTimeout(0.5))
             .andThen(Commands.run(() -> m_LaunchMech.stop(), m_LaunchMech)));
+*/
+    // testing canon shooter
+    mechanismJoystick.button(5).onTrue(
+        Commands.run(() -> m_LaunchMech.shoot(), m_LaunchMech));
+    mechanismJoystick.button(5).onFalse(Commands.runOnce(() -> m_LaunchMech.stop(), m_LaunchMech));
+
 
     if (RobotBase.isSimulation())
       REVPhysicsSim.getInstance().run();

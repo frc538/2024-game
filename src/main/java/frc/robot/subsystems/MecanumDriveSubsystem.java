@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.revrobotics.CANSparkMax;
@@ -13,7 +14,11 @@ import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -33,6 +38,8 @@ public class MecanumDriveSubsystem extends SubsystemBase {
   MecanumDrive driveBase;
   boolean sportMode = false;
   public boolean m_fieldOriented = false;
+
+  AprilTagFieldLayout atfl = AprilTagFieldLayout.loadField(AprilTagFields.k2024Crescendo);
 
   /** Creates a new MechaniumDrive. */
   public MecanumDriveSubsystem() {
@@ -55,7 +62,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
     rearRight.restoreFactoryDefaults();
     rearRight.setInverted(true);
-    rearRight.burnFlash();
+    rearRight.burnFlash();    
 
     driveBase = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
@@ -142,14 +149,16 @@ public class MecanumDriveSubsystem extends SubsystemBase {
   }
 
   public void alignBlueAmp() {
+    Pose3d pose3d = atfl.getTagPose(6).get();
 
-    double desiredx = 1.8415;
-    double desiredy = 8.2042;
+    double targetX = pose3d.getX();
+    double targetY = pose3d.getY();
     //double desiredHeading = 270 + 180 + Constants.Alignment.ampAngleOffsetDegrees;
     double desiredRange = 1.2;
-
     //alignTarget(desiredx, desiredy, desiredHeading);
-    alignrange(desiredRange, desiredHeading, desiredRange);
+    SmartDashboard.putNumber("Tx", targetX);
+    SmartDashboard.putNumber("Ty", targetY);
+    alignrange(desiredRange, targetX, targetY);
   }
 
   public void alignBlueSpeaker() {
@@ -201,13 +210,21 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     double rangeError = desiredRange-actualRange;
     double steer = 0.0f;
     double KPAim = -0.1f;
-    double KPDistance = -0.1f;
+    double KPDistance = -0.2f;
     double minAim = 0.05f;
     
-    steer = deadzone(KPAim * headingError, minAim);
+    steer = MathUtil.clamp(deadzone(KPAim * headingError, minAim), -0.5, 0.5);
 
 
-    double distanceAdjust = rangeError * KPDistance;
+    double distanceAdjust = MathUtil.clamp(rangeError * KPDistance, -0.5, 0.5);
+    
+    SmartDashboard.putNumber("desiredHeading", desiredHeading);
+    SmartDashboard.putNumber("actualHeading", currentHeading);
+    SmartDashboard.putNumber("headingError", headingError);
+
+    SmartDashboard.putNumber("desiredRange", desiredRange);
+    SmartDashboard.putNumber("actualRange", actualRange);
+    SmartDashboard.putNumber("rangeError", rangeError);
 
     drive(distanceAdjust, 0, steer, 0);
   }
