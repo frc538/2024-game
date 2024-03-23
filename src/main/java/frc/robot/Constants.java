@@ -64,6 +64,14 @@ public final class Constants {
 		public static final Translation2d RearLeftDriveWheel_Position_Meters = new Translation2d(-0.3, -0.3);
 		public static final Translation2d RearRightDriveWheel_Position_Meters = new Translation2d(0.3, -0.3);
 
+		// Motor encoder - 42 ticks per rev
+		// Gear ratios are one of the following:
+		// 12.75:1
+		// 10.71:1
+		// 7.31:1
+		// Wheel diameter is 8", 8*.0254*pi m/rev
+		public static final double metersPerTick = 8 * (Math.PI * 0.0254) / (12.75);
+
 		public static final double driveDeadzone = 0.125;
 
 		public static final double rotationGain = 0.25;

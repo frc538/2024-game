@@ -21,6 +21,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.units.Velocity;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -63,6 +64,13 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     rearRight.restoreFactoryDefaults();
     rearRight.setInverted(true);
     rearRight.burnFlash();    
+
+
+
+    //frontLeft.getEncoder().setPositionConversionFactor(metersPerTick);
+    //frontRight.getEncoder().setPositionConversionFactor(metersPerTick);
+    //rearLeft.getEncoder().setPositionConversionFactor(metersPerTick);
+    //rearRight.getEncoder().setPositionConversionFactor(metersPerTick);
 
     driveBase = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
@@ -210,7 +218,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     double rangeError = desiredRange-actualRange;
     double steer = 0.0f;
     double KPAim = -0.1f;
-    double KPDistance = -0.2f;
+    double KPDistance = -0.4f;
     double minAim = 0.05f;
     
     steer = MathUtil.clamp(deadzone(KPAim * headingError, minAim), -0.5, 0.5);
@@ -280,6 +288,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     double rearLeftSpeed = rearLeft.getEncoder().getVelocity();
     double rearRightSpeed = rearRight.getEncoder().getVelocity();
 
+    SmartDashboard.putNumber("front left encoder postion", frontLeft.getEncoder().getPosition());
     SmartDashboard.putNumber("frontLeftSpeed", frontLeftSpeed);
     SmartDashboard.putNumber("frontRightSpeed", frontRightSpeed);
     SmartDashboard.putNumber("rearLeftSpeed", rearLeftSpeed);
