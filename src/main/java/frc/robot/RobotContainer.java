@@ -109,8 +109,6 @@ public class RobotContainer {
     driveJoystick.button(3).whileTrue(Commands.runOnce(() -> m_Drive.alignRedSpeaker(), m_Drive));
     driveJoystick.button(6).whileTrue(Commands.run(() -> m_Drive.alignBlueAmp(), m_Drive));
     driveJoystick.button(4).whileTrue(Commands.runOnce(() -> m_Drive.alignBlueSpeaker(), m_Drive));
-    driveJoystick.button(7).whileTrue(Commands.runOnce(() -> m_Drive.alignRedSource(), m_Drive));
-    driveJoystick.button(8).whileTrue(Commands.runOnce(() -> m_Drive.alignBlueSource(), m_Drive));
     driveJoystick.button(10).onTrue(Commands.run(() -> m_Navigation.ledsOn(), m_Navigation));
     driveJoystick.button(9).onTrue(Commands.runOnce(() -> m_Drive.toggleFieldOrient()));
     //driveJoystick.button(1).onTrue(Commands.run(() -> m_Drive.sportMode(true)));

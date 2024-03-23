@@ -148,12 +148,16 @@ public class MecanumDriveSubsystem extends SubsystemBase {
   }
 
   public void alignRedAmp() {
+    Pose3d pose3d = atfl.getTagPose(5).get();
 
-    double desiredx = 578.77;
-    double desiredy = 323;
-    double desiredHeading = 270 + 180 + Constants.Alignment.ampAngleOffsetDegrees;
-
-    alignTarget(desiredx, desiredy, desiredHeading);
+    double targetX = pose3d.getX();
+    double targetY = pose3d.getY();
+    //double desiredHeading = 270 + 180 + Constants.Alignment.ampAngleOffsetDegrees;
+    double desiredRange = 1.2;
+    //alignTarget(desiredx, desiredy, desiredHeading);
+    SmartDashboard.putNumber("Tx", targetX);
+    SmartDashboard.putNumber("Ty", targetY);
+    alignrange(desiredRange, targetX, targetY);
   }
 
   public void alignBlueAmp() {
@@ -170,39 +174,29 @@ public class MecanumDriveSubsystem extends SubsystemBase {
   }
 
   public void alignBlueSpeaker() {
+    Pose3d pose3d = atfl.getTagPose(7).get();
 
-    double desiredx = -1.5;
-    double desiredy = 218.42;
-    double desiredHeading = 0 + 180 + Constants.Alignment.speakerAngleOffsetDegrees;
-
-    alignTarget(desiredx, desiredy, desiredHeading);
+    double targetX = pose3d.getX();
+    double targetY = pose3d.getY();
+    //double desiredHeading = 270 + 180 + Constants.Alignment.ampAngleOffsetDegrees;
+    double desiredRange = 1.5;
+    //alignTarget(desiredx, desiredy, desiredHeading);
+    SmartDashboard.putNumber("Tx", targetX);
+    SmartDashboard.putNumber("Ty", targetY);
+    alignrange(desiredRange, targetX, targetY);
   }
 
   public void alignRedSpeaker() {
+    Pose3d pose3d = atfl.getTagPose(3).get();
 
-    double desiredx = 652.73;
-    double desiredy = 218.42;
-    double desiredHeading = 180 + 180 + Constants.Alignment.speakerAngleOffsetDegrees;
-
-    alignTarget(desiredx, desiredy, desiredHeading);
-  }
-
-  public void alignRedSource() {
-
-    double desiredx = 593.68;
-    double desiredy = 9.68;
-    double desiredHeading = 120 + 180 + Constants.Alignment.sourceAngleOffsetDegrees;
-
-    alignTarget(desiredx, desiredy, desiredHeading);
-  }
-
-  public void alignBlueSource() {
-
-    double desiredx = 57.54;
-    double desiredy = 9.68;
-    double desiredHeading = 60 + 180 + Constants.Alignment.sourceAngleOffsetDegrees;
-
-    alignTarget(desiredx, desiredy, desiredHeading);
+    double targetX = pose3d.getX();
+    double targetY = pose3d.getY();
+    //double desiredHeading = 270 + 180 + Constants.Alignment.ampAngleOffsetDegrees;
+    double desiredRange = 1.5;
+    //alignTarget(desiredx, desiredy, desiredHeading);
+    SmartDashboard.putNumber("Tx", targetX);
+    SmartDashboard.putNumber("Ty", targetY);
+    alignrange(desiredRange, targetX, targetY);
   }
 
   public void alignrange(double desiredRange, double targetX, double targetY) {
