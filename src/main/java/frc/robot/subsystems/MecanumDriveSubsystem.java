@@ -160,7 +160,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     alignrange(desiredRange, targetX, targetY);
   }
 
-  public void alignBlueAmp() {
+  public void alignAmp() {
     Pose3d pose3d = atfl.getTagPose(6).get();
 
     double targetX = pose3d.getX();
