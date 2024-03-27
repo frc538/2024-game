@@ -22,7 +22,9 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.units.Velocity;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
@@ -147,21 +149,22 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     sportMode = setting;
   }
 
-  public void alignRedAmp() {
-    Pose3d pose3d = atfl.getTagPose(5).get();
-
-    double targetX = pose3d.getX();
-    double targetY = pose3d.getY();
-    //double desiredHeading = 270 + 180 + Constants.Alignment.ampAngleOffsetDegrees;
-    double desiredRange = 1.2;
-    //alignTarget(desiredx, desiredy, desiredHeading);
-    SmartDashboard.putNumber("Tx", targetX);
-    SmartDashboard.putNumber("Ty", targetY);
-    alignrange(desiredRange, targetX, targetY);
-  }
-
   public void alignAmp() {
-    Pose3d pose3d = atfl.getTagPose(6).get();
+    int targetId = 0;
+    Optional<Alliance> ally = DriverStation.getAlliance();
+    if (ally.isPresent()) {
+      if (ally.get() == Alliance.Red) {
+        targetId = 5;
+      }
+      if (ally.get() == Alliance.Blue) {
+        targetId = 6;
+      }
+    }
+    else {
+      //Doesn't do anything/exits out of the function
+      return;
+    }
+    Pose3d pose3d = atfl.getTagPose(targetId).get();
 
     double targetX = pose3d.getX();
     double targetY = pose3d.getY();
@@ -173,8 +176,22 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     alignrange(desiredRange, targetX, targetY);
   }
 
-  public void alignBlueSpeaker() {
-    Pose3d pose3d = atfl.getTagPose(7).get();
+  public void alignSpeaker() {
+    int targetIdSpeaker = 0;
+    Optional<Alliance> ally = DriverStation.getAlliance();
+    if (ally.isPresent()) {
+      if (ally.get() == Alliance.Red) {
+        targetIdSpeaker = 3;
+      }
+      if (ally.get() == Alliance.Blue) {
+        targetIdSpeaker = 7;
+      }
+    }
+    else {
+      //Doesn't do anything/exits out of the function
+      return;
+    }
+    Pose3d pose3d = atfl.getTagPose(targetIdSpeaker).get();
 
     double targetX = pose3d.getX();
     double targetY = pose3d.getY();
@@ -185,20 +202,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Ty", targetY);
     alignrange(desiredRange, targetX, targetY);
   }
-
-  public void alignRedSpeaker() {
-    Pose3d pose3d = atfl.getTagPose(3).get();
-
-    double targetX = pose3d.getX();
-    double targetY = pose3d.getY();
-    //double desiredHeading = 270 + 180 + Constants.Alignment.ampAngleOffsetDegrees;
-    double desiredRange = 1.5;
-    //alignTarget(desiredx, desiredy, desiredHeading);
-    SmartDashboard.putNumber("Tx", targetX);
-    SmartDashboard.putNumber("Ty", targetY);
-    alignrange(desiredRange, targetX, targetY);
-  }
-
+  
   public void alignrange(double desiredRange, double targetX, double targetY) {
     Pose2d robotPose = m_LimelightNavigation.getPose2d();
     double currentHeading = robotPose.getRotation().getDegrees();
