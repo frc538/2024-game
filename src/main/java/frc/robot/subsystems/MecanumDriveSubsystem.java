@@ -125,7 +125,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
           deadzone(rightSpeed, Constants.Misc.driveDeadzone) * driveGain,
           deadzone(rotatinalSpeed, Constants.Misc.driveDeadzone) * rotationGain);
 
-      var chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(fieldOrientedSpeeds, LimelightNavigation.getHeading());
+      var chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(fieldOrientedSpeeds, LimelightNavigation.getPoseHeading());
 
       driveBase.driveCartesian(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond,
           chassisSpeeds.omegaRadiansPerSecond);

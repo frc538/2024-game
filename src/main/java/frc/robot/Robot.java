@@ -4,8 +4,12 @@
 
 package frc.robot;
 
+import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
+
 import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
@@ -25,6 +29,11 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
+  private static final String kDefaultAuto = "Default Auto";
+  private static final String kCustomAuto = "Complex Auto";
+  private String m_autoSelected;
+  private final SendableChooser<String> m_chooser = new SendableChooser<>();
+
   /**
    * This function is run when the robot is first started up and should be used
    * for any
@@ -38,6 +47,11 @@ public class Robot extends TimedRobot {
     for (int port = 5800; port <= 5807; port++) {
       PortForwarder.add(port, "10.5.38.11", port);
     }
+
+    //auto thingins
+    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
+    m_chooser.addOption("Complex Auto", kCustomAuto);
+    SmartDashboard.putData("Auto Choices", m_chooser);
 
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
@@ -85,7 +99,10 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     // +
 
-    m_autonomousCommand = m_robotContainer.autoinit();
+    m_autoSelected = m_chooser.getSelected();
+    System.out.println("Current Auto: " + m_autoSelected);
+
+    m_autonomousCommand = m_robotContainer.autoinit(m_autoSelected);
     m_autonomousCommand.schedule();
   }
 

@@ -17,12 +17,14 @@ import frc.robot.subsystems.RightClimberSubsystem;
 import frc.robot.subsystems.TrapScoreSubsystem;
 import frc.robot.subsystems.climberSubsystem;
 
+import java.security.cert.TrustAnchor;
 import java.util.Map;
 
 import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -52,6 +54,7 @@ public class RobotContainer {
   private final LanuchMechanisumSubsystem m_LaunchMech = new LanuchMechanisumSubsystem();
   private final LeftClimberSubsystem mLeftClimber = new LeftClimberSubsystem();
   private final RightClimberSubsystem mRightClimber = new RightClimberSubsystem();
+
   // private final IntakeMechanisum m_Intakemech = new IntakeMechanisum();
   // private final TrapScoreSubsystem m_TrapScoreSubsystem = new
   // TrapScoreSubsystem();
@@ -175,16 +178,13 @@ public class RobotContainer {
 
   }
 
-  public Command autoinit() {
+  public Command autoinit(String selectedAuto) {
     LimelightNavigation.resetgyro();
     m_Navigation.resetFieldOrient();
-    if (m_Drive.m_fieldOriented == true) {
-      System.out.println("Field oriented already on.");
-    } else {
-    m_Drive.toggleFieldOrient();
-    }
 
-    return Commands.run(() -> m_Drive.drive(Constants.Autos.maxSpeed, 0, 0, 0), m_Drive)
+    if (selectedAuto == "Default Auto") {
+      System.out.println("Default auto selected.");
+      return Commands.run(() -> m_Drive.drive(Constants.Autos.maxSpeed, 0, 0, 0), m_Drive)
         .withTimeout(Constants.Autos.driveTimeout)
         // .andThen(Commands.run(() -> m_Drive.alignRedSpeaker(),
         // m_Drive)).withTimeout(Constants.Autos.alignTimeout)
@@ -193,6 +193,25 @@ public class RobotContainer {
         // .andThen(Commands.run(() -> m_LaunchMech.shoot(),
         // m_LaunchMech)).withTimeout(0.7)
         .andThen(Commands.runOnce(() -> m_LaunchMech.stop(), m_LaunchMech));
-  }
+    } else {
+      System.out.println("Complex auto selected.");
+      System.err.println("Complex auto not created.");
 
+      if (m_Drive.m_fieldOriented == true) {
+        System.out.println("Field oriented already on.");
+      } else {
+        m_Drive.toggleFieldOrient();
+      }
+      return Commands.run(() -> m_Drive.drive(Constants.Autos.maxSpeed, 0, 0, 0), m_Drive)
+          .withTimeout(1)
+          // TODO ALIGN YOUR SPEAKER
+           .andThen(Commands.run(() -> m_Drive.alignSpeaker(),
+           m_Drive)).withTimeout(Constants.Autos.alignTimeout)
+          // .andThen(Commands.run(() -> m_LaunchMech.spinUp(),
+          // m_LaunchMech)).withTimeout(0.5)
+           .andThen(Commands.run(() -> m_LaunchMech.shoot(),
+           m_LaunchMech)).withTimeout(0.7)
+          .andThen(Commands.runOnce(() -> m_LaunchMech.stop(), m_LaunchMech));
+    }
+  }
 }

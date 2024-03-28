@@ -44,7 +44,7 @@ public class LimelightNavigation extends SubsystemBase {
 
   MecanumDriveKinematics m_Kinematics;
   // MecanumDriveOdometry m_DriveOdometry;
-  MecanumDrivePoseEstimator m_DrivePoseEstimator;
+  static MecanumDrivePoseEstimator m_DrivePoseEstimator;
 
   public static Pigeon2 m_pigeon2;
   boolean m_InitializeDFromTag = false;
@@ -82,7 +82,11 @@ public class LimelightNavigation extends SubsystemBase {
     var pigeon2Config = new Pigeon2Configuration();
   }
 
-  public static Rotation2d getHeading() {
+  public static Rotation2d getPoseHeading() {
+    return m_DrivePoseEstimator.getEstimatedPosition().getRotation();
+  }
+
+  public static Rotation2d getGyroHeading() {
     return m_pigeon2.getRotation2d();
   }
 
