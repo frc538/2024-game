@@ -173,6 +173,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     //alignTarget(desiredx, desiredy, desiredHeading);
     SmartDashboard.putNumber("Tx", targetX);
     SmartDashboard.putNumber("Ty", targetY);
+    SmartDashboard.putString("Target","Amp");
     alignrange(desiredRange, targetX, targetY);
   }
 
@@ -181,7 +182,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     Optional<Alliance> ally = DriverStation.getAlliance();
     if (ally.isPresent()) {
       if (ally.get() == Alliance.Red) {
-        targetIdSpeaker = 3;
+        targetIdSpeaker = 4;
       }
       if (ally.get() == Alliance.Blue) {
         targetIdSpeaker = 7;
@@ -200,6 +201,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     //alignTarget(desiredx, desiredy, desiredHeading);
     SmartDashboard.putNumber("Tx", targetX);
     SmartDashboard.putNumber("Ty", targetY);
+    SmartDashboard.putString("Target","Speaker");
     alignrange(desiredRange, targetX, targetY);
   }
   
@@ -210,6 +212,14 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     double desiredHeading = Math.toDegrees(Math.atan2(targetY, targetX));
     double headingError = desiredHeading-currentHeading;
 
+    // Normalizes heading error because we had an issue with aligning.
+
+    if (headingError > 180) {
+      headingError -= 360;
+    } else if (headingError < -180) {
+      headingError += 360;
+    }
+
     double distanceX = targetX-robotPose.getX();
     double distanceY = targetY-robotPose.getY();
     double actualRange = Math.sqrt(distanceX*distanceX+distanceY*distanceY);
@@ -217,7 +227,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     double steer = 0.0f;
     double KPAim = -0.1f;
     double KPDistance = -0.4f;
-    double minAim = 0.05f;
+    double minAim = 0; //0.05f;
     
     steer = MathUtil.clamp(deadzone(KPAim * headingError, minAim), -0.5, 0.5);
 

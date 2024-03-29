@@ -108,7 +108,7 @@ public class RobotContainer {
 
     driveJoystick.button(12).onTrue(Commands.runOnce(() -> m_Navigation.resetPosition(), m_Navigation));
     driveJoystick.button(11).onTrue(Commands.runOnce(() -> m_Navigation.resetFieldOrient(), m_Navigation));
-    driveJoystick.button(5).whileTrue(Commands.runOnce(() -> m_Drive.alignSpeaker(), m_Drive));
+    driveJoystick.button(5).whileTrue(Commands.run(() -> m_Drive.alignSpeaker(), m_Drive));
     driveJoystick.button(6).whileTrue(Commands.run(() -> m_Drive.alignAmp(), m_Drive));
     driveJoystick.button(10).onTrue(Commands.run(() -> m_Navigation.ledsOn(), m_Navigation));
     driveJoystick.button(9).onTrue(Commands.runOnce(() -> m_Drive.toggleFieldOrient()));
@@ -188,7 +188,7 @@ public class RobotContainer {
         // m_LaunchMech)).withTimeout(0.5)
         // .andThen(Commands.run(() -> m_LaunchMech.shoot(),
         // m_LaunchMech)).withTimeout(0.7)
-        .andThen(Commands.runOnce(() -> m_LaunchMech.stop(), m_LaunchMech));
+        ;
     } else {
       System.out.println("Complex auto selected.");
       System.err.println("Complex auto not created.");

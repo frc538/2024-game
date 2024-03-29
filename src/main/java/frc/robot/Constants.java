@@ -89,10 +89,10 @@ public final class Constants {
 	}
 
 	public static class Autos {
-		public static final double maxSpeed = 0;
-		public static final double distance = 3;
+		public static final double maxSpeed = 0.7;
+		public static final double distance = 1;
 		public static final double alignTimeout = 5;
-		public static final double driveTimeout = 3;
+		public static final double driveTimeout = 1;
 	}
 
 	public static class Alignment {
