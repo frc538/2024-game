@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.REVPhysicsSim;
+import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -16,14 +17,19 @@ import frc.robot.Robot;
 
 public class LanuchMechanisumSubsystem extends SubsystemBase {
   CANSparkMax top;
+  CANSparkMax top2;
   CANSparkMax bottom;
+  CANSparkMax intakeRotate;
 
   
   /** Creates a new LanuchMechanisumSubsystem. */
   public LanuchMechanisumSubsystem() {
 
     top = new CANSparkMax(Constants.CANIDs.topShoot, MotorType.kBrushless);
-    bottom = new CANSparkMax(Constants.CANIDs.bottomShoot, MotorType.kBrushless);
+    top2 = new CANSparkMax(Constants.CANIDs.top2shoot, MotorType.kBrushless);
+    bottom = new CANSparkMax(Constants.CANIDs.intake, MotorType.kBrushless);
+    intakeRotate = new CANSparkMax(Constants.CANIDs.intakeRotate, MotorType.kBrushless);
+
 
     if (RobotBase.isSimulation()) {
       // REVPhysicsSim.getInstance().addSparkMax(top, DCMotor.getNEO(1));
@@ -48,22 +54,36 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
   }
 
   public void shoot() {
-    top.setVoltage(13);
-    bottom.setVoltage(13);
+    top.set(-1);
+    top2.set(1);
+    bottom.set(-1);
   }
 
   public void intake() {
-    top.set(-0.2);
     bottom.set(-0.2);
+  }
+
+  public void intakeRotateDown() {
+    intakeRotate.set(-0.1);
+  }
+
+  public void intakeRotateUp() {
+    intakeRotate.set(0.1);
+  }
+
+  public void STOPROTATING() {
+    intakeRotate.set(0);
   }
 
   public void stop() {
     top.set(0);
+    top2.set(0);
     bottom.set(0);
   }
 
   public void spinUp() {
-    top.setVoltage(13);
+    top.set(-1);
+    top2.set(1);
     bottom.set(0);
   }
 

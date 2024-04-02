@@ -31,20 +31,19 @@ public final class Constants {
 	}
 
 	public static class CANIDs {
-		public static final int FrontLeftDriveMotor = 8;
-		public static final int FrontRightDriveMotor = 1;
-		public static final int RearLeftDriveMotor = 5;
-		public static final int RearRighDriveMotor = 2;
+		public static final int FrontLeftDriveMotor = 28;
+		public static final int FrontRightDriveMotor = 27;
+		public static final int RearLeftDriveMotor = 26;
+		public static final int RearRighDriveMotor = 25;
 
-		public static final int topShoot = 4;
-		public static final int bottomShoot = 6;
+		public static final int topShoot = 34;
+		public static final int top2shoot = 33;
 
-		public static final int leftClimber = 3;
-		public static final int rightClimber = 7;
+		public static final int leftClimber = 14;
+		public static final int rightClimber = 13;
 
-		public static final int intake = 7;
-		public static final int staging = 8;
-		public static final int launcherLoad = 9;
+		public static final int intake = 32;
+		public static final int intakeRotate = 31;
 	}
 
 	public static class Misc {

@@ -20,6 +20,8 @@ import frc.robot.subsystems.climberSubsystem;
 import java.security.cert.TrustAnchor;
 import java.util.Map;
 
+import javax.print.event.PrintJobEvent;
+
 import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.RelativeEncoder;
 
@@ -36,6 +38,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -139,24 +142,21 @@ public class RobotContainer {
     // m_TrapScoreSubsystem.dropAngle();
     // },m_TrapScoreSubsystem));
 
-    mechanismJoystick.axisGreaterThan(1, 0.5).whileTrue(Commands.startEnd(() -> mLeftClimber.lower(),
-        () -> mLeftClimber.stop(), mLeftClimber));
-    mechanismJoystick.axisLessThan(1, -0.5).whileTrue(Commands.startEnd(() -> mLeftClimber.raise(),
-        () -> mLeftClimber.stop(), mLeftClimber));
+  //  mechanismJoystick.axisGreaterThan(1, 0.5).whileTrue(Commands.startEnd(() -> mLeftClimber.lower(),
+  //      () -> mLeftClimber.stop(), mLeftClimber));
+  //  mechanismJoystick.axisLessThan(1, -0.5).whileTrue(Commands.startEnd(() -> mLeftClimber.raise(),
+  //      () -> mLeftClimber.stop(), mLeftClimber));
+//
+  //  mechanismJoystick.axisGreaterThan(5, 0.5).whileTrue(Commands.startEnd(() -> mRightClimber.lower(),
+  //      () -> mRightClimber.stop(), mRightClimber));
+  //  mechanismJoystick.axisLessThan(5, -0.5).whileTrue(Commands.startEnd(() -> mRightClimber.raise(),
+  //      () -> mRightClimber.stop(), mRightClimber));
 
-    mechanismJoystick.axisGreaterThan(5, 0.5).whileTrue(Commands.startEnd(() -> mRightClimber.lower(),
-        () -> mRightClimber.stop(), mRightClimber));
-    mechanismJoystick.axisLessThan(5, -0.5).whileTrue(Commands.startEnd(() -> mRightClimber.raise(),
-        () -> mRightClimber.stop(), mRightClimber));
-
-    mechanismJoystick.button(1)
+    driveJoystick.povDown()
         .whileTrue(Commands.startEnd(() -> m_climber.lower(), () -> m_climber.stop(), m_climber));
-    mechanismJoystick.button(4)
+    driveJoystick.povUp()
         .whileTrue(Commands.startEnd(() -> m_climber.raise(), () -> m_climber.stop(), m_climber));
 
-    mechanismJoystick.axisGreaterThan(3, 0.5)
-        .whileTrue(Commands.startEnd(() -> m_LaunchMech.intake(), () -> m_LaunchMech.stop(), m_LaunchMech));
-    mechanismJoystick.axisGreaterThan(2, 0.5).whileTrue(Commands.run(() -> m_LaunchMech.spinUp(), m_LaunchMech));
 /*
     mechanismJoystick.button(5).onTrue(
         Commands.run(() -> m_LaunchMech.spinUp(), m_LaunchMech).withTimeout(2)
@@ -167,6 +167,25 @@ public class RobotContainer {
     mechanismJoystick.button(5).onTrue(
         Commands.run(() -> m_LaunchMech.shoot(), m_LaunchMech));
     mechanismJoystick.button(5).onFalse(Commands.runOnce(() -> m_LaunchMech.stop(), m_LaunchMech));
+
+    mechanismJoystick.button(1).onTrue(
+      Commands.run(() -> m_LaunchMech.intakeRotateDown(), m_LaunchMech));
+    mechanismJoystick.button(1).onFalse(Commands.runOnce(() -> m_LaunchMech.STOPROTATING(), m_LaunchMech));
+
+    mechanismJoystick.button(4).onTrue(
+      Commands.run(() -> m_LaunchMech.intakeRotateUp(), m_LaunchMech));
+    mechanismJoystick.button(4).onFalse(Commands.runOnce(() -> m_LaunchMech.STOPROTATING(), m_LaunchMech));
+
+    mechanismJoystick.button(6).onTrue(
+      Commands.run(() -> m_LaunchMech.spinUp(), m_LaunchMech).withTimeout(0.5)
+      .andThen(Commands.run(() -> m_LaunchMech.shoot())).withTimeout(1)
+        .andThen(Commands.run(() -> m_LaunchMech.stop(), m_LaunchMech))
+      );
+
+    mechanismJoystick.button(5).onTrue(
+      Commands.run(() -> m_LaunchMech.intake(), m_LaunchMech));
+    mechanismJoystick.button(6).onFalse(
+      Commands.run(() -> m_LaunchMech.stop(), m_LaunchMech)); 
 
 
     if (RobotBase.isSimulation())
