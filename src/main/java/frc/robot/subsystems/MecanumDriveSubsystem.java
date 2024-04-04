@@ -122,9 +122,15 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     double rotationGain = Constants.Misc.rotationGain;
 
     if (m_fieldOriented == true) {
-
-      var fieldOrientedSpeeds = new ChassisSpeeds(deadzone(forwardSpeed, Constants.Misc.driveDeadzone) * driveGain,
-          deadzone(rightSpeed, Constants.Misc.driveDeadzone) * driveGain,
+      double allianceInversion = 1;
+      Optional<Alliance> ally = DriverStation.getAlliance();
+      if (ally.isPresent()) {
+        if (ally.get() == Alliance.Red) {
+          allianceInversion = -1;
+        }
+      }
+      var fieldOrientedSpeeds = new ChassisSpeeds(deadzone(forwardSpeed * allianceInversion, Constants.Misc.driveDeadzone) * driveGain,
+          deadzone(rightSpeed * allianceInversion, Constants.Misc.driveDeadzone) * driveGain,
           deadzone(rotatinalSpeed, Constants.Misc.driveDeadzone) * rotationGain);
 
       var chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(fieldOrientedSpeeds, LimelightNavigation.getPoseHeading());

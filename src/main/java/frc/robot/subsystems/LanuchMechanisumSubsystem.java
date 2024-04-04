@@ -10,7 +10,9 @@ import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
@@ -21,6 +23,8 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
   CANSparkMax bottom;
   CANSparkMax intakeRotate;
 
+  DigitalInput intakeRotateLimitSwitch = new DigitalInput(0);
+
   
   /** Creates a new LanuchMechanisumSubsystem. */
   public LanuchMechanisumSubsystem() {
@@ -29,6 +33,7 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
     top2 = new CANSparkMax(Constants.CANIDs.top2shoot, MotorType.kBrushless);
     bottom = new CANSparkMax(Constants.CANIDs.intake, MotorType.kBrushless);
     intakeRotate = new CANSparkMax(Constants.CANIDs.intakeRotate, MotorType.kBrushless);
+    SmartDashboard.putNumber("Intake Rotate Encoder", intakeRotate.getEncoder().getPosition());
 
 
     if (RobotBase.isSimulation()) {
@@ -55,7 +60,7 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
 
   public void shoot() {
     top.set(-1);
-    top2.set(-1);
+    top2.set(-0.85);
     bottom.set(-1);
   }
 
@@ -68,7 +73,11 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
   }
 
   public void intakeRotateUp() {
-    intakeRotate.set(0.25);
+    if (intakeRotateLimitSwitch.get()) {
+      intakeRotate.set(0);
+    } else {
+      intakeRotate.set(0.25);
+    }
   }
 
   public void STOPROTATING() {
@@ -83,11 +92,12 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
 
   public void spinUp() {
     top.set(-1);
-    top2.set(-1);
+    top2.set(-0.95);
     bottom.set(0);
   }
 
   @Override
   public void periodic() {
+    
   }
 }

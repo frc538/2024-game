@@ -186,7 +186,7 @@ public class RobotContainer {
       Commands.run(() -> m_LaunchMech.intakeRotateDown(), m_LaunchMech));
     mechanismJoystick.button(1).onFalse(Commands.runOnce(() -> m_LaunchMech.STOPROTATING(), m_LaunchMech));
 
-    mechanismJoystick.button(4).onTrue(
+    mechanismJoystick.button(4).whileTrue(
       Commands.run(() -> m_LaunchMech.intakeRotateUp(), m_LaunchMech));
     mechanismJoystick.button(4).onFalse(Commands.runOnce(() -> m_LaunchMech.STOPROTATING(), m_LaunchMech));
 
