@@ -111,10 +111,23 @@ public class RobotContainer {
 
     driveJoystick.button(12).onTrue(Commands.runOnce(() -> m_Navigation.resetPosition(), m_Navigation));
     driveJoystick.button(11).onTrue(Commands.runOnce(() -> m_Navigation.resetFieldOrient(), m_Navigation));
-    driveJoystick.button(5).whileTrue(Commands.run(() -> m_Drive.alignSpeaker(), m_Drive));
-    driveJoystick.button(6).whileTrue(Commands.run(() -> m_Drive.alignAmp(), m_Drive));
+    driveJoystick.button(7).whileTrue(Commands.run(() -> m_Drive.alignSpeaker(), m_Drive));
+    driveJoystick.button(8).whileTrue(Commands.run(() -> m_Drive.alignAmp(), m_Drive));
     driveJoystick.button(10).onTrue(Commands.run(() -> m_Navigation.ledsOn(), m_Navigation));
     driveJoystick.button(9).onTrue(Commands.runOnce(() -> m_Drive.toggleFieldOrient()));
+
+    driveJoystick.button(5).whileTrue(Commands.run(() -> mLeftClimber.raise(), mLeftClimber));
+    driveJoystick.button(3).whileTrue(Commands.run(() -> mLeftClimber.lower(), mLeftClimber));
+    driveJoystick.button(3).onFalse(Commands.runOnce(() -> mLeftClimber.stop(), mLeftClimber));
+    driveJoystick.button(5).onFalse(Commands.runOnce(() -> mLeftClimber.stop(), mLeftClimber));
+
+
+    driveJoystick.button(6).whileTrue(Commands.run(() -> mRightClimber.raise(), mLeftClimber));
+    driveJoystick.button(4).whileTrue(Commands.run(() -> mRightClimber.lower(), mLeftClimber));
+    driveJoystick.button(4).onFalse(Commands.runOnce(() -> mRightClimber.stop(), mLeftClimber));
+    driveJoystick.button(6).onFalse(Commands.runOnce(() -> mRightClimber.stop(), mLeftClimber));
+
+
     //driveJoystick.button(1).onTrue(Commands.run(() -> m_Drive.sportMode(true)));
     //driveJoystick.button(1).onFalse(Commands.run(() -> m_Drive.sportMode(false)));
 
@@ -156,6 +169,7 @@ public class RobotContainer {
         .whileTrue(Commands.startEnd(() -> m_climber.lower(), () -> m_climber.stop(), m_climber));
     driveJoystick.povUp()
         .whileTrue(Commands.startEnd(() -> m_climber.raise(), () -> m_climber.stop(), m_climber));
+        
 
 /*
     mechanismJoystick.button(5).onTrue(
@@ -177,9 +191,9 @@ public class RobotContainer {
     mechanismJoystick.button(4).onFalse(Commands.runOnce(() -> m_LaunchMech.STOPROTATING(), m_LaunchMech));
 
     mechanismJoystick.button(6).onTrue(
-      Commands.run(() -> m_LaunchMech.spinUp(), m_LaunchMech).withTimeout(0.5)
-      .andThen(Commands.run(() -> m_LaunchMech.shoot())).withTimeout(1)
-        .andThen(Commands.run(() -> m_LaunchMech.stop(), m_LaunchMech))
+      Commands.run(() -> m_LaunchMech.spinUp(), m_LaunchMech).withTimeout(1)
+      .andThen(Commands.run(() -> m_LaunchMech.shoot())).withTimeout(2)
+        .andThen(Commands.runOnce(() -> m_LaunchMech.stop(), m_LaunchMech))
       );
 
     mechanismJoystick.button(5).onTrue(

@@ -104,6 +104,7 @@ public class LimelightNavigation extends SubsystemBase {
   }
 
   public void resetPosition() {
+    m_InitializeDFromTag = false;
     //m_pigeon2.reset();
     // This method will be called once per scheduler run
     if (LimelightHelpers.getTV(Constants.Misc.LimelightName) == true) {

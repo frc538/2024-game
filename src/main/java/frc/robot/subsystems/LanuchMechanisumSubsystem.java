@@ -54,8 +54,8 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
   }
 
   public void shoot() {
-    top.set(-1);
-    top2.set(1);
+    top.set(1);
+    top2.set(-1);
     bottom.set(-1);
   }
 
@@ -68,7 +68,7 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
   }
 
   public void intakeRotateUp() {
-    intakeRotate.set(0.1);
+    intakeRotate.set(0.25);
   }
 
   public void STOPROTATING() {
@@ -83,7 +83,7 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
 
   public void spinUp() {
     top.set(-1);
-    top2.set(1);
+    top2.set(-1);
     bottom.set(0);
   }
 
