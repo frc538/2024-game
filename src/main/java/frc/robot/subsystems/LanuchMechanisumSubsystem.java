@@ -54,7 +54,7 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
   }
 
   public void shoot() {
-    top.set(1);
+    top.set(-1);
     top2.set(-1);
     bottom.set(-1);
   }
