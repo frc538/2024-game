@@ -18,9 +18,9 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class LanuchMechanisumSubsystem extends SubsystemBase {
-  CANSparkMax top;
-  CANSparkMax top2;
-  CANSparkMax bottom;
+  CANSparkMax lowerShooterMotorController;
+  CANSparkMax upperShooterMotorController;
+  CANSparkMax intakeMotorController;
   CANSparkMax intakeRotate;
 
   DigitalInput intakeRotateLimitSwitch = new DigitalInput(0);
@@ -29,9 +29,9 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
   /** Creates a new LanuchMechanisumSubsystem. */
   public LanuchMechanisumSubsystem() {
 
-    top = new CANSparkMax(Constants.CANIDs.topShoot, MotorType.kBrushless);
-    top2 = new CANSparkMax(Constants.CANIDs.top2shoot, MotorType.kBrushless);
-    bottom = new CANSparkMax(Constants.CANIDs.intake, MotorType.kBrushless);
+    lowerShooterMotorController = new CANSparkMax(Constants.CANIDs.topShoot, MotorType.kBrushless);
+    upperShooterMotorController = new CANSparkMax(Constants.CANIDs.top2shoot, MotorType.kBrushless);
+    intakeMotorController = new CANSparkMax(Constants.CANIDs.intake, MotorType.kBrushless);
     intakeRotate = new CANSparkMax(Constants.CANIDs.intakeRotate, MotorType.kBrushless);
     SmartDashboard.putNumber("Intake Rotate Encoder", intakeRotate.getEncoder().getPosition());
 
@@ -45,27 +45,27 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
   }
 
   private void launchSpeaker() {
-    top.set(Constants.Misc.speekerLaunchSpeed);
+    lowerShooterMotorController.set(Constants.Misc.speekerLaunchSpeed);
   }
 
   private void launchAmp() {
     // launch into the amp
-    top.set(Constants.Misc.ampLaunchSpeed);
+    lowerShooterMotorController.set(Constants.Misc.ampLaunchSpeed);
   }
 
   private void initaliseLauncher() {
-    top.set(0);
+    lowerShooterMotorController.set(0);
 
   }
 
   public void shoot() {
-    top.set(-1);
-    top2.set(-0.85);
-    bottom.set(-1);
+    lowerShooterMotorController.set(-0.85);
+    upperShooterMotorController.set(-1);
+    intakeMotorController.set(-1);
   }
 
   public void intake() {
-    bottom.set(-0.2);
+    intakeMotorController.set(-0.2);
   }
 
   public void intakeRotateDown() {
@@ -85,15 +85,15 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
   }
 
   public void stop() {
-    top.set(0);
-    top2.set(0);
-    bottom.set(0);
+    lowerShooterMotorController.set(0);
+    upperShooterMotorController.set(0);
+    intakeMotorController.set(0);
   }
 
   public void spinUp() {
-    top.set(-1);
-    top2.set(-0.95);
-    bottom.set(0);
+    lowerShooterMotorController.set(-1);
+    upperShooterMotorController.set(-0.95);
+    intakeMotorController.set(0);
   }
 
   @Override
