@@ -73,11 +73,12 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
   }
 
   public void intakeRotateUp() {
-    if (intakeRotateLimitSwitch.get()) {
-      intakeRotate.set(0);
-    } else {
-      intakeRotate.set(0.25);
-    }
+    //if (intakeRotateLimitSwitch.get()) {
+    //  intakeRotate.set(0);
+    //} else {
+    //  intakeRotate.set(0.25);
+    //}
+    intakeRotate.set(0.25);
   }
 
   public void STOPROTATING() {

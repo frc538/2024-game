@@ -178,9 +178,8 @@ public class RobotContainer {
             .andThen(Commands.run(() -> m_LaunchMech.stop(), m_LaunchMech)));
 */
     // testing canon shooter
-    mechanismJoystick.button(5).onTrue(
-        Commands.run(() -> m_LaunchMech.shoot(), m_LaunchMech));
-    mechanismJoystick.button(5).onFalse(Commands.runOnce(() -> m_LaunchMech.stop(), m_LaunchMech));
+    //mechanismJoystick.button(5).onTrue(
+        //Commands.run(() -> m_LaunchMech.shoot(), m_LaunchMech));
 
     mechanismJoystick.button(1).onTrue(
       Commands.run(() -> m_LaunchMech.intakeRotateDown(), m_LaunchMech));
@@ -192,14 +191,16 @@ public class RobotContainer {
 
     mechanismJoystick.button(6).onTrue(
       Commands.run(() -> m_LaunchMech.spinUp(), m_LaunchMech).withTimeout(1)
-      .andThen(Commands.run(() -> m_LaunchMech.shoot())).withTimeout(2)
+      .andThen(Commands.run(() -> m_LaunchMech.shoot())).withTimeout(20)
         .andThen(Commands.runOnce(() -> m_LaunchMech.stop(), m_LaunchMech))
       );
+      mechanismJoystick.button(6).onFalse(
+      Commands.run(() -> m_LaunchMech.stop(), m_LaunchMech)); 
+    
 
     mechanismJoystick.button(5).onTrue(
       Commands.run(() -> m_LaunchMech.intake(), m_LaunchMech));
-    mechanismJoystick.button(6).onFalse(
-      Commands.run(() -> m_LaunchMech.stop(), m_LaunchMech)); 
+    mechanismJoystick.button(5).onFalse(Commands.runOnce(() -> m_LaunchMech.stop(), m_LaunchMech));
 
 
     if (RobotBase.isSimulation())
