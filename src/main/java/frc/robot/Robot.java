@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -41,6 +42,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+
+    // Camera thingins
+
+    CameraServer.startAutomaticCapture();
 
     // Make sure you only configure port forwarding once in your robot code.
     // Do not place these function calls in any periodic functions

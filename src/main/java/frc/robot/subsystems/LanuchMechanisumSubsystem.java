@@ -59,7 +59,7 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
   }
 
   public void shoot() {
-    lowerShooterMotorController.set(-0.85);
+    lowerShooterMotorController.set(-1);
     upperShooterMotorController.set(-1);
     intakeMotorController.set(-1);
   }
@@ -93,7 +93,7 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
 
   public void spinUp() {
     lowerShooterMotorController.set(-1);
-    upperShooterMotorController.set(-0.95);
+    upperShooterMotorController.set(-1);
     intakeMotorController.set(0);
   }
 
