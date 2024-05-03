@@ -7,14 +7,11 @@ package frc.robot;
 import frc.robot.subsystems.LeftClimberSubsystem;
 import frc.robot.commands.Autos;
 
-//import frc.robot.Constants.OperatorConstants;
-
 import frc.robot.subsystems.IntakeMechanisum;
 import frc.robot.subsystems.LanuchMechanisumSubsystem;
 import frc.robot.subsystems.LimelightNavigation;
 import frc.robot.subsystems.MecanumDriveSubsystem;
 import frc.robot.subsystems.RightClimberSubsystem;
-import frc.robot.subsystems.TrapScoreSubsystem;
 import frc.robot.subsystems.climberSubsystem;
 
 import java.security.cert.TrustAnchor;
@@ -30,11 +27,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
-//import frc.robot.subsystems.LimelightNavigation;
-
-//import java.util.Map;
-
-//import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -57,10 +49,6 @@ public class RobotContainer {
   private final LanuchMechanisumSubsystem m_LaunchMech = new LanuchMechanisumSubsystem();
   private final LeftClimberSubsystem mLeftClimber = new LeftClimberSubsystem();
   private final RightClimberSubsystem mRightClimber = new RightClimberSubsystem();
-
-  // private final IntakeMechanisum m_Intakemech = new IntakeMechanisum();
-  // private final TrapScoreSubsystem m_TrapScoreSubsystem = new
-  // TrapScoreSubsystem();
 
   private Map<String, RelativeEncoder> Encoders = m_Drive.GetEncoders();
 
@@ -127,59 +115,10 @@ public class RobotContainer {
     driveJoystick.button(4).onFalse(Commands.runOnce(() -> mRightClimber.stop(), mLeftClimber));
     driveJoystick.button(6).onFalse(Commands.runOnce(() -> mRightClimber.stop(), mLeftClimber));
 
-
-    //driveJoystick.button(1).onTrue(Commands.run(() -> m_Drive.sportMode(true)));
-    //driveJoystick.button(1).onFalse(Commands.run(() -> m_Drive.sportMode(false)));
-
-    // contrJoystick.button(1).onFalse(Commands.run(() -> {
-    // m_LaunchMech.launchSpeaker();
-    // }, m_LaunchMech));
-
-    // contrJoystick.button(2).onFalse(Commands.run(() -> {
-    // m_LaunchMech.launchAmp();
-    // },m_LaunchMech));
-
-    // contrJoystick.button(3).whileTrue(Commands.run(() -> {
-    // m_Intakemech.intake();
-    // },m_Intakemech));
-
-    // contrJoystick.button(3).onFalse(Commands.run(() -> {
-    // m_TrapScoreSubsystem.startAngle();
-    // },m_TrapScoreSubsystem));
-
-    // contrJoystick.button(4).onFalse(Commands.run(() -> {
-    // m_TrapScoreSubsystem.loadAngle();
-    // },m_TrapScoreSubsystem));
-
-    // contrJoystick.button(5).onFalse(Commands.run(() -> {
-    // m_TrapScoreSubsystem.dropAngle();
-    // },m_TrapScoreSubsystem));
-
-  //  mechanismJoystick.axisGreaterThan(1, 0.5).whileTrue(Commands.startEnd(() -> mLeftClimber.lower(),
-  //      () -> mLeftClimber.stop(), mLeftClimber));
-  //  mechanismJoystick.axisLessThan(1, -0.5).whileTrue(Commands.startEnd(() -> mLeftClimber.raise(),
-  //      () -> mLeftClimber.stop(), mLeftClimber));
-//
-  //  mechanismJoystick.axisGreaterThan(5, 0.5).whileTrue(Commands.startEnd(() -> mRightClimber.lower(),
-  //      () -> mRightClimber.stop(), mRightClimber));
-  //  mechanismJoystick.axisLessThan(5, -0.5).whileTrue(Commands.startEnd(() -> mRightClimber.raise(),
-  //      () -> mRightClimber.stop(), mRightClimber));
-
     driveJoystick.povDown()
         .whileTrue(Commands.startEnd(() -> m_climber.lower(), () -> m_climber.stop(), m_climber));
     driveJoystick.povUp()
         .whileTrue(Commands.startEnd(() -> m_climber.raise(), () -> m_climber.stop(), m_climber));
-        
-
-/*
-    mechanismJoystick.button(5).onTrue(
-        Commands.run(() -> m_LaunchMech.spinUp(), m_LaunchMech).withTimeout(2)
-            .andThen(Commands.run(() -> m_LaunchMech.shoot(), m_LaunchMech).withTimeout(0.5))
-            .andThen(Commands.run(() -> m_LaunchMech.stop(), m_LaunchMech)));
-*/
-    // testing canon shooter
-    //mechanismJoystick.button(5).onTrue(
-        //Commands.run(() -> m_LaunchMech.shoot(), m_LaunchMech));
 
     mechanismJoystick.button(1).onTrue(
       Commands.run(() -> m_LaunchMech.intakeRotateDown(), m_LaunchMech));
@@ -215,13 +154,7 @@ public class RobotContainer {
     if (selectedAuto == "Default Auto") {
       System.out.println("Default auto selected.");
       return Commands.run(() -> m_Drive.drive(Constants.Autos.maxSpeed, 0, 0, 0), m_Drive)
-        .withTimeout(Constants.Autos.driveTimeout)
-        // .andThen(Commands.run(() -> m_Drive.alignRedSpeaker(),
-        // m_Drive)).withTimeout(Constants.Autos.alignTimeout)
-        // .andThen(Commands.run(() -> m_LaunchMech.spinUp(),
-        // m_LaunchMech)).withTimeout(0.5)
-        // .andThen(Commands.run(() -> m_LaunchMech.shoot(),
-        // m_LaunchMech)).withTimeout(0.7)
+        .withTimeout(Constants.Autos.driveTimeoutSeconds)
         ;
     } else {
       System.out.println("Complex auto selected.");
@@ -236,7 +169,7 @@ public class RobotContainer {
           .withTimeout(1)
           // TODO ALIGN YOUR SPEAKER
            .andThen(Commands.run(() -> m_Drive.alignSpeaker(),
-           m_Drive)).withTimeout(Constants.Autos.alignTimeout)
+           m_Drive)).withTimeout(Constants.Autos.alignTimeoutSeconds)
           // .andThen(Commands.run(() -> m_LaunchMech.spinUp(),
           // m_LaunchMech)).withTimeout(0.5)
            .andThen(Commands.run(() -> m_LaunchMech.shoot(),

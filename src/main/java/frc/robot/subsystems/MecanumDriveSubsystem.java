@@ -67,13 +67,6 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     rearRight.setInverted(true);
     rearRight.burnFlash();    
 
-
-
-    //frontLeft.getEncoder().setPositionConversionFactor(metersPerTick);
-    //frontRight.getEncoder().setPositionConversionFactor(metersPerTick);
-    //rearLeft.getEncoder().setPositionConversionFactor(metersPerTick);
-    //rearRight.getEncoder().setPositionConversionFactor(metersPerTick);
-
     driveBase = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
     if (RobotBase.isSimulation()) {
@@ -174,9 +167,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
     double targetX = pose3d.getX();
     double targetY = pose3d.getY();
-    //double desiredHeading = 270 + 180 + Constants.Alignment.ampAngleOffsetDegrees;
     double desiredRange = 1.2;
-    //alignTarget(desiredx, desiredy, desiredHeading);
     SmartDashboard.putNumber("Tx", targetX);
     SmartDashboard.putNumber("Ty", targetY);
     SmartDashboard.putString("Target","Amp");
@@ -202,9 +193,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
     double targetX = pose3d.getX();
     double targetY = pose3d.getY();
-    //double desiredHeading = 270 + 180 + Constants.Alignment.ampAngleOffsetDegrees;
     double desiredRange = 1.5;
-    //alignTarget(desiredx, desiredy, desiredHeading);
     SmartDashboard.putNumber("Tx", targetX);
     SmartDashboard.putNumber("Ty", targetY);
     SmartDashboard.putString("Target","Speaker");

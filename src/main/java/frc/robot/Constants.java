@@ -19,15 +19,13 @@ import edu.wpi.first.math.geometry.Translation2d;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-	public static class PWM {
-		public static final int topLaunch = 9;
-		public static final int bottomLaunch = 4;
-		public static final int intake = 2;
-		public static final int trapScoreTurner = 3;
-	}
 
 	public static class OperatorConstants {
 		public static final int kDriverControllerPort = 0;
+	}
+
+	public static class AprilTags {
+		public static final int 
 	}
 
 	public static class CANIDs {
@@ -36,8 +34,8 @@ public final class Constants {
 		public static final int RearLeftDriveMotor = 26;
 		public static final int RearRighDriveMotor = 25;
 
-		public static final int topShoot = 34;
-		public static final int top2shoot = 33;
+		public static final int lowerShooter = 34;
+		public static final int upperShooter = 33;
 
 		public static final int leftClimber = 14;
 		public static final int rightClimber = 13;
@@ -65,9 +63,7 @@ public final class Constants {
 
 		// Motor encoder - 42 ticks per rev
 		// Gear ratios are one of the following:
-		// 12.75:1
-		// 10.71:1
-		// 7.31:1
+		// 12.75:1   THIS ONE
 		// Wheel diameter is 8", 8*.0254*pi m/rev
 		public static final double metersPerTick = 8 * (Math.PI * 0.0254) / (12.75);
 
@@ -90,8 +86,8 @@ public final class Constants {
 	public static class Autos {
 		public static final double maxSpeed = 0.7;
 		public static final double distance = 1;
-		public static final double alignTimeout = 5;
-		public static final double driveTimeout = 1;
+		public static final double alignTimeoutSeconds = 5;
+		public static final double driveTimeoutSeconds = 1;
 	}
 
 	public static class Alignment {

@@ -161,7 +161,6 @@ public class LimelightNavigation extends SubsystemBase {
   }
 
   public static void resetgyro () {
-  //  m_pigeon2.reset();
   }
 }
 

@@ -29,18 +29,14 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
   /** Creates a new LanuchMechanisumSubsystem. */
   public LanuchMechanisumSubsystem() {
 
-    lowerShooterMotorController = new CANSparkMax(Constants.CANIDs.topShoot, MotorType.kBrushless);
-    upperShooterMotorController = new CANSparkMax(Constants.CANIDs.top2shoot, MotorType.kBrushless);
+    lowerShooterMotorController = new CANSparkMax(Constants.CANIDs.lowerShooter, MotorType.kBrushless);
+    upperShooterMotorController = new CANSparkMax(Constants.CANIDs.upperShooter, MotorType.kBrushless);
     intakeMotorController = new CANSparkMax(Constants.CANIDs.intake, MotorType.kBrushless);
     intakeRotate = new CANSparkMax(Constants.CANIDs.intakeRotate, MotorType.kBrushless);
     SmartDashboard.putNumber("Intake Rotate Encoder", intakeRotate.getEncoder().getPosition());
 
 
     if (RobotBase.isSimulation()) {
-      // REVPhysicsSim.getInstance().addSparkMax(top, DCMotor.getNEO(1));
-      // REVPhysicsSim.getInstance().addSparkMax(bottom, DCMotor.getNEO(1));
-      // REVPhysicsSim.getInstance().addSparkMax(staging, DCMotor.getNEO(1));
-      // REVPhysicsSim.getInstance().addSparkMax(pickup, DCMotor.getNEO(1));
     }
   }
 
@@ -73,11 +69,6 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
   }
 
   public void intakeRotateUp() {
-    //if (intakeRotateLimitSwitch.get()) {
-    //  intakeRotate.set(0);
-    //} else {
-    //  intakeRotate.set(0.25);
-    //}
     intakeRotate.set(0.25);
   }
 
