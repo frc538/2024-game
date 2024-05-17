@@ -94,6 +94,10 @@ public class LimelightNavigation extends SubsystemBase {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
   }
 
+  public void ledControls(int ControlValue) {
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(ControlValue);    
+  }
+
   public void ledsOn() {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(2);
   }

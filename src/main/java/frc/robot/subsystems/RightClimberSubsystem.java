@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class RightClimberSubsystem extends SubsystemBase {
-  CANSparkMax climber;
+  final CANSparkMax climber;
 
   /** Creates a new ClimberSubsystem. */
   public RightClimberSubsystem() {

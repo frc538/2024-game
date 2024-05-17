@@ -32,10 +32,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class MecanumDriveSubsystem extends SubsystemBase {
-  CANSparkMax frontLeft;
-  CANSparkMax frontRight;
-  CANSparkMax rearLeft;
-  CANSparkMax rearRight;
+  final CANSparkMax frontLeft;
+  final CANSparkMax frontRight;
+  final CANSparkMax rearLeft;
+  final CANSparkMax rearRight;
 
   LimelightNavigation m_LimelightNavigation;
   MecanumDrive driveBase;

@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class LeftClimberSubsystem extends SubsystemBase {
-  CANSparkMax climber;
+  final CANSparkMax climber;
 
   public static double climberDeadzone(double value, double dz) {
     if (value > dz) {

@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class climberSubsystem extends SubsystemBase {
-  LeftClimberSubsystem m_lcs;
-  RightClimberSubsystem m_rcs;
-  Pigeon2 m_pigeon2;
+  final LeftClimberSubsystem m_lcs;
+  final RightClimberSubsystem m_rcs;
+  final Pigeon2 m_pigeon2;
 
 
   /** Creates a new climberSubsystem. */

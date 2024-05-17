@@ -18,10 +18,10 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class LanuchMechanisumSubsystem extends SubsystemBase {
-  CANSparkMax lowerShooterMotorController;
-  CANSparkMax upperShooterMotorController;
-  CANSparkMax intakeMotorController;
-  CANSparkMax intakeRotate;
+  final CANSparkMax lowerShooterMotorController;
+  final CANSparkMax upperShooterMotorController;
+  final CANSparkMax intakeMotorController;
+  final CANSparkMax intakeRotate;
 
   DigitalInput intakeRotateLimitSwitch = new DigitalInput(0);
 

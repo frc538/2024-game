@@ -170,8 +170,6 @@ public class RobotContainer {
           // TODO ALIGN YOUR SPEAKER
            .andThen(Commands.run(() -> m_Drive.alignSpeaker(),
            m_Drive)).withTimeout(Constants.Autos.alignTimeoutSeconds)
-          // .andThen(Commands.run(() -> m_LaunchMech.spinUp(),
-          // m_LaunchMech)).withTimeout(0.5)
            .andThen(Commands.run(() -> m_LaunchMech.shoot(),
            m_LaunchMech)).withTimeout(0.7)
           .andThen(Commands.runOnce(() -> m_LaunchMech.stop(), m_LaunchMech));
