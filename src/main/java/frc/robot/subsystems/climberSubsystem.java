@@ -12,14 +12,13 @@ import frc.robot.Constants;
 public class climberSubsystem extends SubsystemBase {
   final LeftClimberSubsystem m_lcs;
   final RightClimberSubsystem m_rcs;
-  final Pigeon2 m_pigeon2;
+  private LimelightNavigation m_ln;
 
   /** Creates a new climberSubsystem. */
-  public climberSubsystem(LeftClimberSubsystem lcs, RightClimberSubsystem rcs) {
+  public climberSubsystem(LeftClimberSubsystem lcs, RightClimberSubsystem rcs, LimelightNavigation ln) {
     m_lcs = lcs;
     m_rcs = rcs;
-    m_pigeon2 = LimelightNavigation.m_pigeon2;
-
+    m_ln = ln;
   }
 
   public void raise() {
@@ -33,7 +32,7 @@ public class climberSubsystem extends SubsystemBase {
   }
 
   private void raiseLower(double cmd) {
-    double error = m_pigeon2.getRoll().getValueAsDouble();
+    double error = m_ln.getRoll();
     double levelCommand = MecanumDriveSubsystem.deadzone(error, Constants.Misc.climberDeadZone)
         * Constants.Misc.climberP;
     m_lcs.setSpeed(cmd + levelCommand);

@@ -46,7 +46,7 @@ public class LimelightNavigation extends SubsystemBase {
   // MecanumDriveOdometry m_DriveOdometry;
   static MecanumDrivePoseEstimator m_DrivePoseEstimator;
 
-  public static Pigeon2 m_pigeon2;
+  private Pigeon2 m_pigeon2;
   boolean m_InitializeDFromTag = false;
 
   double m_latency = 0.0;
@@ -82,12 +82,16 @@ public class LimelightNavigation extends SubsystemBase {
     var pigeon2Config = new Pigeon2Configuration();
   }
 
-  public static Rotation2d getPoseHeading() {
+  public Rotation2d getPoseHeading() {
     return m_DrivePoseEstimator.getEstimatedPosition().getRotation();
   }
 
-  public static Rotation2d getGyroHeading() {
+  public Rotation2d getGyroHeading() {
     return m_pigeon2.getRotation2d();
+  }
+
+  public double getRoll() {
+    return m_pigeon2.getRoll().getValueAsDouble();
   }
 
   public void ledControls(int ControlValue) {
