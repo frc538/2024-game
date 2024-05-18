@@ -14,7 +14,6 @@ public class climberSubsystem extends SubsystemBase {
   final RightClimberSubsystem m_rcs;
   final Pigeon2 m_pigeon2;
 
-
   /** Creates a new climberSubsystem. */
   public climberSubsystem(LeftClimberSubsystem lcs, RightClimberSubsystem rcs) {
     m_lcs = lcs;

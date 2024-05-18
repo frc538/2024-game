@@ -5,7 +5,6 @@
 package frc.robot;
 
 import frc.robot.subsystems.LeftClimberSubsystem;
-import frc.robot.commands.Autos;
 
 import frc.robot.subsystems.IntakeMechanisum;
 import frc.robot.subsystems.LanuchMechanisumSubsystem;
@@ -93,15 +92,11 @@ public class RobotContainer {
       m_Drive.drive(forwardSpeed, rightSpeed, rotatinalSpeed, slider);
     }, m_Drive));
 
-    m_Navigation.setDefaultCommand(Commands.run(() -> {
-      m_Navigation.ledsOff();
-    }, m_Navigation));
-
     driveJoystick.button(12).onTrue(Commands.runOnce(() -> m_Navigation.resetPosition(), m_Navigation));
     driveJoystick.button(11).onTrue(Commands.runOnce(() -> m_Navigation.resetFieldOrient(), m_Navigation));
     driveJoystick.button(7).whileTrue(Commands.run(() -> m_Drive.alignSpeaker(), m_Drive));
     driveJoystick.button(8).whileTrue(Commands.run(() -> m_Drive.alignAmp(), m_Drive));
-    driveJoystick.button(10).onTrue(Commands.run(() -> m_Navigation.ledsOn(), m_Navigation));
+    driveJoystick.button(10).onTrue(Commands.run(() -> m_Navigation.ledControls(1), m_Navigation));
     driveJoystick.button(9).onTrue(Commands.runOnce(() -> m_Drive.toggleFieldOrient()));
 
     driveJoystick.button(5).whileTrue(Commands.run(() -> mLeftClimber.raise(), mLeftClimber));

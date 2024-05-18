@@ -90,16 +90,14 @@ public class LimelightNavigation extends SubsystemBase {
     return m_pigeon2.getRotation2d();
   }
 
-  public void ledsOff() {
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
-  }
-
   public void ledControls(int ControlValue) {
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(ControlValue);    
-  }
-
-  public void ledsOn() {
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(2);
+    if (ControlValue == 1) {
+      ControlValue = 2;
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(ControlValue);    
+    } else {
+      ControlValue = 1;
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(ControlValue);    
+    }
   }
 
   public void resetFieldOrient() {

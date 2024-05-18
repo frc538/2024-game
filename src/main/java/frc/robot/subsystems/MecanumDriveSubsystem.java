@@ -46,6 +46,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
   /** Creates a new MechaniumDrive. */
   public MecanumDriveSubsystem() {
+
     frontLeft = new CANSparkMax(Constants.CANIDs.FrontLeftDriveMotor, MotorType.kBrushless);
     frontRight = new CANSparkMax(Constants.CANIDs.FrontRightDriveMotor, MotorType.kBrushless);
     rearLeft = new CANSparkMax(Constants.CANIDs.RearLeftDriveMotor, MotorType.kBrushless);
@@ -93,6 +94,8 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
     return Encoders;
   }
+
+  
 
   public static double deadzone(double value, double dz) {
     if (value > dz) {
@@ -153,10 +156,10 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     Optional<Alliance> ally = DriverStation.getAlliance();
     if (ally.isPresent()) {
       if (ally.get() == Alliance.Red) {
-        targetId = 5;
+        targetId = Constants.AprilTags.redAmp;
       }
       if (ally.get() == Alliance.Blue) {
-        targetId = 6;
+        targetId = Constants.AprilTags.blueAmp;
       }
     }
     else {
@@ -179,10 +182,10 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     Optional<Alliance> ally = DriverStation.getAlliance();
     if (ally.isPresent()) {
       if (ally.get() == Alliance.Red) {
-        targetIdSpeaker = 4;
+        targetIdSpeaker = Constants.AprilTags.redSpeaker;
       }
       if (ally.get() == Alliance.Blue) {
-        targetIdSpeaker = 7;
+        targetIdSpeaker = Constants.AprilTags.blueSpeaker;
       }
     }
     else {
