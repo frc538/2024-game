@@ -207,6 +207,15 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     SmartDashboard.putString("Target","Speaker");
     alignrange(desiredRange, targetX, targetY);
   }
+
+  private double normalizeAngle(double angle) {
+      if (angle > 180) {
+      angle -= 360;
+    } else if (angle < -180) {
+      angle += 360;
+    }
+    return angle;
+    }
   
   public void alignrange(double desiredRange, double targetX, double targetY) {
     Pose2d robotPose = m_LimelightNavigation.getPose2d();
@@ -217,11 +226,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
     // Normalizes heading error because we had an issue with aligning.
 
-    if (headingError > 180) {
-      headingError -= 360;
-    } else if (headingError < -180) {
-      headingError += 360;
-    }
+    headingError = normalizeAngle(headingError);
 
     double distanceX = targetX-robotPose.getX();
     double distanceY = targetY-robotPose.getY();
