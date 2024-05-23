@@ -12,7 +12,7 @@ import frc.robot.Constants;
 public class climberSubsystem extends SubsystemBase {
   final LeftClimberSubsystem m_lcs;
   final RightClimberSubsystem m_rcs;
-  private LimelightNavigation m_ln;
+  private final LimelightNavigation m_ln;
 
   /** Creates a new climberSubsystem. */
   public climberSubsystem(LeftClimberSubsystem lcs, RightClimberSubsystem rcs, LimelightNavigation ln) {

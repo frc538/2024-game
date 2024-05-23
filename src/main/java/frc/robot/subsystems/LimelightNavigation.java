@@ -46,7 +46,7 @@ public class LimelightNavigation extends SubsystemBase {
   // MecanumDriveOdometry m_DriveOdometry;
   static MecanumDrivePoseEstimator m_DrivePoseEstimator;
 
-  private Pigeon2 m_pigeon2;
+  private final Pigeon2 m_pigeon2;
   boolean m_InitializeDFromTag = false;
 
   double m_latency = 0.0;
