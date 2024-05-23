@@ -7,56 +7,89 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.REVPhysicsSim;
+import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
 public class LanuchMechanisumSubsystem extends SubsystemBase {
-    CANSparkMax top;
-    CANSparkMax bottom;
-    CANSparkMax staging;
-    CANSparkMax pickup;
+  final CANSparkMax lowerShooterMotorController;
+  final CANSparkMax upperShooterMotorController;
+  final CANSparkMax intakeMotorController;
+  final CANSparkMax intakeRotate;
 
+  DigitalInput intakeRotateLimitSwitch = new DigitalInput(0);
+
+  
   /** Creates a new LanuchMechanisumSubsystem. */
   public LanuchMechanisumSubsystem() {
 
-    top = new CANSparkMax(Constants.CANIDs.topRight, MotorType.kBrushless);
-    bottom = new CANSparkMax(Constants.CANIDs.topLeft, MotorType.kBrushless);
-    staging = new CANSparkMax(Constants.CANIDs.staging, MotorType.kBrushless);
-    pickup = new CANSparkMax(Constants.CANIDs.launcherLoad, MotorType.kBrushless);
-  
+    lowerShooterMotorController = new CANSparkMax(Constants.CANIDs.lowerShooter, MotorType.kBrushless);
+    upperShooterMotorController = new CANSparkMax(Constants.CANIDs.upperShooter, MotorType.kBrushless);
+    intakeMotorController = new CANSparkMax(Constants.CANIDs.intake, MotorType.kBrushless);
+    intakeRotate = new CANSparkMax(Constants.CANIDs.intakeRotate, MotorType.kBrushless);
+    SmartDashboard.putNumber("Intake Rotate Encoder", intakeRotate.getEncoder().getPosition());
 
-    bottom.follow(top);
-    staging.follow(pickup);
 
     if (RobotBase.isSimulation()) {
-      REVPhysicsSim.getInstance().addSparkMax(top, DCMotor.getNEO(1));
-      REVPhysicsSim.getInstance().addSparkMax(bottom, DCMotor.getNEO(1));
-      REVPhysicsSim.getInstance().addSparkMax(staging, DCMotor.getNEO(1));
-      REVPhysicsSim.getInstance().addSparkMax(pickup, DCMotor.getNEO(1));
     }
   }
-public void launchSpeaker(){
-  top.set(Constants.Misc.speekerLaunchSpeed);
-  pickup.set(Constants.Misc.speekerLaunchSpeed);
-}
 
-public void launchAmp(){
-  //launch into the amp
-  top.set(Constants.Misc.ampLaunchSpeed);
-  pickup.set(0);
-}
+  private void launchSpeaker() {
+    lowerShooterMotorController.set(Constants.Misc.speekerLaunchSpeed);
+  }
 
-public void initaliseLauncher(){
-  pickup.set(Constants.Misc.intSpeed);
-  top.set(0);
+  private void launchAmp() {
+    // launch into the amp
+    lowerShooterMotorController.set(Constants.Misc.ampLaunchSpeed);
+  }
 
-}
+  private void initaliseLauncher() {
+    lowerShooterMotorController.set(0);
 
+  }
+
+  public void shoot() {
+    lowerShooterMotorController.set(-1);
+    upperShooterMotorController.set(-1);
+    intakeMotorController.set(-1);
+  }
+
+  public void intake() {
+    intakeMotorController.set(-0.2);
+  }
+
+  public void intakeRotateDown() {
+    intakeRotate.set(-0.1);
+  }
+
+  public void intakeRotateUp() {
+    intakeRotate.set(0.25);
+  }
+
+  public void STOPROTATING() {
+    intakeRotate.set(0);
+  }
+
+  public void stop() {
+    lowerShooterMotorController.set(0);
+    upperShooterMotorController.set(0);
+    intakeMotorController.set(0);
+  }
+
+  public void spinUp() {
+    lowerShooterMotorController.set(-1);
+    upperShooterMotorController.set(-1);
+    intakeMotorController.set(0);
+  }
 
   @Override
-  public void periodic(){}
+  public void periodic() {
+    
+  }
 }

@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class IntakeMechanisum extends SubsystemBase {
-  CANSparkMax intake;
+  final CANSparkMax intake;
   
   /** Creates a new IntakeMechanisum. */
   public IntakeMechanisum() {
@@ -22,7 +22,6 @@ public class IntakeMechanisum extends SubsystemBase {
     intake = new CANSparkMax(Constants.CANIDs.intake, MotorType.kBrushless);
     if (RobotBase.isSimulation()) {
 
-    REVPhysicsSim.getInstance().addSparkMax(intake, DCMotor.getNEO(1));
     }
     
   }

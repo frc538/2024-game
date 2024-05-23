@@ -1,0 +1,17 @@
+* Limelight tests
+- configured as red
+  - [ ] When facing target 4, push align to speaker, it aligns to target 4 and goes to speaker range
+  - [ ] If facing target 5 and 105 inches away, and push align to speaker, it turns 90 degrees clockwise.
+  - [ ] If facing target 12 and 41 inches away, and push align to speaker, it turns 90 degrees counterclockwise.
+- configured as blue
+  - [ ] When facing target 7, push align to speaker, it aligns to target 7 and goes to speaker range
+  - [ ] If facing target 6 and 105 inches away, and push align to speaker, it turns 90 degrees counterclockwise.
+  - [ ] If facing target 16 and 41 inches away, and push align to speaker, it turns 90 degrees clockwise.
+- integrated tests with mount doom
+  - [ ] When facing mount doom at a randomized angle, align to speaker and shoot.
+  - [ ] When facing the amp, align to speaker and shoot.
+  - [ ] Test alignment in complex auto.
+    - In start area and face forward.
+    - Facing stage 11 (RED)
+    - Facing stage 16 (BLUE)
+    - If it aligns to speaker and shoots (AND SCORES), successful test.
