@@ -37,6 +37,10 @@ public class MecanumDriveSubsystem extends SubsystemBase {
   final CANSparkMax rearLeft;
   final CANSparkMax rearRight;
 
+  double HeadingDistanceSetting = Constants.ExtraAlignValues.HeadingDistanceAdjustSetting;
+  double PowerTurn = Constants.ExtraAlignValues.PowerTurn;
+  double PowerForward = Constants.ExtraAlignValues.PowerForward;
+
   LimelightNavigation m_LimelightNavigation;
   MecanumDrive driveBase;
   boolean m_sportMode = false;
@@ -217,6 +221,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     return angle;
     }
   
+  // point at target from desired range
   public void alignrange(double desiredRange, double targetX, double targetY) {
     Pose2d robotPose = m_LimelightNavigation.getPose2d();
     double currentHeading = robotPose.getRotation().getDegrees();
@@ -237,10 +242,16 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     double KPDistance = -0.4f;
     double minAim = 0; //0.05f;
     
-    steer = MathUtil.clamp(deadzone(KPAim * headingError, minAim), -0.5, 0.5);
+    steer = MathUtil.clamp(deadzone(KPAim * headingError, minAim), -PowerTurn, PowerTurn);
 
-
-    double distanceAdjust = MathUtil.clamp(rangeError * KPDistance, -0.5, 0.5);
+    // This is here to control forward movement until pointed in the general direction of the target 
+    double HeadingThresholdGain = 0.0;
+    if (Math.abs(headingError) > HeadingDistanceSetting) {
+      HeadingThresholdGain = 0.0;
+    } else {
+      HeadingThresholdGain = 1.0;
+    }
+    double distanceAdjust = MathUtil.clamp(rangeError * KPDistance * HeadingThresholdGain, -PowerForward, PowerForward);
     
     SmartDashboard.putNumber("desiredHeading", desiredHeading);
     SmartDashboard.putNumber("actualHeading", currentHeading);
