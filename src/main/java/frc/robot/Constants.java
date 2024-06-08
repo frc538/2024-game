@@ -33,8 +33,8 @@ public final class Constants {
 	public static class AprilTags {
 		public static final int redAmp = 5;
 		public static final int blueAmp = 6;
-		public static final int redSpeaker = 3;
-		public static final int blueSpeaker = 8;
+		public static final int redSpeaker = 4;
+		public static final int blueSpeaker = 7;
 	}
 
 	public static class CANIDs {
