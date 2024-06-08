@@ -21,7 +21,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 public final class Constants {
 
 	public static class ExtraAlignValues {
-		public static final double HeadingDistanceAdjustSetting = 10.0;
+		public static final double HeadingDistanceAdjustSetting = 20.0;
 		public static final double PowerTurn = 0.5;
 		public static final double PowerForward = 0.5;
 	}

@@ -96,7 +96,6 @@ public class RobotContainer {
     driveJoystick.button(11).onTrue(Commands.runOnce(() -> m_Navigation.resetFieldOrient(), m_Navigation));
     driveJoystick.button(7).whileTrue(Commands.run(() -> m_Drive.alignSpeaker(), m_Drive));
     driveJoystick.button(8).whileTrue(Commands.run(() -> m_Drive.alignAmp(), m_Drive));
-    driveJoystick.button(10).onTrue(Commands.run(() -> m_Navigation.ledControls(1), m_Navigation));
     driveJoystick.button(9).onTrue(Commands.runOnce(() -> m_Drive.toggleFieldOrient()));
 
     driveJoystick.button(5).whileTrue(Commands.run(() -> mLeftClimber.raise(), mLeftClimber));
@@ -104,6 +103,7 @@ public class RobotContainer {
     driveJoystick.button(3).onFalse(Commands.runOnce(() -> mLeftClimber.stop(), mLeftClimber));
     driveJoystick.button(5).onFalse(Commands.runOnce(() -> mLeftClimber.stop(), mLeftClimber));
 
+    driveJoystick.button(2).onTrue(Commands.runOnce(() -> m_Navigation.toggleLEDS(), m_Navigation));
 
     driveJoystick.button(6).whileTrue(Commands.run(() -> mRightClimber.raise(), mLeftClimber));
     driveJoystick.button(4).whileTrue(Commands.run(() -> mRightClimber.lower(), mLeftClimber));

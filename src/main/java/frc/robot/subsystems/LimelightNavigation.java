@@ -52,6 +52,8 @@ public class LimelightNavigation extends SubsystemBase {
   double m_latency = 0.0;
   double m_limelightSamplesCaptured = 0;
 
+  boolean flashBangOnOff = true;
+
   //private Pigeon2Configuration pigeon2Config;
 
   int x;
@@ -94,13 +96,26 @@ public class LimelightNavigation extends SubsystemBase {
     return m_pigeon2.getRoll().getValueAsDouble();
   }
 
-  public void ledControls(int ControlValue) {
-    if (ControlValue == 1) {
-      ControlValue = 2;
-      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(ControlValue);    
+  public void toggleLEDS() {
+    flashBangOnOff = !flashBangOnOff;
+    ledControls();
+
+
+  }
+
+  public void ledControls() {
+    int ControlValue = flashBangOnOff ? 1 : 2;
+    if (flashBangOnOff) {
+      if (ControlValue == 1) {
+        ControlValue = 2;
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(ControlValue);    
+      } else {
+        ControlValue = 1;
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(ControlValue);    
+      }
     } else {
-      ControlValue = 1;
-      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(ControlValue);    
+        ControlValue = 1;
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(ControlValue);
     }
   }
 

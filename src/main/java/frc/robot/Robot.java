@@ -6,6 +6,9 @@ package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.net.PortForwarder;
+import edu.wpi.first.util.datalog.DataLog;
+import edu.wpi.first.util.datalog.DoubleLogEntry;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -39,6 +42,17 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+
+    // Robot Position Logging
+    DataLogManager.start();
+    DataLog RobotXYZ = DataLogManager.getLog();
+    DoubleLogEntry RobotXDoubleLog;
+    DoubleLogEntry RobotYDoubleLog;
+    DoubleLogEntry RobotZDoubleLog;
+
+    RobotXDoubleLog = new DoubleLogEntry(RobotXYZ, "/RobotX/double");
+    RobotYDoubleLog = new DoubleLogEntry(RobotXYZ, "/RobotY/double");
+    RobotZDoubleLog = new DoubleLogEntry(RobotXYZ, "/RobotZ/double");
 
     // Camera thingins
 
@@ -82,6 +96,9 @@ public class Robot extends TimedRobot {
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    //active logging
+   //DO THIS RobotXDoubleLog.append(SmartDashboard."");
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
