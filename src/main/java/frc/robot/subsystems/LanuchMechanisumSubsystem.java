@@ -88,6 +88,10 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
     intakeMotorController.set(0);
   }
 
+  public void deJamForIan() {
+    intakeMotorController.set(0.05);
+  }
+
   @Override
   public void periodic() {
     

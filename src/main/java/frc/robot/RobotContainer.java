@@ -136,6 +136,10 @@ public class RobotContainer {
       Commands.run(() -> m_LaunchMech.intake(), m_LaunchMech));
     mechanismJoystick.button(5).onFalse(Commands.runOnce(() -> m_LaunchMech.stop(), m_LaunchMech));
 
+    mechanismJoystick.button(2).onTrue(
+      Commands.run(() -> m_LaunchMech.deJamForIan(), m_LaunchMech));
+    mechanismJoystick.button(2).onFalse(Commands.runOnce(() -> m_LaunchMech.stop(), m_LaunchMech));
+
 
     if (RobotBase.isSimulation())
       REVPhysicsSim.getInstance().run();

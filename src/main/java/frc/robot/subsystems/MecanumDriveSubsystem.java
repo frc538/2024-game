@@ -127,11 +127,11 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     double rotationGain = Constants.Misc.rotationGain;
 
     if (m_fieldOriented == true) {
-      double allianceInversion = 1;
+      double allianceInversion = -1;
       Optional<Alliance> ally = DriverStation.getAlliance();
       if (ally.isPresent()) {
         if (ally.get() == Alliance.Red) {
-          allianceInversion = -1;
+          allianceInversion = 1;
         }
       }
       var fieldOrientedSpeeds = new ChassisSpeeds(deadzone(forwardSpeed * allianceInversion, Constants.Misc.driveDeadzone) * driveGain,
