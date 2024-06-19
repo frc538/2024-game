@@ -23,6 +23,7 @@ import edu.wpi.first.math.kinematics.MecanumDriveOdometry;
 import edu.wpi.first.math.kinematics.MecanumDriveWheelPositions;
 import edu.wpi.first.math.kinematics.WheelPositions;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -42,6 +43,8 @@ public class LimelightNavigation extends SubsystemBase {
   RelativeEncoder m_RearLeftWheel_Encoder;
   RelativeEncoder m_RearRightWheel_Encoder;
 
+  public 
+
   MecanumDriveKinematics m_Kinematics;
   // MecanumDriveOdometry m_DriveOdometry;
   static MecanumDrivePoseEstimator m_DrivePoseEstimator;
@@ -57,6 +60,8 @@ public class LimelightNavigation extends SubsystemBase {
   //private Pigeon2Configuration pigeon2Config;
 
   int x;
+
+  StructPublisher<Pose2d> posePublisher;
 
   /** Creates a new LimelightNavigation. */
   public LimelightNavigation(Map<String, RelativeEncoder> encoders) {
@@ -82,6 +87,9 @@ public class LimelightNavigation extends SubsystemBase {
 
     m_pigeon2 = new Pigeon2(CanID.Pigeon2);
     var pigeon2Config = new Pigeon2Configuration();
+
+    posePublisher =NetworkTableInstance.getDefault().getStructTopic("Pose2d", Pose2d.struct).publish();
+
   }
 
   public Rotation2d getPoseHeading() {
@@ -104,10 +112,10 @@ public class LimelightNavigation extends SubsystemBase {
   }
 
   public void ledControls() {
-    int ControlValue = flashBangOnOff ? 1 : 2;
+    int ControlValue = flashBangOnOff ? 1 : 3;
     if (flashBangOnOff) {
       if (ControlValue == 1) {
-        ControlValue = 2;
+        ControlValue = 3;
         NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(ControlValue);    
       } else {
         ControlValue = 1;
@@ -174,6 +182,9 @@ public class LimelightNavigation extends SubsystemBase {
     SmartDashboard.putNumber("Robot Pitch", m_pigeon2.getPitch().getValueAsDouble());
     SmartDashboard.putNumber("Robot Yaw", m_pigeon2.getYaw().getValueAsDouble());
     SmartDashboard.putNumber("Robot Roll", m_pigeon2.getRoll().getValueAsDouble());
+
+    posePublisher.set(pose);
+
     double currentHeading = SmartDashboard.getNumber("updated heading", m_pigeon2.getRotation2d().getDegrees());
   }
 

@@ -35,6 +35,7 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
+
   /**
    * This function is run when the robot is first started up and should be used
    * for any
@@ -46,14 +47,7 @@ public class Robot extends TimedRobot {
     // Robot Position Logging
     DataLogManager.start();
     DataLog RobotXYZ = DataLogManager.getLog();
-    DoubleLogEntry RobotXDoubleLog;
-    DoubleLogEntry RobotYDoubleLog;
-    DoubleLogEntry RobotZDoubleLog;
-
-    RobotXDoubleLog = new DoubleLogEntry(RobotXYZ, "/RobotX/double");
-    RobotYDoubleLog = new DoubleLogEntry(RobotXYZ, "/RobotY/double");
-    RobotZDoubleLog = new DoubleLogEntry(RobotXYZ, "/RobotZ/double");
-
+    
     // Camera thingins
 
     CameraServer.startAutomaticCapture();
@@ -88,6 +82,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+
     // Runs the Scheduler. This is responsible for polling buttons, adding
     // newly-scheduled
     // commands, running already-scheduled commands, removing finished or
@@ -99,6 +94,8 @@ public class Robot extends TimedRobot {
 
     //active logging
    //DO THIS RobotXDoubleLog.append(SmartDashboard."");
+
+    
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
