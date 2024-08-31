@@ -5,6 +5,9 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.hal.HAL;
+import frc.robot.subsystems.Drive.DriveIO;
+import frc.robot.subsystems.Drive.MecanumDriveSubsystem;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +21,7 @@ public class MecanumTest {
     @BeforeEach // this method will run before each test
     void setup() {
         assert HAL.initialize(500, 0); // initialize the HAL, crash if failed
-        mDriveSubsystem = new MecanumDriveSubsystem(); // create our drive
+        mDriveSubsystem = new MecanumDriveSubsystem(new DriveIO() {}); // create our drive
     }
 
     @AfterEach
