@@ -55,7 +55,7 @@ public class LimelightNavigation extends SubsystemBase {
 
   boolean flashBangOnOff = true;
 
-  //private Pigeon2Configuration pigeon2Config;
+  // private Pigeon2Configuration pigeon2Config;
 
   int x;
 
@@ -71,16 +71,16 @@ public class LimelightNavigation extends SubsystemBase {
         Constants.Misc.RearLeftDriveWheel_Position_Meters, Constants.Misc.RearRightDriveWheel_Position_Meters);
     m_DrivePoseEstimator = new MecanumDrivePoseEstimator(m_Kinematics, new Rotation2d(0),
         new MecanumDriveWheelPositions(
-            m_DriveIO.frontLeftEncoderPosition*Constants.Misc.metersPerTick, 
-            m_DriveIO.frontRightEncoderPosition*Constants.Misc.metersPerTick,
-            m_DriveIO.rearLeftEncoderPosition*Constants.Misc.metersPerTick,
-            m_DriveIO.rearRightEncoderPosition*Constants.Misc.metersPerTick),
+            m_DriveIO.frontLeftRad * Constants.Misc.metersPerMotorRad,
+            m_DriveIO.frontRightRad * Constants.Misc.metersPerMotorRad,
+            m_DriveIO.rearLeftRad * Constants.Misc.metersPerMotorRad,
+            m_DriveIO.rearRightRad * Constants.Misc.metersPerMotorRad),
         initialPoseMeters);
 
     m_pigeon2 = new Pigeon2(CanID.Pigeon2);
     var pigeon2Config = new Pigeon2Configuration();
 
-    posePublisher =NetworkTableInstance.getDefault().getStructTopic("Pose2d", Pose2d.struct).publish();
+    posePublisher = NetworkTableInstance.getDefault().getStructTopic("Pose2d", Pose2d.struct).publish();
 
   }
 
@@ -100,7 +100,6 @@ public class LimelightNavigation extends SubsystemBase {
     flashBangOnOff = !flashBangOnOff;
     ledControls();
 
-
   }
 
   public void ledControls() {
@@ -108,14 +107,14 @@ public class LimelightNavigation extends SubsystemBase {
     if (flashBangOnOff) {
       if (ControlValue == 1) {
         ControlValue = 3;
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(ControlValue);    
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(ControlValue);
       } else {
         ControlValue = 1;
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(ControlValue);    
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(ControlValue);
       }
     } else {
-        ControlValue = 1;
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(ControlValue);
+      ControlValue = 1;
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(ControlValue);
     }
   }
 
@@ -131,10 +130,10 @@ public class LimelightNavigation extends SubsystemBase {
     if (LimelightHelpers.getTV(Constants.Misc.LimelightName) == true) {
       Pose2d robotPose2d = LimelightHelpers.getBotPose2d_wpiBlue(Constants.Misc.LimelightName);
       var MecanumDriveWheelPositions = new MecanumDriveWheelPositions(
-        m_DriveIO.frontLeftEncoderPosition*Constants.Misc.metersPerTick, 
-        m_DriveIO.frontRightEncoderPosition*Constants.Misc.metersPerTick,
-        m_DriveIO.rearLeftEncoderPosition*Constants.Misc.metersPerTick, 
-        m_DriveIO.rearRightEncoderPosition*Constants.Misc.metersPerTick);
+            m_DriveIO.frontLeftRad*Constants.Misc.metersPerMotorRad, 
+            m_DriveIO.frontRightRad*Constants.Misc.metersPerMotorRad,
+            m_DriveIO.rearLeftRad*Constants.Misc.metersPerMotorRad,
+            m_DriveIO.rearRightRad*Constants.Misc.metersPerMotorRad);
       m_DrivePoseEstimator.resetPosition(m_pigeon2.getRotation2d(), MecanumDriveWheelPositions, robotPose2d);
       m_InitializeDFromTag = true;
     }
@@ -148,10 +147,10 @@ public class LimelightNavigation extends SubsystemBase {
      resetPosition();
     } else {
       MecanumDriveWheelPositions positions = new MecanumDriveWheelPositions(
-        m_DriveIO.frontLeftEncoderPosition*Constants.Misc.metersPerTick,
-        m_DriveIO.frontRightEncoderPosition*Constants.Misc.metersPerTick,
-        m_DriveIO.rearLeftEncoderPosition*Constants.Misc.metersPerTick,
-        m_DriveIO.rearRightEncoderPosition*Constants.Misc.metersPerTick);
+            m_DriveIO.frontLeftRad*Constants.Misc.metersPerMotorRad, 
+            m_DriveIO.frontRightRad*Constants.Misc.metersPerMotorRad,
+            m_DriveIO.rearLeftRad*Constants.Misc.metersPerMotorRad,
+            m_DriveIO.rearRightRad*Constants.Misc.metersPerMotorRad);
       m_DrivePoseEstimator.update(m_pigeon2.getRotation2d(), positions);
 
       if (LimelightHelpers.getTV(Constants.Misc.LimelightName) == true) {
@@ -184,7 +183,7 @@ public class LimelightNavigation extends SubsystemBase {
     return m_DrivePoseEstimator.getEstimatedPosition();
   }
 
-  public static void resetgyro () {
+  public static void resetgyro() {
   }
 }
 

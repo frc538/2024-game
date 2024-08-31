@@ -79,8 +79,11 @@ public final class Constants {
 		// Motor encoder - 42 ticks per rev
 		// Gear ratios are one of the following:
 		// 12.75:1   THIS ONE
-		// Wheel diameter is 8", 8*.0254*pi m/rev
-		public static final double metersPerTick = 8 * (Math.PI * 0.0254) / (12.75);
+		public static final double motorRadPerWheelRad = 12.75;
+
+		// Linear speed = Radius * Angular Velocity
+		// Angular Velocity of wheel = Angular Velocity of Motor / Gear Ratio
+		public static final double metersPerMotorRad = 4 / 12.75;
 
 		public static final double driveDeadzone = 0.125;
 

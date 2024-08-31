@@ -45,23 +45,23 @@ public class DriveIOSparkMaxBrushed implements DriveIO {
 
     @Override
     public void updateInputs(DriveIOInputs inputs) {
-        inputs.frontLeftEncoderPosition = frontLeft.getEncoder().getPosition();
-        inputs.frontLeftEncoderVelocity = frontLeft.getEncoder().getVelocity();
+        inputs.frontLeftRad = frontLeft.getEncoder().getPosition() * 2 * Math.PI;
+        inputs.frontLeftRadPerSec = frontLeft.getEncoder().getVelocity() * 2 * Math.PI * 60.0;
         inputs.frontLeftAppliedVolts = frontLeft.getAppliedOutput() * frontLeft.getBusVoltage();
         inputs.frontLeftCurrentAmps = frontLeft.getOutputCurrent();
 
-        inputs.frontRightEncoderPosition = frontRight.getEncoder().getPosition();
-        inputs.frontRightEncoderVelocity = frontRight.getEncoder().getVelocity();
+        inputs.frontRightRad = frontRight.getEncoder().getPosition() * 2 * Math.PI;
+        inputs.frontRightRadPerSec = frontRight.getEncoder().getVelocity() * 2 * Math.PI * 60.0;
         inputs.frontRightAppliedVolts = frontRight.getAppliedOutput() * frontRight.getBusVoltage();
         inputs.frontRightCurrentAmps = frontRight.getOutputCurrent();
 
-        inputs.rearLeftEncoderPosition = rearLeft.getEncoder().getPosition();
-        inputs.rearLeftEncoderVelocity = rearLeft.getEncoder().getVelocity();
+        inputs.rearLeftRad = rearLeft.getEncoder().getPosition() * 2 * Math.PI;
+        inputs.rearLeftRadPerSec = rearLeft.getEncoder().getVelocity() * 2 * Math.PI * 60.0;
         inputs.rearLeftAppliedVolts = rearLeft.getAppliedOutput() * rearLeft.getBusVoltage();
         inputs.rearLeftCurrentAmps = rearLeft.getOutputCurrent();
 
-        inputs.rearRightEncoderPosition = rearRight.getEncoder().getPosition();
-        inputs.rearRightEncoderVelocity = rearRight.getEncoder().getVelocity();
+        inputs.rearRightRad = rearRight.getEncoder().getPosition() * 2 * Math.PI;
+        inputs.rearRightRadPerSec = rearRight.getEncoder().getVelocity() * 2 * Math.PI * 60.0;
         inputs.rearRightAppliedVolts = rearRight.getAppliedOutput() * rearRight.getBusVoltage();
         inputs.rearRightCurrentAmps = rearRight.getOutputCurrent();
     }
