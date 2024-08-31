@@ -44,18 +44,26 @@ public class DriveIOSparkMaxBrushed implements DriveIO {
     }
 
     @Override
-    public void updateInputs(DriveIOInputs io) {
-        io.frontLeftEncoderPosition = frontLeft.getEncoder().getPosition();
-        io.frontLeftEncoderVelocity = frontLeft.getEncoder().getVelocity();
+    public void updateInputs(DriveIOInputs inputs) {
+        inputs.frontLeftEncoderPosition = frontLeft.getEncoder().getPosition();
+        inputs.frontLeftEncoderVelocity = frontLeft.getEncoder().getVelocity();
+        inputs.frontLeftAppliedVolts = frontLeft.getAppliedOutput() * frontLeft.getBusVoltage();
+        inputs.frontLeftCurrentAmps = frontLeft.getOutputCurrent();
 
-        io.frontRightEncoderPosition = frontRight.getEncoder().getPosition();
-        io.frontRightEncoderVelocity = frontRight.getEncoder().getVelocity();
+        inputs.frontRightEncoderPosition = frontRight.getEncoder().getPosition();
+        inputs.frontRightEncoderVelocity = frontRight.getEncoder().getVelocity();
+        inputs.frontRightAppliedVolts = frontRight.getAppliedOutput() * frontRight.getBusVoltage();
+        inputs.frontRightCurrentAmps = frontRight.getOutputCurrent();
 
-        io.rearLeftEncoderPosition = rearLeft.getEncoder().getPosition();
-        io.rearLeftEncoderVelocity = rearLeft.getEncoder().getVelocity();
+        inputs.rearLeftEncoderPosition = rearLeft.getEncoder().getPosition();
+        inputs.rearLeftEncoderVelocity = rearLeft.getEncoder().getVelocity();
+        inputs.rearLeftAppliedVolts = rearLeft.getAppliedOutput() * rearLeft.getBusVoltage();
+        inputs.rearLeftCurrentAmps = rearLeft.getOutputCurrent();
 
-        io.rearRightEncoderPosition = rearRight.getEncoder().getPosition();
-        io.rearRightEncoderVelocity = rearRight.getEncoder().getVelocity();
+        inputs.rearRightEncoderPosition = rearRight.getEncoder().getPosition();
+        inputs.rearRightEncoderVelocity = rearRight.getEncoder().getVelocity();
+        inputs.rearRightAppliedVolts = rearRight.getAppliedOutput() * rearRight.getBusVoltage();
+        inputs.rearRightCurrentAmps = rearRight.getOutputCurrent();
     }
 
     @Override
