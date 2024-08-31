@@ -30,6 +30,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.CanID;
+import frc.robot.subsystems.Drive.DriveIO;
+import frc.robot.subsystems.Drive.MecanumDriveSubsystem;
+import frc.robot.subsystems.Drive.DriveIO.DriveIOInputs;
 import frc.robot.LimelightHelpers;
 
 public class LimelightNavigation extends SubsystemBase {
@@ -38,14 +41,9 @@ public class LimelightNavigation extends SubsystemBase {
   Translation2d m_RearLeftWheel_Position;
   Translation2d m_RearRightWheel_Position;
 
-  RelativeEncoder m_FrontLeftWheel_Endocer;
-  RelativeEncoder m_FrontRightWheel_Encoder;
-  RelativeEncoder m_RearLeftWheel_Encoder;
-  RelativeEncoder m_RearRightWheel_Encoder;
+  private DriveIOInputs m_DriveIO;
 
-  public 
-
-  MecanumDriveKinematics m_Kinematics;
+  public MecanumDriveKinematics m_Kinematics;
   // MecanumDriveOdometry m_DriveOdometry;
   static MecanumDrivePoseEstimator m_DrivePoseEstimator;
 
@@ -64,14 +62,8 @@ public class LimelightNavigation extends SubsystemBase {
   StructPublisher<Pose2d> posePublisher;
 
   /** Creates a new LimelightNavigation. */
-  public LimelightNavigation(Map<String, RelativeEncoder> encoders) {
-    // BUGBUG: Get this in RobotContainer, pass to this subsystem.
-    Map<String, RelativeEncoder> Encoders = encoders;
-    m_FrontLeftWheel_Endocer = Encoders.get("Front Left");
-    m_FrontRightWheel_Encoder = Encoders.get("Front Right");
-    m_RearLeftWheel_Encoder = Encoders.get("Rear Left");
-    m_RearRightWheel_Encoder = Encoders.get("Rear Right");
-
+  public LimelightNavigation(DriveIOInputs dio) {
+    m_DriveIO = dio;
 
     Pose2d initialPoseMeters = new Pose2d();
     m_Kinematics = new MecanumDriveKinematics(Constants.Misc.FrontLeftDriveWheel_Position_Meters,
@@ -79,10 +71,10 @@ public class LimelightNavigation extends SubsystemBase {
         Constants.Misc.RearLeftDriveWheel_Position_Meters, Constants.Misc.RearRightDriveWheel_Position_Meters);
     m_DrivePoseEstimator = new MecanumDrivePoseEstimator(m_Kinematics, new Rotation2d(0),
         new MecanumDriveWheelPositions(
-            m_FrontLeftWheel_Endocer.getPosition()*Constants.Misc.metersPerTick, 
-            m_FrontRightWheel_Encoder.getPosition()*Constants.Misc.metersPerTick,
-            m_RearLeftWheel_Encoder.getPosition()*Constants.Misc.metersPerTick,
-             m_RearRightWheel_Encoder.getPosition()*Constants.Misc.metersPerTick),
+            m_DriveIO.frontLeftEncoderPosition*Constants.Misc.metersPerTick, 
+            m_DriveIO.frontRightEncoderPosition*Constants.Misc.metersPerTick,
+            m_DriveIO.rearLeftEncoderPosition*Constants.Misc.metersPerTick,
+            m_DriveIO.rearRightEncoderPosition*Constants.Misc.metersPerTick),
         initialPoseMeters);
 
     m_pigeon2 = new Pigeon2(CanID.Pigeon2);
@@ -139,10 +131,10 @@ public class LimelightNavigation extends SubsystemBase {
     if (LimelightHelpers.getTV(Constants.Misc.LimelightName) == true) {
       Pose2d robotPose2d = LimelightHelpers.getBotPose2d_wpiBlue(Constants.Misc.LimelightName);
       var MecanumDriveWheelPositions = new MecanumDriveWheelPositions(
-          m_FrontLeftWheel_Endocer.getPosition()*Constants.Misc.metersPerTick, 
-          m_FrontRightWheel_Encoder.getPosition()*Constants.Misc.metersPerTick,
-          m_RearLeftWheel_Encoder.getPosition()*Constants.Misc.metersPerTick, 
-          m_RearRightWheel_Encoder.getPosition()*Constants.Misc.metersPerTick);
+        m_DriveIO.frontLeftEncoderPosition*Constants.Misc.metersPerTick, 
+        m_DriveIO.frontRightEncoderPosition*Constants.Misc.metersPerTick,
+        m_DriveIO.rearLeftEncoderPosition*Constants.Misc.metersPerTick, 
+        m_DriveIO.rearRightEncoderPosition*Constants.Misc.metersPerTick);
       m_DrivePoseEstimator.resetPosition(m_pigeon2.getRotation2d(), MecanumDriveWheelPositions, robotPose2d);
       m_InitializeDFromTag = true;
     }
@@ -156,10 +148,10 @@ public class LimelightNavigation extends SubsystemBase {
      resetPosition();
     } else {
       MecanumDriveWheelPositions positions = new MecanumDriveWheelPositions(
-        m_FrontLeftWheel_Endocer.getPosition()*Constants.Misc.metersPerTick,
-          m_FrontRightWheel_Encoder.getPosition()*Constants.Misc.metersPerTick,
-          m_RearLeftWheel_Encoder.getPosition()*Constants.Misc.metersPerTick,
-          m_RearRightWheel_Encoder.getPosition()*Constants.Misc.metersPerTick);
+        m_DriveIO.frontLeftEncoderPosition*Constants.Misc.metersPerTick,
+        m_DriveIO.frontRightEncoderPosition*Constants.Misc.metersPerTick,
+        m_DriveIO.rearLeftEncoderPosition*Constants.Misc.metersPerTick,
+        m_DriveIO.rearRightEncoderPosition*Constants.Misc.metersPerTick);
       m_DrivePoseEstimator.update(m_pigeon2.getRotation2d(), positions);
 
       if (LimelightHelpers.getTV(Constants.Misc.LimelightName) == true) {

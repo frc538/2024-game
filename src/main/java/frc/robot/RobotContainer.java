@@ -9,9 +9,11 @@ import frc.robot.subsystems.LeftClimberSubsystem;
 import frc.robot.subsystems.IntakeMechanisum;
 import frc.robot.subsystems.LanuchMechanisumSubsystem;
 import frc.robot.subsystems.LimelightNavigation;
-import frc.robot.subsystems.MecanumDriveSubsystem;
 import frc.robot.subsystems.RightClimberSubsystem;
 import frc.robot.subsystems.climberSubsystem;
+import frc.robot.subsystems.Drive.DriveIO;
+import frc.robot.subsystems.Drive.DriveIOSparkMaxBrushed;
+import frc.robot.subsystems.Drive.MecanumDriveSubsystem;
 
 import java.security.cert.TrustAnchor;
 import java.util.Map;
@@ -22,6 +24,7 @@ import com.revrobotics.REVPhysicsSim;
 import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -43,17 +46,15 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final MecanumDriveSubsystem m_Drive = new MecanumDriveSubsystem();
+  private final MecanumDriveSubsystem m_Drive;
 
   private final LanuchMechanisumSubsystem m_LaunchMech = new LanuchMechanisumSubsystem();
   private final LeftClimberSubsystem mLeftClimber = new LeftClimberSubsystem();
   private final RightClimberSubsystem mRightClimber = new RightClimberSubsystem();
 
-  private Map<String, RelativeEncoder> Encoders = m_Drive.GetEncoders();
+  private final LimelightNavigation m_Navigation;
 
-  private final LimelightNavigation m_Navigation = new LimelightNavigation(Encoders);
-
-  private final climberSubsystem m_climber = new climberSubsystem(mLeftClimber, mRightClimber, m_Navigation);// has to be after
+  private final climberSubsystem m_climber;// has to be after
                                                                                                // limelight subsystem
 
   private final CommandJoystick driveJoystick = new CommandJoystick(0);
@@ -63,6 +64,29 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    switch (Constants.currentMode) {
+      case REAL:
+        // Real robot, instantiate hardware IO implementations
+        m_Drive = new MecanumDriveSubsystem(new DriveIOSparkMaxBrushed()); // Spark Max/Spark Flex + brushed, no encoders
+        // drive = new Drive(new DriveIOSparkMax()); // Spark Max/Spark Flex + NEO/Vortex
+        // drive = new Drive(new DriveIOTalonSRX()); // Talon SRX + brushed, no encoders
+        // drive = new Drive(new DriveIOTalonFX()); // Talon FX (Falon 500/Kraken X60)
+        break;
+
+      //case SIM:
+        // Sim robot, instantiate physics sim IO implementations
+        //drive = new Drive(new DriveIOSim());
+        //break;
+
+      default:
+        // Replayed robot, disable IO implementations
+        m_Drive = new MecanumDriveSubsystem(new DriveIO() {});
+        break;
+    }
+
+    m_Navigation = new LimelightNavigation(m_Drive.inputs);
+    m_climber = new climberSubsystem(mLeftClimber, mRightClimber, m_Navigation);
+
     // Configure the trigger bindings
     configureBindings();
     m_Drive.setLimeLightNavigation(m_Navigation);

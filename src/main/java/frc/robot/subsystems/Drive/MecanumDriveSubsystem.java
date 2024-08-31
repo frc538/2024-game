@@ -2,11 +2,13 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.subsystems;
+package frc.robot.subsystems.Drive;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
+import org.littletonrobotics.junction.Logger;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.revrobotics.CANSparkMax;
@@ -30,76 +32,31 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.LimelightNavigation;
 
 public class MecanumDriveSubsystem extends SubsystemBase {
-  final CANSparkMax frontLeft;
-  final CANSparkMax frontRight;
-  final CANSparkMax rearLeft;
-  final CANSparkMax rearRight;
 
+  private final DriveIO io;
+  public final DriveIOInputsAutoLogged inputs = new DriveIOInputsAutoLogged();
+  
   double HeadingDistanceSetting = Constants.ExtraAlignValues.HeadingDistanceAdjustSetting;
   double PowerTurn = Constants.ExtraAlignValues.PowerTurn;
   double PowerForward = Constants.ExtraAlignValues.PowerForward;
 
   LimelightNavigation m_LimelightNavigation;
-  MecanumDrive driveBase;
   boolean m_sportMode = false;
   public boolean m_fieldOriented = false;
 
   AprilTagFieldLayout atfl = AprilTagFieldLayout.loadField(AprilTagFields.k2024Crescendo);
 
   /** Creates a new MechaniumDrive. */
-  public MecanumDriveSubsystem() {
-
-    frontLeft = new CANSparkMax(Constants.CANIDs.FrontLeftDriveMotor, MotorType.kBrushless);
-    frontRight = new CANSparkMax(Constants.CANIDs.FrontRightDriveMotor, MotorType.kBrushless);
-    rearLeft = new CANSparkMax(Constants.CANIDs.RearLeftDriveMotor, MotorType.kBrushless);
-    rearRight = new CANSparkMax(Constants.CANIDs.RearRighDriveMotor, MotorType.kBrushless);
-
-    frontLeft.restoreFactoryDefaults();
-    frontLeft.setInverted(false);
-    frontLeft.burnFlash();
-
-    rearLeft.restoreFactoryDefaults();
-    rearLeft.setInverted(false);
-    rearLeft.burnFlash();
-
-    frontRight.restoreFactoryDefaults();
-    frontRight.setInverted(true);
-    frontRight.burnFlash();
-
-    rearRight.restoreFactoryDefaults();
-    rearRight.setInverted(true);
-    rearRight.burnFlash();    
-
-    driveBase = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
-
-    if (RobotBase.isSimulation()) {
-
-      REVPhysicsSim.getInstance().addSparkMax(frontLeft, DCMotor.getNEO(1));
-      REVPhysicsSim.getInstance().addSparkMax(frontRight, DCMotor.getNEO(1));
-      REVPhysicsSim.getInstance().addSparkMax(rearLeft, DCMotor.getNEO(1));
-      REVPhysicsSim.getInstance().addSparkMax(rearRight, DCMotor.getNEO(1));
-
-    }
-
+  public MecanumDriveSubsystem(DriveIO io) {
+    this.io = io;
   }
 
   public void setLimeLightNavigation(LimelightNavigation lNavigation) {
     m_LimelightNavigation = lNavigation;
   }
-
-  public Map<String, RelativeEncoder> GetEncoders() {
-    Map<String, RelativeEncoder> Encoders = new HashMap<String, RelativeEncoder>();
-    Encoders.put("Front Left", frontLeft.getEncoder());
-    Encoders.put("Front Right", frontRight.getEncoder());
-    Encoders.put("Rear Left", rearLeft.getEncoder());
-    Encoders.put("Rear Right", rearRight.getEncoder());
-
-    return Encoders;
-  }
-
-  
 
   public static double deadzone(double value, double dz) {
     if (value > dz) {
@@ -140,11 +97,11 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
       var chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(fieldOrientedSpeeds, m_LimelightNavigation.getPoseHeading().times(-1));
 
-      driveBase.driveCartesian(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond,
+      io.driveCartesian(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond,
           chassisSpeeds.omegaRadiansPerSecond);
 
     } else {
-      driveBase.driveCartesian(
+      io.driveCartesian(
           deadzone(forwardSpeed, Constants.Misc.driveDeadzone) * driveGain,
           deadzone(rightSpeed, Constants.Misc.driveDeadzone) * driveGain,
           deadzone(rotatinalSpeed, Constants.Misc.driveDeadzone) * rotationGain);
@@ -253,13 +210,13 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     }
     double distanceAdjust = MathUtil.clamp(rangeError * KPDistance * HeadingThresholdGain, -PowerForward, PowerForward);
     
-    SmartDashboard.putNumber("desiredHeading", desiredHeading);
-    SmartDashboard.putNumber("actualHeading", currentHeading);
-    SmartDashboard.putNumber("headingError", headingError);
+    Logger.recordOutput("Drive/desiredHeading", desiredHeading);
+    Logger.recordOutput("Drive/actualHeading", currentHeading);
+    Logger.recordOutput("Drive/headingError", headingError);
 
-    SmartDashboard.putNumber("desiredRange", desiredRange);
-    SmartDashboard.putNumber("actualRange", actualRange);
-    SmartDashboard.putNumber("rangeError", rangeError);
+    Logger.recordOutput("Drive/desiredRange", desiredRange);
+    Logger.recordOutput("Drive/actualRange", actualRange);
+    Logger.recordOutput("Drive/rangeError", rangeError);
 
     drive(distanceAdjust, 0, steer, 0);
   }
@@ -309,17 +266,8 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-    double frontLeftSpeed = frontLeft.getEncoder().getVelocity();
-    double frontRightSpeed = frontRight.getEncoder().getVelocity();
-    double rearLeftSpeed = rearLeft.getEncoder().getVelocity();
-    double rearRightSpeed = rearRight.getEncoder().getVelocity();
+    io.updateInputs(inputs);
 
-    SmartDashboard.putNumber("front left encoder postion", frontLeft.getEncoder().getPosition());
-    SmartDashboard.putNumber("frontLeftSpeed", frontLeftSpeed);
-    SmartDashboard.putNumber("frontRightSpeed", frontRightSpeed);
-    SmartDashboard.putNumber("rearLeftSpeed", rearLeftSpeed);
-    SmartDashboard.putNumber("rearRightSpeed", rearRightSpeed);
-    SmartDashboard.putBoolean("FieldOriented", m_fieldOriented);
+    Logger.recordOutput("Drive/FieldOriented", m_fieldOriented);
   }
 }

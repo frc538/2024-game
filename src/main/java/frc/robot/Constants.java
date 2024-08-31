@@ -19,6 +19,12 @@ import edu.wpi.first.math.geometry.Translation2d;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+	public static enum Mode {
+		REAL,
+		SIM,
+		REPLAY
+	};
+	public static final Mode currentMode = Mode.REAL;
 
 	public static class ExtraAlignValues {
 		public static final double HeadingDistanceAdjustSetting = 20.0;
