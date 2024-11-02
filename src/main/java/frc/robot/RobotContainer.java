@@ -6,7 +6,6 @@ package frc.robot;
 
 import frc.robot.subsystems.LeftClimberSubsystem;
 
-import frc.robot.subsystems.IntakeMechanisum;
 import frc.robot.subsystems.LanuchMechanisumSubsystem;
 import frc.robot.subsystems.LimelightNavigation;
 import frc.robot.subsystems.RightClimberSubsystem;
@@ -15,24 +14,13 @@ import frc.robot.subsystems.Drive.DriveIO;
 import frc.robot.subsystems.Drive.DriveIOSparkMaxBrushed;
 import frc.robot.subsystems.Drive.MecanumDriveSubsystem;
 
-import java.security.cert.TrustAnchor;
-import java.util.Map;
-
-import javax.print.event.PrintJobEvent;
-
 import com.revrobotics.REVPhysicsSim;
-import com.revrobotics.RelativeEncoder;
-
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.drive.MecanumDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
