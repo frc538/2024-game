@@ -11,9 +11,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.MecanumDriveKinematics;
 import edu.wpi.first.math.kinematics.MecanumDriveWheelPositions;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drive.DriveIO.DriveIOInputs;
@@ -29,10 +27,6 @@ public class Navigation extends SubsystemBase {
   static MecanumDrivePoseEstimator m_DrivePoseEstimator;
 
   boolean m_InitializeDFromTag = false;
-
-  double m_latency = 0.0;
-  double m_limelightSamplesCaptured = 0;
-
   boolean flashBangOnOff = true;
   int x;
 
@@ -53,7 +47,6 @@ public class Navigation extends SubsystemBase {
             driveInputs.rearLeftRad * Constants.Misc.metersPerMotorRad,
             driveInputs.rearRightRad * Constants.Misc.metersPerMotorRad),
         initialPoseMeters);
-
   }
 
   /* Used by Drive subsystem to do field oriented */
@@ -67,24 +60,7 @@ public class Navigation extends SubsystemBase {
 
   public void toggleLEDS() {
     flashBangOnOff = !flashBangOnOff;
-    ledControls();
-
-  }
-
-  public void ledControls() {
-    int ControlValue = flashBangOnOff ? 1 : 3;
-    if (flashBangOnOff) {
-      if (ControlValue == 1) {
-        ControlValue = 3;
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(ControlValue);
-      } else {
-        ControlValue = 1;
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(ControlValue);
-      }
-    } else {
-      ControlValue = 1;
-      NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(ControlValue);
-    }
+    io.ledControls(flashBangOnOff);
   }
 
   public void resetFieldOrient() {
@@ -111,9 +87,7 @@ public class Navigation extends SubsystemBase {
   @Override
   public void periodic() {
     io.updateInputs(inputs);
-    Logger.processInputs("Navigation", inputs);
-    double cl;
-    double tl;
+
     if (m_InitializeDFromTag == false) {
       resetPosition();
     } else {
@@ -124,19 +98,14 @@ public class Navigation extends SubsystemBase {
           driveInputs.rearRightRad * Constants.Misc.metersPerMotorRad);
       m_DrivePoseEstimator.update(inputs.gyroHeading, positions);
 
-      if (LimelightHelpers.getTV(Constants.Misc.LimelightName) == true) {
-        Pose2d robotPose2d = LimelightHelpers.getBotPose2d_wpiBlue(Constants.Misc.LimelightName);
-        cl = LimelightHelpers.getLatency_Capture("limelight");
-        tl = LimelightHelpers.getLatency_Pipeline("limelight");
-        m_limelightSamplesCaptured = m_limelightSamplesCaptured + 1;
-        m_latency = Timer.getFPGATimestamp() - tl / 1000 - cl / 1000;
-        m_DrivePoseEstimator.addVisionMeasurement(robotPose2d, m_latency);
+      if (inputs.isVisionMeasurement == true) {
+        inputs.VisionLatency = Timer.getFPGATimestamp() - inputs.pipelineLatency / 1000 - inputs.captureLatency / 1000;
+        m_DrivePoseEstimator.addVisionMeasurement(inputs.robotPose2d, inputs.VisionLatency);
       }
     }
     inputs.EstimatedPose2d = m_DrivePoseEstimator.getEstimatedPosition();
-    SmartDashboard.putNumber("Robot Latency (Milliseconds)", m_latency);
-    SmartDashboard.putNumber("Limelight Samples Captured", m_limelightSamplesCaptured);
-    SmartDashboard.putNumber("updated heading", inputs.gyroHeading.getDegrees());
+
+    Logger.processInputs("Navigation", inputs);
   }
 
   public Pose2d getPose2d() {

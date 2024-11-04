@@ -15,16 +15,27 @@ public interface NavigationIO {
         Translation2d m_RearLeftWheel_Position;
         Translation2d m_RearRightWheel_Position;
 
+        // Gyro IO
         double gyroYaw;
         double gyroPitch;
         double gyroRoll;
-
         Rotation2d gyroHeading;
 
+        // Vision IO
+        Boolean isVisionMeasurement;
+        Pose2d robotPose2d;
+        double captureLatency;
+        double pipelineLatency;
+        int samplesCaptured = 0;
+
+        // Application IO
         Pose2d EstimatedPose2d;
+        double VisionLatency;
     }
 
     public default void updateInputs(NavigationIOInputs io) {};
 
     public default void resetGyro(){};
+
+    public default void ledControls(Boolean flashBangOn) {};
 }
