@@ -19,9 +19,10 @@ public interface NavigationIO {
         double gyroPitch;
         double gyroRoll;
 
+        Rotation2d gyroHeading;
+
         Pose2d EstimatedPose2d;
     }
-    public default Rotation2d getRotation2d(){return Rotation2d.fromDegrees(0);};
 
     public default void updateInputs(NavigationIOInputs io) {};
 

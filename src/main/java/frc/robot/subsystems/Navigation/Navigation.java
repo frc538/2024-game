@@ -12,7 +12,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.MecanumDriveKinematics;
 import edu.wpi.first.math.kinematics.MecanumDriveWheelPositions;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -35,9 +34,7 @@ public class Navigation extends SubsystemBase {
   double m_limelightSamplesCaptured = 0;
 
   boolean flashBangOnOff = true;
-  int x;
-
-  StructPublisher<Pose2d> posePublisher;
+  int x;  
 
   /** Creates a new LimelightNavigation. */
   public Navigation(NavigationIO io, DriveIOInputs dio) {
@@ -57,19 +54,10 @@ public class Navigation extends SubsystemBase {
             driveInputs.rearRightRad * Constants.Misc.metersPerMotorRad),
         initialPoseMeters);
 
-    //m_pigeon2 = new Pigeon2(CanID.Pigeon2);
-    //var pigeon2Config = new Pigeon2Configuration();
-
-    posePublisher = NetworkTableInstance.getDefault().getStructTopic("Pose2d", Pose2d.struct).publish();
-
   }
 
   public Rotation2d getPoseHeading() {
     return m_DrivePoseEstimator.getEstimatedPosition().getRotation();
-  }
-
-  public Rotation2d getGyroHeading() {
-    return io.getRotation2d();
   }
 
   public double getRoll() {
@@ -114,7 +102,7 @@ public class Navigation extends SubsystemBase {
             driveInputs.frontRightRad*Constants.Misc.metersPerMotorRad,
             driveInputs.rearLeftRad*Constants.Misc.metersPerMotorRad,
             driveInputs.rearRightRad*Constants.Misc.metersPerMotorRad);
-      m_DrivePoseEstimator.resetPosition(io.getRotation2d(), MecanumDriveWheelPositions, robotPose2d);
+      m_DrivePoseEstimator.resetPosition(inputs.gyroHeading, MecanumDriveWheelPositions, robotPose2d);
       m_InitializeDFromTag = true;
     }
   }
@@ -133,7 +121,7 @@ public class Navigation extends SubsystemBase {
             driveInputs.frontRightRad*Constants.Misc.metersPerMotorRad,
             driveInputs.rearLeftRad*Constants.Misc.metersPerMotorRad,
             driveInputs.rearRightRad*Constants.Misc.metersPerMotorRad);
-      m_DrivePoseEstimator.update(io.getRotation2d(), positions);
+      m_DrivePoseEstimator.update(inputs.gyroHeading, positions);
 
       if (LimelightHelpers.getTV(Constants.Misc.LimelightName) == true) {
         Pose2d robotPose2d = LimelightHelpers.getBotPose2d_wpiBlue(Constants.Misc.LimelightName);
@@ -144,17 +132,10 @@ public class Navigation extends SubsystemBase {
         m_DrivePoseEstimator.addVisionMeasurement(robotPose2d, m_latency);
       }
     }
-    Pose2d pose = m_DrivePoseEstimator.getEstimatedPosition();
+    inputs.EstimatedPose2d = m_DrivePoseEstimator.getEstimatedPosition();
     SmartDashboard.putNumber("Robot Latency (Milliseconds)", m_latency);
     SmartDashboard.putNumber("Limelight Samples Captured", m_limelightSamplesCaptured);
-    SmartDashboard.putNumber("Robot X", pose.getX());
-    SmartDashboard.putNumber("Robot Y", pose.getY());
-    SmartDashboard.putNumber("Robot Heading", pose.getRotation().getDegrees());
-    SmartDashboard.putNumber("updated heading", io.getRotation2d().getDegrees());
-
-    posePublisher.set(pose);
-
-    //double currentHeading = SmartDashboard.getNumber("updated heading", io.getRotation2d().getDegrees());
+    SmartDashboard.putNumber("updated heading", inputs.gyroHeading.getDegrees());
   }
 
   public Pose2d getPose2d() {
