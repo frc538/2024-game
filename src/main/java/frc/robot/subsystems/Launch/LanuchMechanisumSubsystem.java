@@ -35,6 +35,7 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
     }
   }
 
+  /*
   private void launchSpeaker() {
     lowerShooterMotorController.set(Constants.Misc.speekerLaunchSpeed);
   }
@@ -46,8 +47,7 @@ public class LanuchMechanisumSubsystem extends SubsystemBase {
 
   private void initaliseLauncher() {
     lowerShooterMotorController.set(0);
-
-  }
+  }*/
 
   public void shoot() {
     lowerShooterMotorController.set(-1);
