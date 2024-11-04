@@ -34,7 +34,7 @@ public class Navigation extends SubsystemBase {
   double m_limelightSamplesCaptured = 0;
 
   boolean flashBangOnOff = true;
-  int x;  
+  int x;
 
   /** Creates a new LimelightNavigation. */
   public Navigation(NavigationIO io, DriveIOInputs dio) {
@@ -56,8 +56,9 @@ public class Navigation extends SubsystemBase {
 
   }
 
+  /* Used by Drive subsystem to do field oriented */
   public Rotation2d getPoseHeading() {
-    return m_DrivePoseEstimator.getEstimatedPosition().getRotation();
+    return inputs.EstimatedPose2d.getRotation();
   }
 
   public double getRoll() {
@@ -93,15 +94,15 @@ public class Navigation extends SubsystemBase {
 
   public void resetPosition() {
     m_InitializeDFromTag = false;
-    //m_pigeon2.reset();
+    // m_pigeon2.reset();
     // This method will be called once per scheduler run
     if (LimelightHelpers.getTV(Constants.Misc.LimelightName) == true) {
       Pose2d robotPose2d = LimelightHelpers.getBotPose2d_wpiBlue(Constants.Misc.LimelightName);
       var MecanumDriveWheelPositions = new MecanumDriveWheelPositions(
-            driveInputs.frontLeftRad*Constants.Misc.metersPerMotorRad, 
-            driveInputs.frontRightRad*Constants.Misc.metersPerMotorRad,
-            driveInputs.rearLeftRad*Constants.Misc.metersPerMotorRad,
-            driveInputs.rearRightRad*Constants.Misc.metersPerMotorRad);
+          driveInputs.frontLeftRad * Constants.Misc.metersPerMotorRad,
+          driveInputs.frontRightRad * Constants.Misc.metersPerMotorRad,
+          driveInputs.rearLeftRad * Constants.Misc.metersPerMotorRad,
+          driveInputs.rearRightRad * Constants.Misc.metersPerMotorRad);
       m_DrivePoseEstimator.resetPosition(inputs.gyroHeading, MecanumDriveWheelPositions, robotPose2d);
       m_InitializeDFromTag = true;
     }
@@ -114,13 +115,13 @@ public class Navigation extends SubsystemBase {
     double cl;
     double tl;
     if (m_InitializeDFromTag == false) {
-     resetPosition();
+      resetPosition();
     } else {
       MecanumDriveWheelPositions positions = new MecanumDriveWheelPositions(
-            driveInputs.frontLeftRad*Constants.Misc.metersPerMotorRad, 
-            driveInputs.frontRightRad*Constants.Misc.metersPerMotorRad,
-            driveInputs.rearLeftRad*Constants.Misc.metersPerMotorRad,
-            driveInputs.rearRightRad*Constants.Misc.metersPerMotorRad);
+          driveInputs.frontLeftRad * Constants.Misc.metersPerMotorRad,
+          driveInputs.frontRightRad * Constants.Misc.metersPerMotorRad,
+          driveInputs.rearLeftRad * Constants.Misc.metersPerMotorRad,
+          driveInputs.rearRightRad * Constants.Misc.metersPerMotorRad);
       m_DrivePoseEstimator.update(inputs.gyroHeading, positions);
 
       if (LimelightHelpers.getTV(Constants.Misc.LimelightName) == true) {
@@ -128,7 +129,7 @@ public class Navigation extends SubsystemBase {
         cl = LimelightHelpers.getLatency_Capture("limelight");
         tl = LimelightHelpers.getLatency_Pipeline("limelight");
         m_limelightSamplesCaptured = m_limelightSamplesCaptured + 1;
-        m_latency = Timer.getFPGATimestamp()- tl /1000 - cl /1000;
+        m_latency = Timer.getFPGATimestamp() - tl / 1000 - cl / 1000;
         m_DrivePoseEstimator.addVisionMeasurement(robotPose2d, m_latency);
       }
     }

@@ -25,12 +25,12 @@ public class MecanumDriveSubsystem extends SubsystemBase {
 
   private final DriveIO io;
   public final DriveIOInputsAutoLogged inputs = new DriveIOInputsAutoLogged();
-  
+
   double HeadingDistanceSetting = Constants.ExtraAlignValues.HeadingDistanceAdjustSetting;
   double PowerTurn = Constants.ExtraAlignValues.PowerTurn;
   double PowerForward = Constants.ExtraAlignValues.PowerForward;
 
-  Navigation m_LimelightNavigation;
+  Navigation m_Navigation;
   boolean m_sportMode = false;
   public boolean m_fieldOriented = false;
 
@@ -42,7 +42,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
   }
 
   public void setLimeLightNavigation(Navigation lNavigation) {
-    m_LimelightNavigation = lNavigation;
+    m_Navigation = lNavigation;
   }
 
   public static double deadzone(double value, double dz) {
@@ -63,7 +63,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     } else {
       driveGain = 0.45 * sliderValue + .55;
     }
-    Logger.recordOutput("Drive/driveGain",driveGain);
+    Logger.recordOutput("Drive/driveGain", driveGain);
     return driveGain;
   }
 
@@ -79,11 +79,13 @@ public class MecanumDriveSubsystem extends SubsystemBase {
           allianceInversion = -1;
         }
       }
-      var fieldOrientedSpeeds = new ChassisSpeeds(deadzone(forwardSpeed * allianceInversion, Constants.Misc.driveDeadzone) * driveGain,
+      var fieldOrientedSpeeds = new ChassisSpeeds(
+          deadzone(forwardSpeed * allianceInversion, Constants.Misc.driveDeadzone) * driveGain,
           deadzone(rightSpeed * allianceInversion, Constants.Misc.driveDeadzone) * driveGain,
           deadzone(rotatinalSpeed, Constants.Misc.driveDeadzone) * rotationGain);
 
-      var chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(fieldOrientedSpeeds, m_LimelightNavigation.getPoseHeading().times(-1));
+      var chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(fieldOrientedSpeeds,
+          m_Navigation.getPoseHeading().times(-1));
 
       io.driveCartesian(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond,
           chassisSpeeds.omegaRadiansPerSecond);
@@ -115,9 +117,8 @@ public class MecanumDriveSubsystem extends SubsystemBase {
       if (ally.get() == Alliance.Blue) {
         targetId = Constants.AprilTags.blueAmp;
       }
-    }
-    else {
-      //Doesn't do anything/exits out of the function
+    } else {
+      // Doesn't do anything/exits out of the function
       return;
     }
     Pose3d pose3d = atfl.getTagPose(targetId).get();
@@ -127,11 +128,11 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     double desiredRange = 1.2;
     SmartDashboard.putNumber("Tx", targetX);
     SmartDashboard.putNumber("Ty", targetY);
-    SmartDashboard.putString("Target","Amp");
+    SmartDashboard.putString("Target", "Amp");
 
     Logger.recordOutput("Target/Tx", targetX);
     Logger.recordOutput("Target/Ty", targetY);
-    Logger.recordOutput("Target/type","Amp");
+    Logger.recordOutput("Target/type", "Amp");
     alignrange(desiredRange, targetX, targetY);
   }
 
@@ -145,9 +146,8 @@ public class MecanumDriveSubsystem extends SubsystemBase {
       if (ally.get() == Alliance.Blue) {
         targetIdSpeaker = Constants.AprilTags.blueSpeaker;
       }
-    }
-    else {
-      //Doesn't do anything/exits out of the function
+    } else {
+      // Doesn't do anything/exits out of the function
       return;
     }
     Pose3d pose3d = atfl.getTagPose(targetIdSpeaker).get();
@@ -157,47 +157,48 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     double desiredRange = 1.5;
     SmartDashboard.putNumber("Tx", targetX);
     SmartDashboard.putNumber("Ty", targetY);
-    SmartDashboard.putString("Target","Speaker");
+    SmartDashboard.putString("Target", "Speaker");
 
     Logger.recordOutput("Target/Tx", targetX);
     Logger.recordOutput("Target/Ty", targetY);
-    Logger.recordOutput("Target/type","Speaker");
+    Logger.recordOutput("Target/type", "Speaker");
     alignrange(desiredRange, targetX, targetY);
   }
 
   private double normalizeAngle(double angle) {
-      if (angle > 180) {
+    if (angle > 180) {
       angle -= 360;
     } else if (angle < -180) {
       angle += 360;
     }
     return angle;
-    }
-  
+  }
+
   // point at target from desired range
   public void alignrange(double desiredRange, double targetX, double targetY) {
-    Pose2d robotPose = m_LimelightNavigation.getPose2d();
+    Pose2d robotPose = m_Navigation.getPose2d();
     double currentHeading = robotPose.getRotation().getDegrees();
 
     double desiredHeading = Math.toDegrees(Math.atan2(targetY, targetX));
-    double headingError = desiredHeading-currentHeading;
+    double headingError = desiredHeading - currentHeading;
 
     // Normalizes heading error because we had an issue with aligning.
 
     headingError = normalizeAngle(headingError);
 
-    double distanceX = targetX-robotPose.getX();
-    double distanceY = targetY-robotPose.getY();
-    double actualRange = Math.sqrt(distanceX*distanceX+distanceY*distanceY);
-    double rangeError = desiredRange-actualRange;
+    double distanceX = targetX - robotPose.getX();
+    double distanceY = targetY - robotPose.getY();
+    double actualRange = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+    double rangeError = desiredRange - actualRange;
     double steer = 0.0f;
     double KPAim = -0.1f;
     double KPDistance = -0.4f;
-    double minAim = 0; //0.05f;
-    
+    double minAim = 0; // 0.05f;
+
     steer = MathUtil.clamp(deadzone(KPAim * headingError, minAim), -PowerTurn, PowerTurn);
 
-    // This is here to control forward movement until pointed in the general direction of the target 
+    // This is here to control forward movement until pointed in the general
+    // direction of the target
     double HeadingThresholdGain = 0.0;
     if (Math.abs(headingError) > HeadingDistanceSetting) {
       HeadingThresholdGain = 0.0;
@@ -205,7 +206,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
       HeadingThresholdGain = 1.0;
     }
     double distanceAdjust = MathUtil.clamp(rangeError * KPDistance * HeadingThresholdGain, -PowerForward, PowerForward);
-    
+
     Logger.recordOutput("Drive/desiredHeading", desiredHeading);
     Logger.recordOutput("Drive/actualHeading", currentHeading);
     Logger.recordOutput("Drive/headingError", headingError);
@@ -217,12 +218,12 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     drive(distanceAdjust, 0, steer, 0);
   }
 
-// go to desired pos and heading
+  // go to desired pos and heading
   public void alignTarget(double desiredx, double desiredy, double desiredHeading) {
     double left = 0;
     double forward = 0;
     double rotationSpeed = 0;
-    Pose2d pose = m_LimelightNavigation.getPose2d();
+    Pose2d pose = m_Navigation.getPose2d();
     double ydisplacement = pose.getY() - desiredy;
     double xdisplacement = pose.getX() - desiredx;
     double headingdisplacement = pose.getRotation().getDegrees() - desiredHeading;
