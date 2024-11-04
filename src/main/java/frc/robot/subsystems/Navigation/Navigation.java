@@ -19,14 +19,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drive.DriveIO.DriveIOInputs;
 
-public class LimelightNavigation extends SubsystemBase {
+public class Navigation extends SubsystemBase {
 
   private final NavigationIO io;
   public final NavigationIOInputsAutoLogged inputs = new NavigationIOInputsAutoLogged();
 
-  
-
-  private DriveIOInputs m_DriveIO;
+  private DriveIOInputs driveInputs;
 
   public MecanumDriveKinematics m_Kinematics;
   static MecanumDrivePoseEstimator m_DrivePoseEstimator;
@@ -37,18 +35,15 @@ public class LimelightNavigation extends SubsystemBase {
   double m_limelightSamplesCaptured = 0;
 
   boolean flashBangOnOff = true;
-
-  // private Pigeon2Configuration pigeon2Config;
-
   int x;
 
   StructPublisher<Pose2d> posePublisher;
 
   /** Creates a new LimelightNavigation. */
-  public LimelightNavigation(NavigationIO io, DriveIOInputs dio) {
+  public Navigation(NavigationIO io, DriveIOInputs dio) {
     this.io = io;
 
-    m_DriveIO = dio;
+    driveInputs = dio;
 
     Pose2d initialPoseMeters = new Pose2d();
     m_Kinematics = new MecanumDriveKinematics(Constants.Misc.FrontLeftDriveWheel_Position_Meters,
@@ -56,10 +51,10 @@ public class LimelightNavigation extends SubsystemBase {
         Constants.Misc.RearLeftDriveWheel_Position_Meters, Constants.Misc.RearRightDriveWheel_Position_Meters);
     m_DrivePoseEstimator = new MecanumDrivePoseEstimator(m_Kinematics, new Rotation2d(0),
         new MecanumDriveWheelPositions(
-            m_DriveIO.frontLeftRad * Constants.Misc.metersPerMotorRad,
-            m_DriveIO.frontRightRad * Constants.Misc.metersPerMotorRad,
-            m_DriveIO.rearLeftRad * Constants.Misc.metersPerMotorRad,
-            m_DriveIO.rearRightRad * Constants.Misc.metersPerMotorRad),
+            driveInputs.frontLeftRad * Constants.Misc.metersPerMotorRad,
+            driveInputs.frontRightRad * Constants.Misc.metersPerMotorRad,
+            driveInputs.rearLeftRad * Constants.Misc.metersPerMotorRad,
+            driveInputs.rearRightRad * Constants.Misc.metersPerMotorRad),
         initialPoseMeters);
 
     //m_pigeon2 = new Pigeon2(CanID.Pigeon2);
@@ -115,10 +110,10 @@ public class LimelightNavigation extends SubsystemBase {
     if (LimelightHelpers.getTV(Constants.Misc.LimelightName) == true) {
       Pose2d robotPose2d = LimelightHelpers.getBotPose2d_wpiBlue(Constants.Misc.LimelightName);
       var MecanumDriveWheelPositions = new MecanumDriveWheelPositions(
-            m_DriveIO.frontLeftRad*Constants.Misc.metersPerMotorRad, 
-            m_DriveIO.frontRightRad*Constants.Misc.metersPerMotorRad,
-            m_DriveIO.rearLeftRad*Constants.Misc.metersPerMotorRad,
-            m_DriveIO.rearRightRad*Constants.Misc.metersPerMotorRad);
+            driveInputs.frontLeftRad*Constants.Misc.metersPerMotorRad, 
+            driveInputs.frontRightRad*Constants.Misc.metersPerMotorRad,
+            driveInputs.rearLeftRad*Constants.Misc.metersPerMotorRad,
+            driveInputs.rearRightRad*Constants.Misc.metersPerMotorRad);
       m_DrivePoseEstimator.resetPosition(io.getRotation2d(), MecanumDriveWheelPositions, robotPose2d);
       m_InitializeDFromTag = true;
     }
@@ -134,10 +129,10 @@ public class LimelightNavigation extends SubsystemBase {
      resetPosition();
     } else {
       MecanumDriveWheelPositions positions = new MecanumDriveWheelPositions(
-            m_DriveIO.frontLeftRad*Constants.Misc.metersPerMotorRad, 
-            m_DriveIO.frontRightRad*Constants.Misc.metersPerMotorRad,
-            m_DriveIO.rearLeftRad*Constants.Misc.metersPerMotorRad,
-            m_DriveIO.rearRightRad*Constants.Misc.metersPerMotorRad);
+            driveInputs.frontLeftRad*Constants.Misc.metersPerMotorRad, 
+            driveInputs.frontRightRad*Constants.Misc.metersPerMotorRad,
+            driveInputs.rearLeftRad*Constants.Misc.metersPerMotorRad,
+            driveInputs.rearRightRad*Constants.Misc.metersPerMotorRad);
       m_DrivePoseEstimator.update(io.getRotation2d(), positions);
 
       if (LimelightHelpers.getTV(Constants.Misc.LimelightName) == true) {

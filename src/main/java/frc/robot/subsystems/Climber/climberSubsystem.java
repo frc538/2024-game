@@ -7,15 +7,15 @@ package frc.robot.subsystems.Climber;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drive.MecanumDriveSubsystem;
-import frc.robot.subsystems.Navigation.LimelightNavigation;
+import frc.robot.subsystems.Navigation.Navigation;
 
 public class climberSubsystem extends SubsystemBase {
   final LeftClimberSubsystem m_lcs;
   final RightClimberSubsystem m_rcs;
-  private final LimelightNavigation m_ln;
+  private final Navigation m_ln;
 
   /** Creates a new climberSubsystem. */
-  public climberSubsystem(LeftClimberSubsystem lcs, RightClimberSubsystem rcs, LimelightNavigation ln) {
+  public climberSubsystem(LeftClimberSubsystem lcs, RightClimberSubsystem rcs, Navigation ln) {
     m_lcs = lcs;
     m_rcs = rcs;
     m_ln = ln;

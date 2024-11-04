@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.Navigation.LimelightNavigation;
+import frc.robot.subsystems.Navigation.Navigation;
 
 public class MecanumDriveSubsystem extends SubsystemBase {
 
@@ -30,7 +30,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
   double PowerTurn = Constants.ExtraAlignValues.PowerTurn;
   double PowerForward = Constants.ExtraAlignValues.PowerForward;
 
-  LimelightNavigation m_LimelightNavigation;
+  Navigation m_LimelightNavigation;
   boolean m_sportMode = false;
   public boolean m_fieldOriented = false;
 
@@ -41,7 +41,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     this.io = io;
   }
 
-  public void setLimeLightNavigation(LimelightNavigation lNavigation) {
+  public void setLimeLightNavigation(Navigation lNavigation) {
     m_LimelightNavigation = lNavigation;
   }
 

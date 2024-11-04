@@ -11,7 +11,7 @@ import frc.robot.subsystems.Drive.DriveIO;
 import frc.robot.subsystems.Drive.DriveIOSparkMaxBrushed;
 import frc.robot.subsystems.Drive.MecanumDriveSubsystem;
 import frc.robot.subsystems.Launch.LanuchMechanisumSubsystem;
-import frc.robot.subsystems.Navigation.LimelightNavigation;
+import frc.robot.subsystems.Navigation.Navigation;
 import frc.robot.subsystems.Navigation.NavigationIOLimelight;
 
 import com.revrobotics.REVPhysicsSim;
@@ -40,7 +40,7 @@ public class RobotContainer {
   private final LeftClimberSubsystem mLeftClimber = new LeftClimberSubsystem();
   private final RightClimberSubsystem mRightClimber = new RightClimberSubsystem();
 
-  private final LimelightNavigation m_Navigation;
+  private final Navigation m_Navigation;
 
   private final climberSubsystem m_climber;// has to be after
                                                                                                // limelight subsystem
@@ -73,7 +73,7 @@ public class RobotContainer {
         break;
     }
 
-    m_Navigation = new LimelightNavigation(new NavigationIOLimelight(),m_Drive.inputs);
+    m_Navigation = new Navigation(new NavigationIOLimelight(),m_Drive.inputs);
     m_climber = new climberSubsystem(mLeftClimber, mRightClimber, m_Navigation);
 
     // Configure the trigger bindings
@@ -160,7 +160,7 @@ public class RobotContainer {
   }
 
   public Command autoinit(String selectedAuto) {
-    LimelightNavigation.resetgyro();
+    Navigation.resetgyro();
     m_Navigation.resetFieldOrient();
 
     if (selectedAuto == "Default Auto") {
