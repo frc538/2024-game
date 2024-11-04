@@ -31,8 +31,6 @@ public interface DriveIO {
         public double commandedXSpeed = 0.0;
         public double commandedYSpeed = 0.0;
         public double commandedZRotation = 0.0;
-
-        public Rotation2d gyroYaw = new Rotation2d();
     }
 
     public default void updateInputs(DriveIOInputs io) {};
