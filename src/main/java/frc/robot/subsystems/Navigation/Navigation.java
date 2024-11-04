@@ -109,7 +109,7 @@ public class Navigation extends SubsystemBase {
   }
 
   public Pose2d getPose2d() {
-    return m_DrivePoseEstimator.getEstimatedPosition();
+    return inputs.EstimatedPose2d;
   }
 
   public static void resetgyro() {
