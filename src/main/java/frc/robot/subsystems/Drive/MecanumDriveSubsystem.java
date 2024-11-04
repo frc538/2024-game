@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.LimelightNavigation;
+import frc.robot.subsystems.Navigation.LimelightNavigation;
 
 public class MecanumDriveSubsystem extends SubsystemBase {
 
@@ -63,6 +63,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     } else {
       driveGain = 0.45 * sliderValue + .55;
     }
+    Logger.recordOutput("Drive/driveGain",driveGain);
     return driveGain;
   }
 
@@ -127,6 +128,10 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Tx", targetX);
     SmartDashboard.putNumber("Ty", targetY);
     SmartDashboard.putString("Target","Amp");
+
+    Logger.recordOutput("Target/Tx", targetX);
+    Logger.recordOutput("Target/Ty", targetY);
+    Logger.recordOutput("Target/type","Amp");
     alignrange(desiredRange, targetX, targetY);
   }
 
@@ -153,6 +158,10 @@ public class MecanumDriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Tx", targetX);
     SmartDashboard.putNumber("Ty", targetY);
     SmartDashboard.putString("Target","Speaker");
+
+    Logger.recordOutput("Target/Tx", targetX);
+    Logger.recordOutput("Target/Ty", targetY);
+    Logger.recordOutput("Target/type","Speaker");
     alignrange(desiredRange, targetX, targetY);
   }
 
@@ -254,6 +263,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     io.updateInputs(inputs);
+    Logger.processInputs("Drive", inputs);
 
     Logger.recordOutput("Drive/FieldOriented", m_fieldOriented);
   }

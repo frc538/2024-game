@@ -7,12 +7,13 @@ package frc.robot;
 import frc.robot.subsystems.LeftClimberSubsystem;
 
 import frc.robot.subsystems.LanuchMechanisumSubsystem;
-import frc.robot.subsystems.LimelightNavigation;
 import frc.robot.subsystems.RightClimberSubsystem;
 import frc.robot.subsystems.climberSubsystem;
 import frc.robot.subsystems.Drive.DriveIO;
 import frc.robot.subsystems.Drive.DriveIOSparkMaxBrushed;
 import frc.robot.subsystems.Drive.MecanumDriveSubsystem;
+import frc.robot.subsystems.Navigation.LimelightNavigation;
+import frc.robot.subsystems.Navigation.NavigationIOLimelight;
 
 import com.revrobotics.REVPhysicsSim;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -56,6 +57,7 @@ public class RobotContainer {
       case REAL:
         // Real robot, instantiate hardware IO implementations
         m_Drive = new MecanumDriveSubsystem(new DriveIOSparkMaxBrushed()); // Spark Max/Spark Flex + brushed, no encoders
+        
         // drive = new Drive(new DriveIOSparkMax()); // Spark Max/Spark Flex + NEO/Vortex
         // drive = new Drive(new DriveIOTalonSRX()); // Talon SRX + brushed, no encoders
         // drive = new Drive(new DriveIOTalonFX()); // Talon FX (Falon 500/Kraken X60)
@@ -72,7 +74,7 @@ public class RobotContainer {
         break;
     }
 
-    m_Navigation = new LimelightNavigation(m_Drive.inputs);
+    m_Navigation = new LimelightNavigation(new NavigationIOLimelight(),m_Drive.inputs);
     m_climber = new climberSubsystem(mLeftClimber, mRightClimber, m_Navigation);
 
     // Configure the trigger bindings
