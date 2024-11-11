@@ -22,7 +22,7 @@ public interface NavigationIO {
         Rotation2d gyroHeading;
 
         // Vision IO
-        Boolean isVisionMeasurement;
+        boolean isVisionMeasurement;
         Pose2d robotPose2d;
         double captureLatency;
         double pipelineLatency;
