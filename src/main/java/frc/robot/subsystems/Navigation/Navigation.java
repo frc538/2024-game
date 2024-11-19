@@ -30,6 +30,10 @@ public class Navigation extends SubsystemBase {
   boolean flashBangOnOff = true;
   int x;
 
+  // Application IO
+  Pose2d EstimatedPose2d = new Pose2d();
+  double VisionLatency = 0.0;
+
   /** Creates a new LimelightNavigation. */
   public Navigation(NavigationIO io, DriveIOInputs dio) {
     this.io = io;
@@ -51,7 +55,7 @@ public class Navigation extends SubsystemBase {
 
   /* Used by Drive subsystem to do field oriented */
   public Rotation2d getPoseHeading() {
-    return inputs.EstimatedPose2d.getRotation();
+    return EstimatedPose2d.getRotation();
   }
 
   public double getRoll() {
@@ -87,29 +91,30 @@ public class Navigation extends SubsystemBase {
   @Override
   public void periodic() {
     io.updateInputs(inputs);
-
-    if (m_InitializeDFromTag == false) {
-      resetPosition();
-    } else {
-      MecanumDriveWheelPositions positions = new MecanumDriveWheelPositions(
-          driveInputs.frontLeftRad * Constants.Misc.metersPerMotorRad,
-          driveInputs.frontRightRad * Constants.Misc.metersPerMotorRad,
-          driveInputs.rearLeftRad * Constants.Misc.metersPerMotorRad,
-          driveInputs.rearRightRad * Constants.Misc.metersPerMotorRad);
-      m_DrivePoseEstimator.update(inputs.gyroHeading, positions);
-
-      if (inputs.isVisionMeasurement == true) {
-        inputs.VisionLatency = Timer.getFPGATimestamp() - inputs.pipelineLatency / 1000 - inputs.captureLatency / 1000;
-        m_DrivePoseEstimator.addVisionMeasurement(inputs.robotPose2d, inputs.VisionLatency);
-      }
-    }
-    inputs.EstimatedPose2d = m_DrivePoseEstimator.getEstimatedPosition();
-
     Logger.processInputs("Navigation", inputs);
+
+    MecanumDriveWheelPositions positions = new MecanumDriveWheelPositions(
+        driveInputs.frontLeftRad * Constants.Misc.metersPerMotorRad,
+        driveInputs.frontRightRad * Constants.Misc.metersPerMotorRad,
+        driveInputs.rearLeftRad * Constants.Misc.metersPerMotorRad,
+        driveInputs.rearRightRad * Constants.Misc.metersPerMotorRad);
+    Logger.recordOutput("Navigation/MecanumDriveWheelPositions",positions);
+    m_DrivePoseEstimator.update(inputs.gyroHeading, positions);
+
+    if (inputs.isVisionMeasurement == true) {
+      VisionLatency = Timer.getFPGATimestamp() - inputs.pipelineLatency / 1000 - inputs.captureLatency / 1000;
+      m_DrivePoseEstimator.addVisionMeasurement(inputs.robotPose2d, VisionLatency);
+    }
+    
+    EstimatedPose2d = m_DrivePoseEstimator.getEstimatedPosition();
+
+    Logger.recordOutput("Navigation/VisionLatency",VisionLatency);
+    Logger.recordOutput("Navigation/EstimatedPose2d",EstimatedPose2d);
+    Logger.recordOutput("Navigation/initializedFromTag", m_InitializeDFromTag);
   }
 
   public Pose2d getPose2d() {
-    return inputs.EstimatedPose2d;
+    return EstimatedPose2d;
   }
 
   public static void resetgyro() {
